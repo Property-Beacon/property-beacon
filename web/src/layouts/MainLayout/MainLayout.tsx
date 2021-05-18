@@ -28,22 +28,53 @@ const MainLayout: React.FunctionComponent = ({ children }) => {
           <span className="text-lg font-bold">Property Beacon</span>
         </div>
         <div className="flex justify-center flex-1 px-2 mx-2">
-          <div className="items-stretch hidden lg:flex">
+          <div className="items-stretch flex">
             <Link
               to={routes.home()}
               className="btn btn-ghost btn-sm rounded-btn"
             >
-              Home
+              <span className="hidden sm:inline">Home</span>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                className="feather feather-home sm:hidden"
+              >
+                <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                <polyline points="9 22 9 12 15 12 15 22"></polyline>
+              </svg>
             </Link>
             <Link
               to={routes.about()}
               className="btn btn-ghost btn-sm rounded-btn"
             >
-              About
+              <span className="hidden sm:inline">About</span>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                className="feather feather-info sm:hidden"
+              >
+                <circle cx="12" cy="12" r="10"></circle>
+                <line x1="12" y1="16" x2="12" y2="12"></line>
+                <line x1="12" y1="8" x2="12.01" y2="8"></line>
+              </svg>
             </Link>
           </div>
         </div>
-        <div className="flex-none">
+        <div className="flex-none hidden sm:block">
           <button className="btn btn-square btn-ghost">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -62,7 +93,7 @@ const MainLayout: React.FunctionComponent = ({ children }) => {
             </svg>
           </button>
         </div>
-        <div className="flex-none">
+        <div className="flex-none hidden sm:block">
           <button className="btn btn-square btn-ghost">
             <svg
               xmlns="http://www.w3.org/2000/svg"
