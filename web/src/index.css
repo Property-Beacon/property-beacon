@@ -13,5 +13,6 @@
  */
 
  body {
-   @apply bg-neutral text-white;
+   @apply bg-neutral;
+   @apply text-white;
  }
