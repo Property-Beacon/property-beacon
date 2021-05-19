@@ -3,8 +3,30 @@
 
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="icon" type="image/png" href="/favicon.png" />
+  <meta name="mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  	<!-- Primary Meta Tags -->
+	<meta name="title" content="<%= ogTitle %>">
+	<meta name="description" content="<%= ogDescription %>">
+	<!-- Open Graph / Facebook -->
+	<meta property="og:type" content="website">
+	<meta property="og:url" content="<%= ogUrl %>">
+	<meta property="og:title" content="<%= ogTitle %>">
+	<meta property="og:description" content="<%= ogDescription %>">
+	<meta property="og:image" content="<%= ogImage %>">
+	<!-- Twitter -->
+	<meta property="twitter:card" content="summary_large_image">
+	<meta property="twitter:url" content="<%= ogUrl %>">
+	<meta property="twitter:title" content="<%= ogTitle %>">
+	<meta property="twitter:description" content="<%= ogDescription %>">
+	<meta property="twitter:image" content="<%= ogImage %>">
+
+	<!-- <link rel="apple-touch-icon" href="<%= htmlWebpackPlugin.options.appleTouchIcon %>">
+	<link rel="icon" type="image/png" sizes="196x196" href="<%= htmlWebpackPlugin.options.icon %>"> -->
+	<link rel="manifest" href="<%= manifest %>" />
+	<link rel="icon" type="image/png" href="/favicon.png" />
   <title><%= htmlWebpackPlugin.options.title %></title>
 </head>
 

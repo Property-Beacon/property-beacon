@@ -1,5 +1,9 @@
 {
   "name": "web",
+  "license": "MIT",
+  "homepage": "https://property-beacon.netlify.com",
+  "displayName": "Property Beacon",
+  "description": "Property Beacon is an online platform that enables the booking, monitoring and enforcing of compliant property signage withing the Real Estate sector.",
   "version": "0.0.0",
   "private": true,
   "browserslist": {

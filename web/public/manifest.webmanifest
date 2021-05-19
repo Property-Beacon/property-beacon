@@ -1,0 +1,19 @@
+{
+  "start_url": "/",
+  "display": "standalone",
+  "theme_color": "rgb(55, 205, 190)",
+  "orientation": "portrait",
+  "short_name": "Property Beacon",
+  "name": "Property Beacon",
+  "background_color": "rgb(22, 24, 29)",
+  "categories": [
+    "real estate",
+    "council",
+    "signage",
+    "real-estate",
+    "development application",
+    "real estate agents"
+  ],
+  "description": "Property Beacon is an online platform that enables the booking, monitoring and enforcing of compliant property signage withing the Real Estate sector.",
+  "icons": []
+}

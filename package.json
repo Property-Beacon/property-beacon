@@ -1,5 +1,10 @@
 {
   "private": true,
+  "author": {
+    "name": "Brian YP Liu",
+    "email": "ralphbliu@gmail.com",
+    "url": "https://brianypliu.com"
+  },
   "workspaces": {
     "packages": [
       "api",
