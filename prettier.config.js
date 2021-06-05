@@ -11,8 +11,8 @@ module.exports = {
     {
       files: 'Routes.*',
       options: {
-        printWidth: 999,
-      },
-    },
-  ],
+        printWidth: 999
+      }
+    }
+  ]
 }

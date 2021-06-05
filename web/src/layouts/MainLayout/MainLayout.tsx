@@ -4,30 +4,21 @@ const MainLayout: React.FunctionComponent = ({ children }) => {
   return (
     <div className="grid grid-cols-1 gap-6 p-2 lg:p-6 xl:grid-cols-3 lg:bg-base-200 rounded-box">
       <div className="navbar col-span-1 shadow-lg xl:col-span-3 bg-neutral-focus text-neutral-content rounded-box">
-        <div className="flex-none">
-          <button className="btn btn-square btn-ghost">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              className="feather feather-menu"
-            >
-              <line x1="3" y1="12" x2="21" y2="12"></line>
-              <line x1="3" y1="6" x2="21" y2="6"></line>
-              <line x1="3" y1="18" x2="21" y2="18"></line>
-            </svg>
-          </button>
+        <div className="pl-4 pr-2">
+          <img
+            width={24}
+            height={24}
+            loading="lazy"
+            alt="Property Beacon"
+            src="/images/icons/icon-128x128.png"
+          />
         </div>
-        <div className="flex-none px-2 mx-2">
-          <span className="text-lg font-bold">Property Beacon</span>
+        <div className="flex-none hidden sm:block">
+          <span className="text-lg text-primary font-bold">
+            Property Beacon
+          </span>
         </div>
-        <div className="flex justify-center flex-1 px-2 mx-2">
+        <div className="flex justify-end sm:justify-center flex-1 px-2 mx-2">
           <div className="items-stretch flex">
             <Link
               to={routes.home()}
