@@ -14,7 +14,6 @@ module.exports = (config, { mode }) => {
     if (plugin.constructor.name === 'HtmlWebpackPlugin') {
       plugin.options.title = process.env.npm_package_displayName
       plugin.options.templateParameters = {
-        theme: 'cupcake',
         ogUrl: process.env.npm_package_homepage,
         ogTitle: process.env.npm_package_displayName,
         ogDescription: process.env.npm_package_description,
