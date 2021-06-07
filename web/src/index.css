@@ -11,3 +11,14 @@
 /**
  * END --- TAILWIND GENERATOR EDIT
  */
+
+body {
+  /* daisyui cupcake theme base colours var */
+  --b1: 24 33.3% 97.1%;
+  --b2: 27 22% 92%;
+  --b3: 22 14.3% 89%;
+  --bc: 280 46.5% 13.9%;
+
+  @apply bg-base-200;
+  @apply text-neutral;
+}

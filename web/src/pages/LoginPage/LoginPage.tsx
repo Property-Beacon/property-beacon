@@ -31,7 +31,7 @@ const LoginPage = () => {
   }, [])
 
   return (
-    <div className="hero min-h-screen bg-base-100">
+    <div className="hero min-h-screen">
       <div className="flex-col justify-center hero-content lg:flex-row">
         <img
           width={128}
@@ -42,11 +42,9 @@ const LoginPage = () => {
           src="/images/icons/icon-512x512.png"
         />
         <div className="text-center lg:text-left">
-          <h1 className="mb-5 text-5xl font-bold text-neutral">{title}</h1>
-          <p className="mb-5 text-base-content text-opacity-60 font-light">
-            {description}
-          </p>
-          <div className="grid grid-flow-col gap-1 auto-cols-max text-neutral justify-center lg:justify-start">
+          <h1 className="mb-5 text-5xl font-bold">{title}</h1>
+          <p className="mb-5 font-light">{description}</p>
+          <div className="grid grid-flow-col gap-1 auto-cols-max justify-center lg:justify-start">
             <div className="flex flex-col p-2 rounded-box">
               <span className="font-mono countdown">
                 <span style={{ '--value': current.getMonth() }}></span>
