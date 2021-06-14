@@ -19,6 +19,8 @@ body {
   --b3: 22 14.3% 89%;
   --bc: 280 46.5% 13.9%;
 
+  --btn-text-case: 'capitalize';
+
   @apply bg-base-200;
   @apply text-neutral;
 }

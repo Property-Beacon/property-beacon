@@ -5,6 +5,20 @@
     "email": "ralphbliu@gmail.com",
     "url": "https://brianypliu.com"
   },
+  "keywords": [
+    "react",
+    "prisma",
+    "nodejs",
+    "graphql",
+    "jamstack",
+    "redwoodjs",
+    "fullstack",
+    "javascript",
+    "typescript",
+    "tailwindcss",
+    "real-estate",
+    "property-beacon"
+  ],
   "workspaces": {
     "packages": [
       "api",
