@@ -1,25 +1,46 @@
+import { useAuth } from '@redwoodjs/auth'
 import { useEffect, useState } from 'react'
+import { routes, useParams, Redirect } from '@redwoodjs/router'
 import {
   Form,
   Label,
   Submit,
+  FormError,
   EmailField,
-  FieldError,
-  PasswordField
+  FieldError
 } from '@redwoodjs/forms'
 
 const LoginPage = () => {
-  const title = document.title
+  // TODO: temporary before v1 release to be removed
   const targetDate = new Date('2021-12-01').getTime()
   const [current, setCurrent] = useState(new Date(targetDate - Date.now()))
+
+  const { redirectTo = routes.home() } = useParams()
+  const { loading, logIn, hasError, error, isAuthenticated } = useAuth()
+  const [isLoading, setIsLoading] = useState(loading)
   const description = (
     document.head.querySelector('meta[name=description]') as HTMLMetaElement
   ).content
-  const onSubmit = (data) => {
-    // TODO GraphQL login API integration
-    console.log(data)
+
+  const onSubmit = async (data: { email: string }) => {
+    setIsLoading(true)
+
+    logIn(data)
+      .then()
+      .catch((error) => {
+        // TODO logging
+        console.error(error)
+      })
+      .finally(() => {
+        setIsLoading(false)
+      })
   }
 
+  useEffect(() => {
+    setIsLoading(loading)
+  }, [loading])
+
+  // TODO: temporary before v1 release to be removed
   useEffect(() => {
     const id = setInterval(() => {
       setCurrent(new Date(targetDate - Date.now()))
@@ -30,19 +51,23 @@ const LoginPage = () => {
     }
   }, [])
 
+  if (isAuthenticated) {
+    return <Redirect to={redirectTo} />
+  }
+
   return (
     <div className="hero min-h-screen">
       <div className="flex-col justify-center hero-content lg:flex-row">
         <img
           width={128}
           height={128}
-          alt={title}
           loading="lazy"
+          alt={document.title}
           className="hidden sm:block"
           src="/images/icons/icon-512x512.png"
         />
         <div className="text-center lg:text-left">
-          <h1 className="mb-5 text-5xl font-bold">{title}</h1>
+          <h1 className="mb-5 text-5xl font-bold">{document.title}</h1>
           <p className="mb-5 font-light">{description}</p>
           <div className="grid grid-flow-col gap-1 auto-cols-max justify-center lg:justify-start">
             <div className="flex flex-col p-2 rounded-box">
@@ -77,15 +102,19 @@ const LoginPage = () => {
             </div>
           </div>
         </div>
-        <div className="card flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
+        <div className="card flex-shrink-0 w- full max-w-sm shadow-2xl bg-base-100">
           <Form onSubmit={onSubmit}>
+            {hasError && <FormError error={error} />}
             <div className="card-body">
               <div className="form-control">
                 <Label name="email" className="label">
-                  <span className="label-text">Email</span>
+                  <span className="text-xs">
+                    Hassle-free with our secured passwordless login
+                  </span>
                 </Label>
                 <EmailField
                   name="email"
+                  disabled={isLoading}
                   className="input input-bordered"
                   placeholder="example@domain.com"
                   errorClassName="input input-bordered input-error"
@@ -101,49 +130,13 @@ const LoginPage = () => {
                   className="mt-1 label-text-alt text-error"
                 />
               </div>
-              {/* <div className="text-right">
-                <a
-                  href="/forgot-password"
-                  className="label-text-alt link-accent"
-                >
-                  Forgot email?
-                </a>
-              </div> */}
-              <div className="form-control">
-                <Label name="password" className="label">
-                  <span className="label-text">Password</span>
-                </Label>
-                <PasswordField
-                  name="password"
-                  className="input input-bordered"
-                  errorClassName="input input-bordered input-error"
-                  validation={{
-                    required: true
-                  }}
-                />
-                <FieldError
-                  name="password"
-                  className="mt-1 label-text-alt text-error"
-                />
-              </div>
-              <div className="text-right">
-                <a
-                  href="/forgot-password"
-                  className="label-text-alt link-accent"
-                >
-                  Forgot password?
-                </a>
-              </div>
               <div className="form-control mt-6">
-                <Submit className="btn btn-accent">Login</Submit>
-              </div>
-              <div className="mt-2 text-center">
-                <a
-                  href="/forgot-password"
-                  className="label-text-alt link-accent"
+                <Submit
+                  disabled={isLoading}
+                  className={`btn btn-accent ${isLoading ? 'loading' : ''}`}
                 >
-                  Create account
-                </a>
+                  Sign in
+                </Submit>
               </div>
             </div>
           </Form>
