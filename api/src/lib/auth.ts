@@ -1,6 +1,8 @@
 import { Magic } from '@magic-sdk/admin'
 import { AuthenticationError, ForbiddenError } from '@redwoodjs/api'
 
+import { logger } from 'src/lib/logger'
+
 /**
  * getCurrentUser returns the user information together with
  * an optional collection of roles used by requireAuth() to check
@@ -22,8 +24,7 @@ export const getCurrentUser = async (_, { token }) => {
     // TODO connect to DB
     return meta
   } catch (error) {
-    // TODO error handling and logging
-    return error
+    logger.error(error, 'Failed to get user metadata')
   }
 }
 

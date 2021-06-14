@@ -14,4 +14,11 @@ import { createLogger } from '@redwoodjs/api/logger'
  * @param {string | DestinationStream} destination - defines where to log, such as a transport stream or file
  * @param {boolean} showConfig - whether to display logger configuration on initialization
  */
-export const logger = createLogger({})
+export const logger = createLogger({
+  // We can extend to avoid logging sensitive data
+  // https://redwoodjs.com/docs/logger.html#redaction
+  // options: { redact: redactionsList }
+  //
+  // TODO: Integrate with 3rd-party logger
+  destination: process.env.LOG_API_DESTINATION
+})

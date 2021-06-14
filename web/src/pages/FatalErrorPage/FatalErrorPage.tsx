@@ -6,7 +6,6 @@
 // avoid the possibility that it will cause its own error. If it does, Redwood will
 // still render a generic error page, but your users will prefer something a bit more
 // thoughtful. =)
-
 export default () => (
   <main>
     <style
@@ -41,7 +40,7 @@ export default () => (
                 line-height: 1;
                 color: #2D3748;
               }
-            `,
+            `
       }}
     />
     <section>

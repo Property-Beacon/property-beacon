@@ -1,6 +1,6 @@
 import { useAuth } from '@redwoodjs/auth'
 import { FiLogOut } from 'react-icons/fi'
-import { useState, MouseEvent } from 'react'
+import { useState, MouseEvent, useEffect } from 'react'
 import { Link, routes } from '@redwoodjs/router'
 
 const MainLayout: React.FunctionComponent = ({ children }) => {
@@ -21,6 +21,10 @@ const MainLayout: React.FunctionComponent = ({ children }) => {
         setIsLoading(false)
       })
   }
+
+  useEffect(() => {
+    setIsLoading(loading)
+  }, [loading])
 
   return (
     <div className="grid grid-cols-1 gap-6 p-2 lg:p-6 xl:grid-cols-3 lg:bg-base-200 rounded-box">

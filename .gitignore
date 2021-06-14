@@ -2,3 +2,4 @@ node_modules
 .redwood/*
 **/dist/**/*
 .env
+property-beacon.*.log
