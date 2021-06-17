@@ -10,6 +10,8 @@ import './index.css'
 
 const m = new Magic(process.env.MAGICLINK_PUBLIC)
 
+m.preload()
+
 const App = () => (
   <FatalErrorBoundary page={FatalErrorPage}>
     <AuthProvider client={m} type="magicLink">

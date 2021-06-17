@@ -1,5 +1,6 @@
 import { useAuth } from '@redwoodjs/auth'
 import { useEffect, useState } from 'react'
+import { RPCError, RPCErrorCode } from 'magic-sdk'
 import { routes, useParams, Redirect } from '@redwoodjs/router'
 import {
   Form,
@@ -28,8 +29,18 @@ const LoginPage = () => {
     logIn(data)
       .then()
       .catch((error) => {
-        // TODO logging
         console.error(error)
+
+        if (error instanceof RPCError) {
+          switch (error.code) {
+            case RPCErrorCode.MagicLinkFailedVerification:
+            case RPCErrorCode.MagicLinkExpired:
+            case RPCErrorCode.MagicLinkRateLimited:
+            case RPCErrorCode.UserAlreadyLoggedIn:
+              // TODO logging
+              break
+          }
+        }
       })
       .finally(() => {
         setIsLoading(false)
