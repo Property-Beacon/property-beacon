@@ -26,6 +26,12 @@
   <link rel="manifest" href="<%= manifest %>" />
   <link rel="icon" type="image/png" href="/favicon.ico" />
   <title><%= htmlWebpackPlugin.options.title %></title>
+
+  <!-- magic.link improves page performance (temp) -->
+  <link rel="preconnect" href="https://api.magic.link">
+  <link rel="preconnect" href="https://auth.magic.link">
+  <link rel="preconnect" href="https://assets.auth.magic.link">
+  <link rel="preconnect" href="https://kms.us-west-2.amazonaws.com">
 </head>
 
 <body>

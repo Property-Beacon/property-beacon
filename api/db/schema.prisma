@@ -1,5 +1,5 @@
 datasource db {
-  provider = "sqlite"
+  provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
@@ -11,7 +11,4 @@ generator client {
 model User {
   id    Int     @id @default(autoincrement())
   email String  @unique
-  issuer String @unique
-  firstName String?
-  lastName String?
 }

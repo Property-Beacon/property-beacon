@@ -8,13 +8,14 @@ Property Beacon is an online platform that enables the booking, monitoring and e
 
 All technical 👨‍💻👩‍💻 documentations of Property Beacon
 
-> Tech stack: yarn workspace, Node.js 14+, React 17+, RedwoodJS (Jamstack), Apollo GraphQL, Prisma, TailwindCSS
+> Tech stack: yarn workspace, Node.js 14+, React 17+, RedwoodJS (Jamstack), Apollo GraphQL, Prisma, Postgres and TailwindCSS
 
 ### Architecture 🏗️
 
-- [Authentication](docs/AUTHENTICATION.md)
 - Web
 - API
+- [Authentication](docs/AUTHENTICATION.md)
+- DB (Prisma + Postgres)
 
 ### Coding conventions and standards
 
@@ -34,25 +35,68 @@ We use Yarn as our package manager. To get the dependencies installed, just do t
 yarn install
 ```
 
-### `env` variables
+### Environment variables
 
-You will need to add few `MagicLink` env variables first, [deep dive](docs/AUTHENTICATION.md)
+`.env.defaults`
+
+See [Local Postgres](#local-postgres) to setup your database for local development
+
+```bash
+REDWOOD_SECURE_SERVICES=1
+# Local Postgres setup is required
+DATABASE_URL="postgresql://postgres:postgres@localhost:5432/pb?connection_limit=1"
+```
+
+`.env`
+
+Create `.env` file at the root directory
 
 ```
+cd property-beacon
 touch .env
 ```
 
-then add these two variables into `.env`
+then add `MagicLink`[(?)](docs/AUTHENTICATION.md) keys
 
 ```
 MAGICLINK_PUBLIC={askMeTheKey}
 MAGICLINK_SECRET={askMeTheKey}
 ```
 
+### Local Postgres
+
+Install `Docker Desktop` which comes with CLI `docker`
+
+- [Apple Mac](https://docs.docker.com/docker-for-mac/install/)
+- [Windows](https://docs.docker.com/docker-for-windows/install/)
+
+Check `docker` CLI after installation
+
+```terminal
+> which docker
+/usr/local/bin/docker
+
+> which docker-compose
+/usr/local/bin/docker-compose
+```
+
+Launch docker containers
+
+```terminal
+cd property-beacon
+docker-compose -f docker-compose.yml up
+```
+
+then you should see `Postgres` and `PgAdmin` are up and running. Since the containers are initialized so you can launch containers via Docker Desktop next time instead of CLI.
+
+<img src="docs/docker-desktop.png" alt="Property Beacon">
+
+`PgAdmin` run on http://localhost:8080/ with `admin@propertybeacon.com/admin` _(username/password)_
+
 ### Fire it up
 
 ```terminal
-yarn redwood dev
+yarn rw dev
 ```
 
 This will launch both `web` and `api` by default and tour browser should open automatically to `http://localhost:8910` to see the web app.
