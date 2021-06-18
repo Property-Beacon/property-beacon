@@ -15,7 +15,7 @@ All technical 👨‍💻👩‍💻 documentations of Property Beacon
 - Web
 - API
 - [Authentication](docs/AUTHENTICATION.md)
-- DB (Prisma + Postgres)
+- [DB (Prisma + Postgres)](docs/DATABASE.md)
 
 ### Coding conventions and standards
 
