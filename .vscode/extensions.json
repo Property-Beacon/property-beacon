@@ -1,0 +1,19 @@
+{
+  "recommendations": [
+    "prisma.prisma",
+    "dbaeumer.vscode-eslint",
+    "graphql.vscode-graphql",
+    "wix.vscode-import-cost",
+    "esbenp.prettier-vscode",
+    "redwoodjs.redwood",
+    "bradlc.vscode-tailwindcss",
+    "ms-vscode.vscode-typescript-tslint-plugin",
+    "redhat.vscode-yaml",
+    "vscode-icons-team.vscode-icons",
+    "mgmcdermott.vscode-language-babel",
+    "coenraads.bracket-pair-colorizer",
+    "streetsidesoftware.code-spell-checker",
+    "ms-azuretools.vscode-docker",
+    "aaron-bond.better-comments"
+  ]
+}

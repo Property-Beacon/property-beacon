@@ -1,0 +1,7 @@
+{
+  "[prisma]": {
+    "editor.defaultFormatter": "Prisma.prisma"
+  },
+  "typescript.tsdk": "bigb/node_modules/typescript/lib",
+  "editor.tabSize": 2
+}

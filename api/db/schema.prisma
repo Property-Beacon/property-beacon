@@ -8,7 +8,77 @@ generator client {
   binaryTargets = "native"
 }
 
+enum Role {
+  USER // General (Officier)
+  ADMIN
+  CLIENT // Council
+  CUSTOMER // Real-estate Agent
+}
+
 model User {
-  id    Int     @id @default(autoincrement())
-  email String  @unique
+  id      String       @id @default(uuid())
+  issuer  String       @unique // magic.link unique issuer
+  role    Role         @default(USER)
+  profile UserProfile?
+  email   String
+  logOn   DateTime     @default(now())
+  logOff  DateTime?
+}
+
+model UserProfile {
+  id           String    @id @default(uuid())
+  userId       String?   @unique
+  User         User?     @relation(fields: [userId], references: [id])
+  avatar       String?
+  firstName    String?
+  lastName     String?
+  phone        String?
+  mobile       String?
+  created      DateTime  @default(now())
+  modified     DateTime?
+  address      Address?
+  organisation Company?
+}
+
+model Company {
+  id            String          @id @default(uuid())
+  userProfileId String?         @unique
+  UserProfile   UserProfile?    @relation(fields: [userProfileId], references: [id])
+  profile       CompanyProfile?
+  name          String
+  displayName   String?
+  shortName     String?
+  website       String?
+}
+
+model CompanyProfile {
+  id        String   @id @default(uuid())
+  companyId String?  @unique
+  Company   Company? @relation(fields: [companyId], references: [id])
+  phone     String?
+  fax       String?
+  mobile    String?
+  fullName  String?
+  email     String?
+  abn       String?
+  acn       String?
+  crn       String?
+  address   Address?
+  owner     String?
+  // Council (Client) role only
+  mayor     String?
+}
+
+model Address {
+  id               String          @id @default(uuid())
+  userProfileId    String?         @unique
+  companyProfileId String?         @unique
+  country          String?
+  state            String?
+  postalCode       String?
+  street           String?
+  name             String?
+  suburb           String? // city,town,village,suburb,district,county
+  UserProfile      UserProfile?    @relation(fields: [userProfileId], references: [id])
+  CompanyProfile   CompanyProfile? @relation(fields: [companyProfileId], references: [id])
 }
