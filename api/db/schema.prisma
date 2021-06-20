@@ -26,29 +26,29 @@ model User {
 }
 
 model UserProfile {
-  id           String    @id @default(uuid())
-  userId       String?   @unique
-  User         User?     @relation(fields: [userId], references: [id])
-  avatar       String?
-  firstName    String?
-  lastName     String?
-  phone        String?
-  mobile       String?
-  created      DateTime  @default(now())
-  modified     DateTime?
-  address      Address?
-  organisation Company?
+  id        String    @id @default(uuid())
+  userId    String?   @unique
+  companyId String?   @unique
+  User      User?     @relation(fields: [userId], references: [id])
+  Company   Company?  @relation(fields: [companyId], references: [id])
+  avatar    String?
+  firstName String?
+  lastName  String?
+  phone     String?
+  mobile    String?
+  created   DateTime  @default(now())
+  modified  DateTime?
+  address   Address?
 }
 
 model Company {
-  id            String          @id @default(uuid())
-  userProfileId String?         @unique
-  UserProfile   UserProfile?    @relation(fields: [userProfileId], references: [id])
-  profile       CompanyProfile?
-  name          String
-  displayName   String?
-  shortName     String?
-  website       String?
+  id          String          @id @default(uuid())
+  userProfile UserProfile?
+  profile     CompanyProfile?
+  name        String
+  displayName String?
+  shortName   String?
+  website     String?
 }
 
 model CompanyProfile {

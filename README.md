@@ -63,7 +63,7 @@ MAGICLINK_PUBLIC={askMeTheKey}
 MAGICLINK_SECRET={askMeTheKey}
 ```
 
-### Local Postgres
+### Local database (PostgreSQL + PgAdmin)
 
 Install `Docker Desktop` which comes with CLI `docker`
 
@@ -89,9 +89,11 @@ docker-compose -f docker-compose.yml up
 
 then you should see `Postgres` and `PgAdmin` are up and running. Since the containers are initialized so you can launch containers via Docker Desktop next time instead of CLI.
 
-<img src="docs/docker-desktop.png" alt="Property Beacon">
+<img src="docs/docker-desktop.png" alt="Docker Desktop">
 
-`PgAdmin` run on http://localhost:8080/ with `admin@propertybeacon.com/admin` _(username/password)_
+`PgAdmin` run on http://localhost:8080/ with `admin@propertybeacon.com/admin` _(username/password)_. You will need to change your database server connection to your actual machine IP address since the two docker containers are running at its independent environment (the same as running on two different machines).
+
+<img src="docs/pgadmin-connection.png" alt="Docker Desktop">
 
 ### Fire it up
 

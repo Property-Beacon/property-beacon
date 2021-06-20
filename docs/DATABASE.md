@@ -1,10 +1,76 @@
 # Database
 
-TODO
-
 ## Prisma
 
+https://www.prisma.io/docs/guides
+
+We define and maintain our data models (**schema**) in `PostgreSQL` with _Node.js_ and _Typescript_. Easy to read, less learning curve and type-safe, just like how you define _GraphQL_ schema.
+
+```
+├── api
+│   ├── schema.prisma
+│   ├── seed.js
+│   └── migrations
+│         ├── migration_lock.toml
+│         ├── 20210619042014_added_user_company_models
+│         ...
+```
+
+`schema.prisma`
+
+The primary schema file to declare database source and data models
+
+```js
+datasource db {
+  provider = "postgresql"
+  // DATABASE_URL is defined in .env
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider      = "prisma-client-js"
+  binaryTargets = "native"
+}
+
+enum Role {
+  USER
+  ADMIN
+  CLIENT
+  CUSTOMER
+}
+
+model User {
+  id      String       @id @default(uuid())
+  issuer  String       @unique // magic.link unique issuer
+  role    Role         @default(USER)
+  profile UserProfile?
+  email   String
+  logOn   DateTime     @default(now())
+  logOff  DateTime?
+}
+```
+
+`seed.js`
+
+The script to inject seed data for dev or testing purpose, data seeding is `development` mode only when run `yarn rw prisma migrate dev`. Less likely we will need to touch this file at all.
+
+`migrations` folder
+
+The folder contains auto generated migration scripts from running `yarn rw prisma migrate dev`
+
+### Change schema (model)
+
+Please make sure you run `yarn rw prisma migrate dev` before you commit whenever you make changes in `schema.prisma`, this will
+
+- create migration script from `schema.prisma` for your changes
+- apply them to the database `PostgreSQL`
+- generate artifacts
+
+Log in [PgAdmin](http://localhost:8080/) to ensure you changes are applied to the database.
+
 ## PostgreSQL
+
+### Local dev
 
 ### Production
 
