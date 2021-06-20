@@ -20,7 +20,7 @@ model User {
   issuer  String       @unique // magic.link unique issuer
   role    Role         @default(USER)
   profile UserProfile?
-  email   String
+  email   String       @unique
   logOn   DateTime     @default(now())
   logOff  DateTime?
 }
