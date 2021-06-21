@@ -2,6 +2,11 @@ import { Magic } from '@magic-sdk/admin'
 import { AuthenticationError, ForbiddenError } from '@redwoodjs/api'
 
 import { logger } from 'src/lib/logger'
+import {
+  createUser,
+  getUserByIssuer,
+  updateUserByIssuer
+} from 'src/services/user'
 
 /**
  * getCurrentUser returns the user information together with
@@ -19,16 +24,23 @@ export const getCurrentUser = async (_, { token }) => {
   const mAdmin = new Magic(process.env.MAGICLINK_SECRET)
 
   try {
-    const meta = await mAdmin.users.getMetadataByToken(token)
+    const { issuer, email } = await mAdmin.users.getMetadataByToken(token)
+    const user = await getUserByIssuer({ issuer })
 
-    // TODO connect to DB
-    return meta
+    return user
+      ? updateUserByIssuer({ issuer, data: { logOn: new Date() } })
+      : createUser({ data: { issuer, email } })
   } catch (error) {
-    logger.error(error, 'Failed to get user metadata')
+    logger.error(
+      error,
+      'Failed to get current user metadata via Magic admin SDK'
+    )
   }
 }
 
 /**
+ * TODO: RBAC
+ *
  * Use requireAuth in your services to check that a user is logged in,
  * whether or not they are assigned a role, and optionally raise an
  * error if they're not.

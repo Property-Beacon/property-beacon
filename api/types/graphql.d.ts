@@ -3,6 +3,7 @@ export type Maybe<T> = T | null;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
 export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
 export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
+export type RequireFields<T, K extends keyof T> = { [X in Exclude<keyof T, K>]?: T[X] } & { [P in K]-?: NonNullable<T[P]> };
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
   ID: string;
@@ -17,13 +18,82 @@ export type Scalars = {
   Time: string;
 };
 
+export type Address = {
+  __typename?: 'Address';
+  name?: Maybe<Scalars['String']>;
+  state?: Maybe<Scalars['String']>;
+  street?: Maybe<Scalars['String']>;
+  suburb?: Maybe<Scalars['String']>;
+  country?: Maybe<Scalars['String']>;
+  postalCode?: Maybe<Scalars['String']>;
+};
 
 
 
+
+
+export type Mutation = {
+  __typename?: 'Mutation';
+  deleteUserByEmail?: Maybe<Scalars['Boolean']>;
+  deleteUserById?: Maybe<Scalars['Boolean']>;
+  deleteUserByIssuer?: Maybe<Scalars['Boolean']>;
+  deleteUserProfileById?: Maybe<Scalars['Boolean']>;
+  updateUserProfileById: UserProfile;
+};
+
+
+export type MutationDeleteUserByEmailArgs = {
+  email: Scalars['String'];
+};
+
+
+export type MutationDeleteUserByIdArgs = {
+  id: Scalars['String'];
+};
+
+
+export type MutationDeleteUserByIssuerArgs = {
+  issuer: Scalars['String'];
+};
+
+
+export type MutationDeleteUserProfileByIdArgs = {
+  userId: Scalars['String'];
+};
+
+
+export type MutationUpdateUserProfileByIdArgs = {
+  userId: Scalars['String'];
+  data?: Maybe<UpdateUserProfile>;
+};
 
 export type Query = {
   __typename?: 'Query';
+  getUserByEmail: User;
+  getUserById: User;
+  getUserByIssuer: User;
+  getUsersByRole: Array<User>;
   redwood?: Maybe<Redwood>;
+};
+
+
+export type QueryGetUserByEmailArgs = {
+  email: Scalars['String'];
+};
+
+
+export type QueryGetUserByIdArgs = {
+  id: Scalars['String'];
+};
+
+
+export type QueryGetUserByIssuerArgs = {
+  issuer: Scalars['String'];
+};
+
+
+export type QueryGetUsersByRoleArgs = {
+  role: Role;
 };
 
 export type Redwood = {
@@ -33,6 +103,55 @@ export type Redwood = {
   prismaVersion?: Maybe<Scalars['String']>;
 };
 
+export type Role =
+  | 'USER'
+  | 'ADMIN'
+  | 'CLIENT'
+  | 'CUSTOMER';
+
+
+export type UpdateAddress = {
+  name?: Maybe<Scalars['String']>;
+  state?: Maybe<Scalars['String']>;
+  street?: Maybe<Scalars['String']>;
+  suburb?: Maybe<Scalars['String']>;
+  country?: Maybe<Scalars['String']>;
+  postalCode?: Maybe<Scalars['String']>;
+};
+
+export type UpdateUserProfile = {
+  phone?: Maybe<Scalars['String']>;
+  avatar?: Maybe<Scalars['String']>;
+  mobile?: Maybe<Scalars['String']>;
+  lastName?: Maybe<Scalars['String']>;
+  firstName?: Maybe<Scalars['String']>;
+  modified?: Maybe<Scalars['DateTime']>;
+  address?: Maybe<UpdateAddress>;
+};
+
+export type User = {
+  __typename?: 'User';
+  id: Scalars['String'];
+  role: Role;
+  email: Scalars['String'];
+  issuer: Scalars['String'];
+  logOn: Scalars['DateTime'];
+  logOff?: Maybe<Scalars['DateTime']>;
+  profile: UserProfile;
+};
+
+export type UserProfile = {
+  __typename?: 'UserProfile';
+  phone?: Maybe<Scalars['String']>;
+  avatar?: Maybe<Scalars['String']>;
+  mobile?: Maybe<Scalars['String']>;
+  address?: Maybe<Address>;
+  lastName?: Maybe<Scalars['String']>;
+  firstName?: Maybe<Scalars['String']>;
+  created?: Maybe<Scalars['DateTime']>;
+  modified?: Maybe<Scalars['DateTime']>;
+  fullName?: Maybe<Scalars['String']>;
+};
 
 
 
@@ -112,28 +231,51 @@ export type DirectiveResolverFn<TResult = {}, TParent = {}, TContext = {}, TArgs
 
 /** Mapping between all available schema types and the resolvers types */
 export type ResolversTypes = {
+  Address: ResolverTypeWrapper<Address>;
+  String: ResolverTypeWrapper<Scalars['String']>;
   Date: ResolverTypeWrapper<Scalars['Date']>;
   DateTime: ResolverTypeWrapper<Scalars['DateTime']>;
   JSON: ResolverTypeWrapper<Scalars['JSON']>;
   JSONObject: ResolverTypeWrapper<Scalars['JSONObject']>;
+  Mutation: ResolverTypeWrapper<{}>;
+  Boolean: ResolverTypeWrapper<Scalars['Boolean']>;
   Query: ResolverTypeWrapper<{}>;
   Redwood: ResolverTypeWrapper<Redwood>;
-  String: ResolverTypeWrapper<Scalars['String']>;
+  Role: Role;
   Time: ResolverTypeWrapper<Scalars['Time']>;
-  Boolean: ResolverTypeWrapper<Scalars['Boolean']>;
+  UpdateAddress: UpdateAddress;
+  UpdateUserProfile: UpdateUserProfile;
+  User: ResolverTypeWrapper<User>;
+  UserProfile: ResolverTypeWrapper<UserProfile>;
 };
 
 /** Mapping between all available schema types and the resolvers parents */
 export type ResolversParentTypes = {
+  Address: Address;
+  String: Scalars['String'];
   Date: Scalars['Date'];
   DateTime: Scalars['DateTime'];
   JSON: Scalars['JSON'];
   JSONObject: Scalars['JSONObject'];
+  Mutation: {};
+  Boolean: Scalars['Boolean'];
   Query: {};
   Redwood: Redwood;
-  String: Scalars['String'];
   Time: Scalars['Time'];
-  Boolean: Scalars['Boolean'];
+  UpdateAddress: UpdateAddress;
+  UpdateUserProfile: UpdateUserProfile;
+  User: User;
+  UserProfile: UserProfile;
+};
+
+export type AddressResolvers<ContextType = any, ParentType extends ResolversParentTypes['Address'] = ResolversParentTypes['Address']> = {
+  name?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  state?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  street?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  suburb?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  country?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  postalCode?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
 export interface DateScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes['Date'], any> {
@@ -152,7 +294,19 @@ export interface JsonObjectScalarConfig extends GraphQLScalarTypeConfig<Resolver
   name: 'JSONObject';
 }
 
+export type MutationResolvers<ContextType = any, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = {
+  deleteUserByEmail?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType, RequireFields<MutationDeleteUserByEmailArgs, 'email'>>;
+  deleteUserById?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType, RequireFields<MutationDeleteUserByIdArgs, 'id'>>;
+  deleteUserByIssuer?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType, RequireFields<MutationDeleteUserByIssuerArgs, 'issuer'>>;
+  deleteUserProfileById?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType, RequireFields<MutationDeleteUserProfileByIdArgs, 'userId'>>;
+  updateUserProfileById?: Resolver<ResolversTypes['UserProfile'], ParentType, ContextType, RequireFields<MutationUpdateUserProfileByIdArgs, 'userId'>>;
+};
+
 export type QueryResolvers<ContextType = any, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = {
+  getUserByEmail?: Resolver<ResolversTypes['User'], ParentType, ContextType, RequireFields<QueryGetUserByEmailArgs, 'email'>>;
+  getUserById?: Resolver<ResolversTypes['User'], ParentType, ContextType, RequireFields<QueryGetUserByIdArgs, 'id'>>;
+  getUserByIssuer?: Resolver<ResolversTypes['User'], ParentType, ContextType, RequireFields<QueryGetUserByIssuerArgs, 'issuer'>>;
+  getUsersByRole?: Resolver<Array<ResolversTypes['User']>, ParentType, ContextType, RequireFields<QueryGetUsersByRoleArgs, 'role'>>;
   redwood?: Resolver<Maybe<ResolversTypes['Redwood']>, ParentType, ContextType>;
 };
 
@@ -167,14 +321,42 @@ export interface TimeScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes
   name: 'Time';
 }
 
+export type UserResolvers<ContextType = any, ParentType extends ResolversParentTypes['User'] = ResolversParentTypes['User']> = {
+  id?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  role?: Resolver<ResolversTypes['Role'], ParentType, ContextType>;
+  email?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  issuer?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  logOn?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>;
+  logOff?: Resolver<Maybe<ResolversTypes['DateTime']>, ParentType, ContextType>;
+  profile?: Resolver<ResolversTypes['UserProfile'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type UserProfileResolvers<ContextType = any, ParentType extends ResolversParentTypes['UserProfile'] = ResolversParentTypes['UserProfile']> = {
+  phone?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  avatar?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  mobile?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  address?: Resolver<Maybe<ResolversTypes['Address']>, ParentType, ContextType>;
+  lastName?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  firstName?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  created?: Resolver<Maybe<ResolversTypes['DateTime']>, ParentType, ContextType>;
+  modified?: Resolver<Maybe<ResolversTypes['DateTime']>, ParentType, ContextType>;
+  fullName?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
 export type Resolvers<ContextType = any> = {
+  Address?: AddressResolvers<ContextType>;
   Date?: GraphQLScalarType;
   DateTime?: GraphQLScalarType;
   JSON?: GraphQLScalarType;
   JSONObject?: GraphQLScalarType;
+  Mutation?: MutationResolvers<ContextType>;
   Query?: QueryResolvers<ContextType>;
   Redwood?: RedwoodResolvers<ContextType>;
   Time?: GraphQLScalarType;
+  User?: UserResolvers<ContextType>;
+  UserProfile?: UserProfileResolvers<ContextType>;
 };
 
 
