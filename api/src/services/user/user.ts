@@ -1,8 +1,9 @@
-import { db } from 'src/lib/db'
 import { requireAuth } from 'src/lib/auth'
+import { db } from 'src/lib/db'
 import {
-  getUserProfile,
-  createUserProfile
+  createUserProfile,
+  deleteUserProfileById,
+  getUserProfile
 } from 'src/services/userProfile/userProfile'
 
 type CreateUserParams = Parameters<typeof db.user.create>[0]
@@ -29,20 +30,6 @@ function beforeResolver(rules) {
  * since all parameters will be aggregated into an args object
  * i.e. getUser(id: String) -> resolverFn({id: 'xxx'}, context)
  */
-export async function getUserById({ id }: GetUserParams) {
-  return db.user.findUnique({ where: { id } })
-}
-async function getUserByEmail({ email }: GetUserParams) {
-  return db.user.findUnique({ where: { email } })
-}
-async function getUserByIssuer({ issuer }: GetUserParams) {
-  return db.user.findUnique({ where: { issuer } })
-}
-
-async function getUsersByRole({ role }: GetUsersParams) {
-  return db.user.findMany({ where: { role } })
-}
-
 async function createUser({ data }: CreateUserParams) {
   // TODO: base on email domain to assign role
   const { issuer: _, ...user } = await db.user.create({
@@ -57,6 +44,20 @@ async function createUser({ data }: CreateUserParams) {
   })
 
   return user
+}
+
+async function getUserById({ id }: GetUserParams) {
+  return db.user.findUnique({ where: { id } })
+}
+async function getUserByEmail({ email }: GetUserParams) {
+  return db.user.findUnique({ where: { email } })
+}
+async function getUserByIssuer({ issuer }: GetUserParams) {
+  return db.user.findUnique({ where: { issuer } })
+}
+
+async function getUsersByRole({ role }: GetUsersParams) {
+  return db.user.findMany({ where: { role } })
 }
 
 async function updateUserById({ id, data }: UpdateUserParams & { id: string }) {
@@ -79,35 +80,41 @@ async function updateUsersByRole({ role, data }: UpdateUsersParams) {
   return db.user.updateMany({ data, where: { role } })
 }
 
+async function deleteUser({ where }: { where: DeleteUserParams }) {
+  const user = await db.user.findUnique({ where })
+
+  if (!user) {
+    return false
+  }
+
+  await db.user.delete({ where })
+  await deleteUserProfileById({ userId: user.id })
+
+  return true
+}
+
 async function deleteUserById({ id }: DeleteUserParams) {
-  return db.user.delete({ where: { id } })
+  return deleteUser({ where: { id } })
 }
 async function deleteUserByEmail({ email }: DeleteUserParams) {
-  return db.user.delete({ where: { email } })
+  return deleteUser({ where: { email } })
 }
 async function deleteUserByIssuer({ issuer }: DeleteUserParams) {
-  return db.user.delete({ where: { issuer } })
+  return deleteUser({ where: { issuer } })
 }
 
 // GraphQL resolver for composition fields
 export const User = {
-  profile: async (_, { root }) => {
-    const { firstName, lastName, ...rest } = await getUserProfile({
+  profile: (_, { root }) =>
+    getUserProfile({
       userId: root.id
     })
-
-    return {
-      ...rest,
-      firstName,
-      lastName,
-      fullName: [firstName, lastName].filter((v) => v).join(' ')
-    }
-  }
 }
 
 export {
   beforeResolver,
   createUser,
+  getUserById,
   getUserByEmail,
   getUserByIssuer,
   getUsersByRole,

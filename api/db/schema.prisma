@@ -27,7 +27,7 @@ model User {
 
 model UserProfile {
   id        String    @id @default(uuid())
-  userId    String?   @unique
+  userId    String    @unique
   companyId String?   @unique
   User      User?     @relation(fields: [userId], references: [id])
   Company   Company?  @relation(fields: [companyId], references: [id])
@@ -53,7 +53,7 @@ model Company {
 
 model CompanyProfile {
   id        String   @id @default(uuid())
-  companyId String?  @unique
+  companyId String   @unique
   Company   Company? @relation(fields: [companyId], references: [id])
   phone     String?
   fax       String?

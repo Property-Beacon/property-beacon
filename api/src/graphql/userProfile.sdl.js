@@ -1,22 +1,4 @@
 export const schema = gql`
-  type Address {
-    name: String
-    state: String
-    street: String
-    suburb: String
-    country: String
-    postalCode: String
-  }
-
-  input UpdateAddress {
-    name: String
-    state: String
-    street: String
-    suburb: String
-    country: String
-    postalCode: String
-  }
-
   type UserProfile {
     phone: String
     avatar: String
@@ -43,8 +25,7 @@ export const schema = gql`
   type Mutation {
     updateUserProfileById(
       userId: String!
-      data: UpdateUserProfile
+      data: UpdateUserProfile!
     ): UserProfile!
-    deleteUserProfileById(userId: String!): Boolean
   }
 `

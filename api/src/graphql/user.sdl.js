@@ -24,8 +24,8 @@ export const schema = gql`
   }
 
   type Mutation {
-    deleteUserById(id: String!): Boolean
-    deleteUserByEmail(email: String!): Boolean
-    deleteUserByIssuer(issuer: String!): Boolean
+    deleteUserById(id: String!): Boolean!
+    deleteUserByEmail(email: String!): Boolean!
+    deleteUserByIssuer(issuer: String!): Boolean!
   }
 `
