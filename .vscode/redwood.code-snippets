@@ -1,0 +1,38 @@
+{
+  "Boilerplate of services (api/src/services)": {
+    "prefix": ["rw:service"],
+    "body": [
+      "import { requireAuth } from 'src/lib/auth'",
+      "import { db } from 'src/lib/db'",
+      "",
+      "// Required for RedwoodJS",
+      "function beforeResolver(rules) {",
+      "rules.add(requireAuth)",
+      "}",
+      "",
+      "// GraphQL resolver for composition fields (optional)",
+      "export const ${TM_FILENAME_BASE/(.*)/${1:/capitalize}/} = {",
+      "}",
+      "",
+      "export {",
+      "beforeResolver",
+      "}"
+    ],
+    "description": "Boilerplate of services (api/src/services)"
+  },
+  "Boilerplate of GraphQL SDL (api/src/graphql)": {
+    "prefix": ["rw:sdl"],
+    "body": [
+      "export const schema = gql`",
+      "",
+      "type Query {",
+      "}",
+      "",
+      "type Mutation {",
+      "}",
+      "",
+      "`"
+    ],
+    "description": "Boilerplate of GraphQL SDL (api/src/graphql)"
+  }
+}
