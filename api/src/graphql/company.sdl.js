@@ -13,7 +13,6 @@ export const schema = gql`
     displayName: String
     shortName: String
     website: String
-    profile: UpdateCompanyProfile
   }
 
   type Query {

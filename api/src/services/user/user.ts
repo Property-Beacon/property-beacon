@@ -2,7 +2,7 @@ import { requireAuth } from 'src/lib/auth'
 import { db } from 'src/lib/db'
 import {
   createUserProfile,
-  deleteUserProfileById,
+  deleteUserProfile,
   getUserProfile
 } from 'src/services/userProfile/userProfile'
 
@@ -88,7 +88,7 @@ async function deleteUser({ where }: { where: DeleteUserParams }) {
   }
 
   await db.user.delete({ where })
-  await deleteUserProfileById({ userId: user.id })
+  await deleteUserProfile({ userId: user.id })
 
   return true
 }

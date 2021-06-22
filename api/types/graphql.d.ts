@@ -62,13 +62,14 @@ export type CompanyProfile = {
 export type Mutation = {
   __typename?: 'Mutation';
   createCompany: Company;
-  createCompanyProfile: CompanyProfile;
+  deleteCompanyProfile?: Maybe<Scalars['Boolean']>;
   deleteUserByEmail: Scalars['Boolean'];
   deleteUserById: Scalars['Boolean'];
   deleteUserByIssuer: Scalars['Boolean'];
+  deleteUserProfile?: Maybe<Scalars['Boolean']>;
   updateCompany: Company;
   updateCompanyProfile: CompanyProfile;
-  updateUserProfileById: UserProfile;
+  updateUserProfile: UserProfile;
 };
 
 
@@ -77,9 +78,8 @@ export type MutationCreateCompanyArgs = {
 };
 
 
-export type MutationCreateCompanyProfileArgs = {
+export type MutationDeleteCompanyProfileArgs = {
   companyId: Scalars['String'];
-  data?: Maybe<UpdateCompanyProfile>;
 };
 
 
@@ -98,6 +98,11 @@ export type MutationDeleteUserByIssuerArgs = {
 };
 
 
+export type MutationDeleteUserProfileArgs = {
+  userId: Scalars['String'];
+};
+
+
 export type MutationUpdateCompanyArgs = {
   id: Scalars['String'];
   data?: Maybe<UpdateCompany>;
@@ -110,7 +115,7 @@ export type MutationUpdateCompanyProfileArgs = {
 };
 
 
-export type MutationUpdateUserProfileByIdArgs = {
+export type MutationUpdateUserProfileArgs = {
   userId: Scalars['String'];
   data: UpdateUserProfile;
 };
@@ -121,7 +126,6 @@ export type Query = {
   getAddressByUserProfileId: Address;
   getCompanies: Array<Company>;
   getCompany: Company;
-  getCompanyProfile?: Maybe<CompanyProfile>;
   getUserByEmail: User;
   getUserById: User;
   getUserByIssuer: User;
@@ -142,11 +146,6 @@ export type QueryGetAddressByUserProfileIdArgs = {
 
 export type QueryGetCompanyArgs = {
   id: Scalars['String'];
-};
-
-
-export type QueryGetCompanyProfileArgs = {
-  companyId: Scalars['String'];
 };
 
 
@@ -197,7 +196,6 @@ export type UpdateCompany = {
   displayName?: Maybe<Scalars['String']>;
   shortName?: Maybe<Scalars['String']>;
   website?: Maybe<Scalars['String']>;
-  profile?: Maybe<UpdateCompanyProfile>;
 };
 
 export type UpdateCompanyProfile = {
@@ -426,13 +424,14 @@ export interface JsonObjectScalarConfig extends GraphQLScalarTypeConfig<Resolver
 
 export type MutationResolvers<ContextType = any, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = {
   createCompany?: Resolver<ResolversTypes['Company'], ParentType, ContextType, RequireFields<MutationCreateCompanyArgs, never>>;
-  createCompanyProfile?: Resolver<ResolversTypes['CompanyProfile'], ParentType, ContextType, RequireFields<MutationCreateCompanyProfileArgs, 'companyId'>>;
+  deleteCompanyProfile?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType, RequireFields<MutationDeleteCompanyProfileArgs, 'companyId'>>;
   deleteUserByEmail?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType, RequireFields<MutationDeleteUserByEmailArgs, 'email'>>;
   deleteUserById?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType, RequireFields<MutationDeleteUserByIdArgs, 'id'>>;
   deleteUserByIssuer?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType, RequireFields<MutationDeleteUserByIssuerArgs, 'issuer'>>;
+  deleteUserProfile?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType, RequireFields<MutationDeleteUserProfileArgs, 'userId'>>;
   updateCompany?: Resolver<ResolversTypes['Company'], ParentType, ContextType, RequireFields<MutationUpdateCompanyArgs, 'id'>>;
   updateCompanyProfile?: Resolver<ResolversTypes['CompanyProfile'], ParentType, ContextType, RequireFields<MutationUpdateCompanyProfileArgs, 'companyId'>>;
-  updateUserProfileById?: Resolver<ResolversTypes['UserProfile'], ParentType, ContextType, RequireFields<MutationUpdateUserProfileByIdArgs, 'userId' | 'data'>>;
+  updateUserProfile?: Resolver<ResolversTypes['UserProfile'], ParentType, ContextType, RequireFields<MutationUpdateUserProfileArgs, 'userId' | 'data'>>;
 };
 
 export type QueryResolvers<ContextType = any, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = {
@@ -440,7 +439,6 @@ export type QueryResolvers<ContextType = any, ParentType extends ResolversParent
   getAddressByUserProfileId?: Resolver<ResolversTypes['Address'], ParentType, ContextType, RequireFields<QueryGetAddressByUserProfileIdArgs, 'userProfileId'>>;
   getCompanies?: Resolver<Array<ResolversTypes['Company']>, ParentType, ContextType>;
   getCompany?: Resolver<ResolversTypes['Company'], ParentType, ContextType, RequireFields<QueryGetCompanyArgs, 'id'>>;
-  getCompanyProfile?: Resolver<Maybe<ResolversTypes['CompanyProfile']>, ParentType, ContextType, RequireFields<QueryGetCompanyProfileArgs, 'companyId'>>;
   getUserByEmail?: Resolver<ResolversTypes['User'], ParentType, ContextType, RequireFields<QueryGetUserByEmailArgs, 'email'>>;
   getUserById?: Resolver<ResolversTypes['User'], ParentType, ContextType, RequireFields<QueryGetUserByIdArgs, 'id'>>;
   getUserByIssuer?: Resolver<ResolversTypes['User'], ParentType, ContextType, RequireFields<QueryGetUserByIssuerArgs, 'issuer'>>;

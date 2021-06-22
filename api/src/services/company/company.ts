@@ -1,12 +1,14 @@
 import { requireAuth } from 'src/lib/auth'
 import { db } from 'src/lib/db'
-import { getCompanyProfile } from 'src/services/companyProfile/companyProfile'
+import {
+  createCompanyProfile,
+  getCompanyProfile
+} from 'src/services/companyProfile/companyProfile'
 
 type ExcludedFields = 'userProfile'
-type CreateCompanyParams = Omit<
-  Parameters<typeof db.company.create>[0]['data'],
-  ExcludedFields
->
+type CreateCompanyParams = {
+  data: Omit<Parameters<typeof db.company.create>[0]['data'], ExcludedFields>
+}
 type GetCompanyParams = {
   id: Parameters<typeof db.company.findUnique>[0]['where']['id']
 }
@@ -21,14 +23,25 @@ function beforeResolver(rules) {
   rules.add(requireAuth)
 }
 
-async function createCompany(data: CreateCompanyParams) {
-  return db.company.create({ data })
+async function createCompany({ data }: CreateCompanyParams) {
+  const company = await db.company.create({ data })
+
+  // Create an empty companyProfile
+  await createCompanyProfile({
+    data: {
+      companyId: company.id,
+      ...data
+    }
+  })
+
+  return company
 }
 
 async function getCompany(where: GetCompanyParams) {
   return db.company.findUnique({ where })
 }
 
+// TODO: filter
 async function getCompanies() {
   return db.company.findMany()
 }

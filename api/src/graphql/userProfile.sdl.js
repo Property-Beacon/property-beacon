@@ -23,9 +23,7 @@ export const schema = gql`
   }
 
   type Mutation {
-    updateUserProfileById(
-      userId: String!
-      data: UpdateUserProfile!
-    ): UserProfile!
+    updateUserProfile(userId: String!, data: UpdateUserProfile!): UserProfile!
+    deleteUserProfile(userId: String!): Boolean
   }
 `

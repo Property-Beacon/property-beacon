@@ -1,23 +1,22 @@
 import { requireAuth } from 'src/lib/auth'
 import { db } from 'src/lib/db'
 
-type UserProfileId = Parameters<
-  typeof db.address.update
->[0]['where']['userProfileId']
-type CompanyProfileId = Parameters<
-  typeof db.address.update
->[0]['where']['companyProfileId']
 type AddressFields =
-  | 'country'
-  | 'state'
-  | 'postalCode'
-  | 'street'
   | 'name'
+  | 'state'
+  | 'street'
   | 'suburb'
-export type CreateAddressParams = Pick<
-  Parameters<typeof db.address.create>[0]['data'],
-  AddressFields | 'userProfileId' | 'companyProfileId'
->
+  | 'country'
+  | 'postalCode'
+type UniqueKeys = Parameters<typeof db.address.update>[0]['where']
+type UserProfileId = UniqueKeys['userProfileId']
+type CompanyProfileId = UniqueKeys['companyProfileId']
+type CreateAddressParams = {
+  data: Pick<
+    Parameters<typeof db.address.create>[0]['data'],
+    AddressFields | 'userProfileId' | 'companyProfileId'
+  >
+}
 type GetAddressParams = Parameters<typeof db.address.findUnique>[0]['where']
 export type UpdateAddressParams = Pick<
   Parameters<typeof db.address.update>[0]['data'],
@@ -29,7 +28,7 @@ function beforeResolver(rules) {
   rules.add(requireAuth)
 }
 
-async function createAddress(data: CreateAddressParams) {
+async function createAddress({ data }: CreateAddressParams) {
   return db.address.create({ data })
 }
 

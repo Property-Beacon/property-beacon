@@ -13,7 +13,7 @@ export const schema = gql`
     owner: String
     # For role CLIENT only
     mayor: String
-    # Resolver from user.sdl.js
+    # Resolver from address.sdl.js
     address: Address
   }
 
@@ -32,18 +32,11 @@ export const schema = gql`
     address: UpdateAddress
   }
 
-  type Query {
-    getCompanyProfile(companyId: String!): CompanyProfile
-  }
-
   type Mutation {
-    createCompanyProfile(
-      companyId: String!
-      data: UpdateCompanyProfile
-    ): CompanyProfile!
     updateCompanyProfile(
       companyId: String!
       data: UpdateCompanyProfile
     ): CompanyProfile!
+    deleteCompanyProfile(companyId: String!): Boolean
   }
 `

@@ -19,7 +19,6 @@ type UpdateUserProfileData = Pick<
 type UpdateUserProfileParams = {
   data: UpdateUserProfileData
 }
-
 type DeleteUserProfile = Pick<
   Parameters<typeof db.userProfile.delete>[0]['where'],
   'userId'
@@ -40,7 +39,7 @@ async function createUserProfile({ data }: CreateUserProfileParams) {
   })
 }
 
-async function updateUserProfileById({
+async function updateUserProfile({
   userId,
   data
 }: UpdateUserProfileParams & {
@@ -61,10 +60,12 @@ async function updateUserProfileById({
       ...profile,
       address: !address
         ? await createAddress({
-            userProfileId: profile.id,
-            ...(addressPayload as Parameters<
-              typeof db.userProfile.create
-            >[0]['data'])
+            data: {
+              userProfileId: profile.id,
+              ...(addressPayload as Parameters<
+                typeof db.userProfile.create
+              >[0]['data'])
+            }
           })
         : await updateAddressByUserProfileId({
             ...where,
@@ -76,8 +77,9 @@ async function updateUserProfileById({
   return { ...profile, address }
 }
 
-async function deleteUserProfileById({ userId }: DeleteUserProfile) {
-  return db.userProfile.delete({ where: { userId } })
+async function deleteUserProfile({ userId }: DeleteUserProfile) {
+  await db.userProfile.delete({ where: { userId } })
+  return true
 }
 
 // GraphQL resolver for composition fields
@@ -92,6 +94,6 @@ export {
   beforeResolver,
   getUserProfile,
   createUserProfile,
-  updateUserProfileById,
-  deleteUserProfileById
+  updateUserProfile,
+  deleteUserProfile
 }
