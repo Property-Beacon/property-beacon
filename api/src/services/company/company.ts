@@ -18,7 +18,7 @@ type UpdateCompanyParams = Omit<
 > &
   GetCompanyParams
 
-// Required for RedwoodJS
+// Required by RedwoodJS
 function beforeResolver(rules) {
   rules.add(requireAuth)
 }

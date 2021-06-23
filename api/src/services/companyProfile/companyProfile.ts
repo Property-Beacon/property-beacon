@@ -32,7 +32,7 @@ type DeleteCompanyProfile = Pick<
   'companyId'
 >
 
-// Required for RedwoodJS
+// Required by RedwoodJS
 function beforeResolver(rules) {
   rules.add(requireAuth)
 }

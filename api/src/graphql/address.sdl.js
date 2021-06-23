@@ -6,6 +6,7 @@ export const schema = gql`
     suburb: String
     country: String
     postalCode: String
+    updatedAt: DateTime
   }
 
   input UpdateAddress {

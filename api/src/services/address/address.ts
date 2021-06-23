@@ -8,6 +8,7 @@ type AddressFields =
   | 'suburb'
   | 'country'
   | 'postalCode'
+  | 'updatedAt'
 type UniqueKeys = Parameters<typeof db.address.update>[0]['where']
 type UserProfileId = UniqueKeys['userProfileId']
 type CompanyProfileId = UniqueKeys['companyProfileId']

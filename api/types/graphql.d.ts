@@ -26,6 +26,7 @@ export type Address = {
   suburb?: Maybe<Scalars['String']>;
   country?: Maybe<Scalars['String']>;
   postalCode?: Maybe<Scalars['String']>;
+  updatedAt?: Maybe<Scalars['DateTime']>;
 };
 
 export type Company = {
@@ -36,6 +37,8 @@ export type Company = {
   shortName?: Maybe<Scalars['String']>;
   website?: Maybe<Scalars['String']>;
   profile?: Maybe<CompanyProfile>;
+  updatedAt?: Maybe<Scalars['DateTime']>;
+  createdAt: Scalars['DateTime'];
 };
 
 export type CompanyProfile = {
@@ -53,6 +56,7 @@ export type CompanyProfile = {
   owner?: Maybe<Scalars['String']>;
   mayor?: Maybe<Scalars['String']>;
   address?: Maybe<Address>;
+  updatedAt?: Maybe<Scalars['DateTime']>;
 };
 
 
@@ -218,7 +222,6 @@ export type UpdateUserProfile = {
   mobile?: Maybe<Scalars['String']>;
   lastName?: Maybe<Scalars['String']>;
   firstName?: Maybe<Scalars['String']>;
-  modified?: Maybe<Scalars['DateTime']>;
   address?: Maybe<UpdateAddress>;
 };
 
@@ -231,6 +234,7 @@ export type User = {
   logOn: Scalars['DateTime'];
   logOff?: Maybe<Scalars['DateTime']>;
   profile: UserProfile;
+  createdAt: Scalars['DateTime'];
 };
 
 export type UserProfile = {
@@ -242,7 +246,7 @@ export type UserProfile = {
   lastName?: Maybe<Scalars['String']>;
   firstName?: Maybe<Scalars['String']>;
   created?: Maybe<Scalars['DateTime']>;
-  modified?: Maybe<Scalars['DateTime']>;
+  updatedAt?: Maybe<Scalars['DateTime']>;
   fullName?: Maybe<Scalars['String']>;
 };
 
@@ -376,6 +380,7 @@ export type AddressResolvers<ContextType = any, ParentType extends ResolversPare
   suburb?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   country?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   postalCode?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  updatedAt?: Resolver<Maybe<ResolversTypes['DateTime']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -386,6 +391,8 @@ export type CompanyResolvers<ContextType = any, ParentType extends ResolversPare
   shortName?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   website?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   profile?: Resolver<Maybe<ResolversTypes['CompanyProfile']>, ParentType, ContextType>;
+  updatedAt?: Resolver<Maybe<ResolversTypes['DateTime']>, ParentType, ContextType>;
+  createdAt?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -403,6 +410,7 @@ export type CompanyProfileResolvers<ContextType = any, ParentType extends Resolv
   owner?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   mayor?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   address?: Resolver<Maybe<ResolversTypes['Address']>, ParentType, ContextType>;
+  updatedAt?: Resolver<Maybe<ResolversTypes['DateTime']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -465,6 +473,7 @@ export type UserResolvers<ContextType = any, ParentType extends ResolversParentT
   logOn?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>;
   logOff?: Resolver<Maybe<ResolversTypes['DateTime']>, ParentType, ContextType>;
   profile?: Resolver<ResolversTypes['UserProfile'], ParentType, ContextType>;
+  createdAt?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -476,7 +485,7 @@ export type UserProfileResolvers<ContextType = any, ParentType extends Resolvers
   lastName?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   firstName?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   created?: Resolver<Maybe<ResolversTypes['DateTime']>, ParentType, ContextType>;
-  modified?: Resolver<Maybe<ResolversTypes['DateTime']>, ParentType, ContextType>;
+  updatedAt?: Resolver<Maybe<ResolversTypes['DateTime']>, ParentType, ContextType>;
   fullName?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };

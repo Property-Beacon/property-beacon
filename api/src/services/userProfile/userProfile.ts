@@ -14,7 +14,7 @@ type GetUserProfileParams = Pick<
 type CreateUserProfileParams = Parameters<typeof db.userProfile.create>[0]
 type UpdateUserProfileData = Pick<
   Parameters<typeof db.userProfile.update>[0]['data'],
-  'firstName' | 'lastName' | 'avatar' | 'phone' | 'mobile' | 'modified'
+  'firstName' | 'lastName' | 'avatar' | 'phone' | 'mobile' | 'updatedAt'
 > & { address: UpdateAddressParams }
 type UpdateUserProfileParams = {
   data: UpdateUserProfileData
@@ -24,7 +24,7 @@ type DeleteUserProfile = Pick<
   'userId'
 >
 
-// Required for RedwoodJS
+// Required by RedwoodJS
 function beforeResolver(rules) {
   rules.add(requireAuth)
 }
@@ -47,7 +47,7 @@ async function updateUserProfile({
 }) {
   const { address: addressPayload, ...userProfilePayload } = data
   const profile = await db.userProfile.update({
-    data: { ...userProfilePayload, modified: new Date() },
+    data: userProfilePayload,
     where: { userId }
   })
   const where = {

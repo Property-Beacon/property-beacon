@@ -6,6 +6,8 @@ export const schema = gql`
     shortName: String
     website: String
     profile: CompanyProfile
+    updatedAt: DateTime
+    createdAt: DateTime!
   }
 
   input UpdateCompany {

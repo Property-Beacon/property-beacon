@@ -5,7 +5,7 @@
       "import { requireAuth } from 'src/lib/auth'",
       "import { db } from 'src/lib/db'",
       "",
-      "// Required for RedwoodJS",
+      "// Required by RedwoodJS",
       "function beforeResolver(rules) {",
       "rules.add(requireAuth)",
       "}",

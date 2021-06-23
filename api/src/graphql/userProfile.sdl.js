@@ -7,7 +7,7 @@ export const schema = gql`
     lastName: String
     firstName: String
     created: DateTime
-    modified: DateTime
+    updatedAt: DateTime
     # From resolver, not in DB schema
     fullName: String
   }
@@ -18,7 +18,6 @@ export const schema = gql`
     mobile: String
     lastName: String
     firstName: String
-    modified: DateTime
     address: UpdateAddress
   }
 
