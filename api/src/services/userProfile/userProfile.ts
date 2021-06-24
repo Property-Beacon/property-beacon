@@ -14,8 +14,8 @@ type GetUserProfileParams = Pick<
 type CreateUserProfileParams = Parameters<typeof db.userProfile.create>[0]
 type UpdateUserProfileData = Pick<
   Parameters<typeof db.userProfile.update>[0]['data'],
-  'firstName' | 'lastName' | 'avatar' | 'phone' | 'mobile' | 'updatedAt'
-> & { address: UpdateAddressParams }
+  'firstName' | 'lastName' | 'avatar' | 'phone' | 'mobile' | 'userId'
+> & { address?: UpdateAddressParams }
 type UpdateUserProfileParams = {
   data: UpdateUserProfileData
 }
@@ -34,9 +34,15 @@ async function getUserProfile({ userId }: GetUserProfileParams) {
 }
 
 async function createUserProfile({ data }: CreateUserProfileParams) {
-  return db.userProfile.create({
+  const userProfile = await db.userProfile.create({
     data
   })
+
+  await createAddress({
+    data: { userProfileId: userProfile.id }
+  })
+
+  return userProfile
 }
 
 async function updateUserProfile({
@@ -90,10 +96,8 @@ export const UserProfile = {
     getAddressByUserProfileId({ userProfileId: root.id })
 }
 
-export {
-  beforeResolver,
-  getUserProfile,
-  createUserProfile,
-  updateUserProfile,
-  deleteUserProfile
-}
+export { beforeResolver }
+// GraphQL API & services
+export { updateUserProfile, deleteUserProfile }
+// Services only
+export { getUserProfile, createUserProfile }

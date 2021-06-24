@@ -16,6 +16,14 @@
       "",
       "export {",
       "beforeResolver",
+      "}",
+      "",
+      "// GraphQL API & services",
+      "export {",
+      "}",
+      "",
+      "// Services",
+      "export {",
       "}"
     ],
     "description": "Boilerplate of services (api/src/services)"
