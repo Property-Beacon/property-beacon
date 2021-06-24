@@ -98,6 +98,6 @@ export const UserProfile = {
 
 export { beforeResolver }
 // GraphQL API & services
-export { updateUserProfile, deleteUserProfile }
+export { updateUserProfile }
 // Services only
-export { getUserProfile, createUserProfile }
+export { getUserProfile, createUserProfile, deleteUserProfile }

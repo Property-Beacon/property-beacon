@@ -1,5 +1,5 @@
 import { getAddressByUserProfileId } from '../address/address'
-import { createUser } from '../user/user'
+import { createUser, getUserById } from '../user/user'
 import {
   deleteUserProfile,
   getUserProfile,
@@ -11,12 +11,11 @@ describe('services/userProfile', () => {
   let userId = ''
 
   beforeEach(async () => {
-    const data = {
-      issuer: 'fake.issuer.11231232',
-      email: 'example@domain.com'
-    }
     const user = await createUser({
-      data
+      data: {
+        issuer: 'fake.issuer.11231232',
+        email: 'example@domain.com'
+      }
     })
 
     userId = user.id
@@ -130,7 +129,9 @@ describe('services/userProfile', () => {
     expect(address.id).not.toBeNull()
 
     await deleteUserProfile({ userId })
+    const user = await getUserById({ id: userId })
 
+    expect(user.id).not.toBeNull()
     expect(await getUserProfile({ userId })).toBeNull()
     expect(
       await getAddressByUserProfileId({

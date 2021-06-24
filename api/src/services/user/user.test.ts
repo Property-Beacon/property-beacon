@@ -44,39 +44,30 @@ describe('services/user', () => {
     )
   })
 
-  it('create CUSTOMER|CLIENT role users', async () => {
-    const data = [
-      {
-        issuer: 'fake.customer.issuer.11231232',
-        email: 'customer@domain.com',
-        role: 'CUSTOMER' as Role
-      },
-      {
-        issuer: 'fake.client.issuer.11231232',
-        email: 'client@domain.com',
-        role: 'CLIENT' as Role
-      }
-    ]
+  it('create a CUSTOMER role user', async () => {
+    const data = {
+      issuer: 'fake.customer.issuer.11231232',
+      email: 'customer@domain.com',
+      role: 'CUSTOMER' as Role
+    }
 
-    data.map(async (payload) => {
-      const user = await createUser({
-        data: payload
-      })
-      const userProfile = await getUserProfile({ userId: user.id })
-
-      expect(user.id).not.toBeNull()
-      expect(user.logOff).toBeNull()
-      expect(user.role).toEqual(payload.role)
-      expect(user.email).toEqual(payload.email)
-      expect(user.logOn).toBeInstanceOf(Date)
-      expect(user.createdAt).toBeInstanceOf(Date)
-
-      expect(userProfile.id).not.toBeNull()
-      expect(userProfile.updatedAt).toBeInstanceOf(Date)
-      expect(new Date(userProfile.updatedAt).getTime()).toBeGreaterThanOrEqual(
-        current.getTime()
-      )
+    const user = await createUser({
+      data
     })
+    const userProfile = await getUserProfile({ userId: user.id })
+
+    expect(user.id).not.toBeNull()
+    expect(user.logOff).toBeNull()
+    expect(user.role).toEqual(data.role)
+    expect(user.email).toEqual(data.email)
+    expect(user.logOn).toBeInstanceOf(Date)
+    expect(user.createdAt).toBeInstanceOf(Date)
+
+    expect(userProfile.id).not.toBeNull()
+    expect(userProfile.updatedAt).toBeInstanceOf(Date)
+    expect(new Date(userProfile.updatedAt).getTime()).toBeGreaterThanOrEqual(
+      current.getTime()
+    )
   })
 
   it('getUserById | getUserByEmail | getUserByIssuer | getUsersByRole', async () => {

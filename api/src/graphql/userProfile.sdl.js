@@ -23,6 +23,5 @@ export const schema = gql`
 
   type Mutation {
     updateUserProfile(userId: String!, data: UpdateUserProfile!): UserProfile!
-    deleteUserProfile(userId: String!): Boolean
   }
 `
