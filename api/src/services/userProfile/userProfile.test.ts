@@ -65,7 +65,7 @@ describe('services/userProfile', () => {
   })
 
   it('updateUserProfile', async () => {
-    const { updatedAt: prevUpdatedAt } = await getUserProfile({ userId })
+    const now = new Date()
     const userProfileData = {
       avatar: 'https://myavatar.com',
       firstName: 'David',
@@ -106,13 +106,13 @@ describe('services/userProfile', () => {
     expect(phone).toEqual(userProfileData.phone)
     expect(mobile).toEqual(userProfileData.mobile)
     expect(updatedAt).toBeInstanceOf(Date)
-    expect(new Date(updatedAt).getTime()).not.toEqual(prevUpdatedAt.getTime())
+    expect(new Date(updatedAt).getTime()).not.toEqual(now.getTime())
 
     expect(address.id).not.toBeNull()
     expect(address.userProfileId).toEqual(id)
     expect(address.updatedAt).toBeInstanceOf(Date)
     expect(new Date(address.updatedAt).getTime()).toBeGreaterThanOrEqual(
-      prevUpdatedAt.getTime()
+      now.getTime()
     )
     expect({ country, state, suburb, postalCode, street, name }).toEqual(
       userProfileData.address
@@ -121,12 +121,7 @@ describe('services/userProfile', () => {
 
   it('deleteUserProfile', async () => {
     const userProfile = await getUserProfile({ userId })
-    const address = await getAddressByUserProfileId({
-      userProfileId: userProfile.id
-    })
 
-    expect(userProfile.id).not.toBeNull()
-    expect(address.id).not.toBeNull()
     expect(await deleteUserProfile({ userId })).toBeTruthy()
 
     const user = await getUserById({ id: userId })

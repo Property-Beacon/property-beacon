@@ -54,7 +54,6 @@ describe('services/user', () => {
     const user = await createUser({
       data
     })
-    const userProfile = await getUserProfile({ userId: user.id })
 
     expect(user.id).not.toBeNull()
     expect(user.logOff).toBeNull()
@@ -62,12 +61,6 @@ describe('services/user', () => {
     expect(user.email).toEqual(data.email)
     expect(user.logOn).toBeInstanceOf(Date)
     expect(user.createdAt).toBeInstanceOf(Date)
-
-    expect(userProfile.id).not.toBeNull()
-    expect(userProfile.updatedAt).toBeInstanceOf(Date)
-    expect(new Date(userProfile.updatedAt).getTime()).toBeGreaterThanOrEqual(
-      current.getTime()
-    )
   })
 
   it('getUserById | getUserByEmail | getUserByIssuer | getUsersByRole', async () => {

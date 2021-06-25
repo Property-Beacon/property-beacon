@@ -101,8 +101,8 @@ describe('services/companyProfile', () => {
   })
 
   it('deleteCompanyProfile', async () => {
-    expect(await getCompany({ id: companyId })).not.toBeNull()
     expect(await deleteCompanyProfile({ companyId })).toBeTruthy()
+    expect(await getCompany({ id: companyId })).not.toBeNull()
     expect(await getCompanyProfile({ companyId })).toBeNull()
     // Ensure address is deleted as well due to DB relation
     expect(
