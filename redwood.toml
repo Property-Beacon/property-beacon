@@ -9,7 +9,7 @@
   host = "0.0.0.0"
   port = 8910
   apiProxyPath = "/.netlify/functions"
-  includeEnvironmentVariables = ["MAGICLINK_PUBLIC", "MAGICLINK_SECRET", "REDWOOD_SECURE_SERVICES", "DATABASE_URL"]
+  includeEnvironmentVariables = ["MAGICLINK_PUBLIC", "MAGICLINK_SECRET", "REDWOOD_SECURE_SERVICES", "DATABASE_URL", "TEST_DATABASE_URL"]
 [api]
   host = "0.0.0.0"
   port = 8911
