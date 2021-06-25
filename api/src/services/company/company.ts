@@ -60,7 +60,9 @@ async function updateCompany({
 }
 
 async function deleteCompany(where: DeleteCompanyParams) {
-  return db.company.delete({ where })
+  await db.company.delete({ where })
+
+  return true
 }
 
 // GraphQL resolver for composition fields (optional)

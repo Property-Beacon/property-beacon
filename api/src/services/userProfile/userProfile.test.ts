@@ -127,12 +127,13 @@ describe('services/userProfile', () => {
 
     expect(userProfile.id).not.toBeNull()
     expect(address.id).not.toBeNull()
+    expect(await deleteUserProfile({ userId })).toBeTruthy()
 
-    await deleteUserProfile({ userId })
     const user = await getUserById({ id: userId })
 
     expect(user.id).not.toBeNull()
     expect(await getUserProfile({ userId })).toBeNull()
+    // Ensure address is deleted as well due to DB relation
     expect(
       await getAddressByUserProfileId({
         userProfileId: userProfile.id

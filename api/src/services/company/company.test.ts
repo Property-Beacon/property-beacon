@@ -78,12 +78,13 @@ describe('services/company', () => {
   })
 
   it('deleteCompany', async () => {
-    await deleteCompany({ id: companyId })
+    expect(await deleteCompany({ id: companyId })).toBeTruthy()
 
     const company = await getCompany({ id: companyId })
     const companyProfile = await getCompanyProfile({ companyId })
 
     expect(company).toBeNull()
+    // Ensure companyProfile is deleted as well due to DB relation
     expect(companyProfile).toBeNull()
   })
 })

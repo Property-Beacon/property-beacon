@@ -38,6 +38,5 @@ export const schema = gql`
       companyId: String!
       data: UpdateCompanyProfile
     ): CompanyProfile!
-    deleteCompanyProfile(companyId: String!): Boolean
   }
 `
