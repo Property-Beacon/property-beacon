@@ -72,11 +72,12 @@ async function deleteAddressByCompanyProfileId({
   return db.address.delete({ where: { companyProfileId } })
 }
 
+export { beforeResolver }
+// GraphQL API & services
+export { getAddressByUserProfileId, getAddressByCompanyProfileId }
+// Services only
 export {
-  beforeResolver,
   createAddress,
-  getAddressByUserProfileId,
-  getAddressByCompanyProfileId,
   updateAddressByUserProfileId,
   updateAddressByCompanyProfileId,
   deleteAddressByUserProfileId,
