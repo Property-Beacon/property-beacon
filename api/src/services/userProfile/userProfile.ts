@@ -14,8 +14,8 @@ type GetUserProfileParams = Pick<
 type CreateUserProfileParams = Parameters<typeof db.userProfile.create>[0]
 type UpdateUserProfileData = Pick<
   Parameters<typeof db.userProfile.update>[0]['data'],
-  'firstName' | 'lastName' | 'avatar' | 'phone' | 'mobile' | 'modified'
-> & { address: UpdateAddressParams }
+  'firstName' | 'lastName' | 'avatar' | 'phone' | 'mobile' | 'userId'
+> & { address?: UpdateAddressParams }
 type UpdateUserProfileParams = {
   data: UpdateUserProfileData
 }
@@ -24,7 +24,7 @@ type DeleteUserProfile = Pick<
   'userId'
 >
 
-// Required for RedwoodJS
+// Required by RedwoodJS
 function beforeResolver(rules) {
   rules.add(requireAuth)
 }
@@ -34,9 +34,15 @@ async function getUserProfile({ userId }: GetUserProfileParams) {
 }
 
 async function createUserProfile({ data }: CreateUserProfileParams) {
-  return db.userProfile.create({
+  const userProfile = await db.userProfile.create({
     data
   })
+
+  await createAddress({
+    data: { userProfileId: userProfile.id }
+  })
+
+  return userProfile
 }
 
 async function updateUserProfile({
@@ -47,7 +53,7 @@ async function updateUserProfile({
 }) {
   const { address: addressPayload, ...userProfilePayload } = data
   const profile = await db.userProfile.update({
-    data: { ...userProfilePayload, modified: new Date() },
+    data: userProfilePayload,
     where: { userId }
   })
   const where = {
@@ -90,10 +96,8 @@ export const UserProfile = {
     getAddressByUserProfileId({ userProfileId: root.id })
 }
 
-export {
-  beforeResolver,
-  getUserProfile,
-  createUserProfile,
-  updateUserProfile,
-  deleteUserProfile
-}
+export { beforeResolver }
+// GraphQL API & services
+export { updateUserProfile }
+// Services only
+export { getUserProfile, createUserProfile, deleteUserProfile }

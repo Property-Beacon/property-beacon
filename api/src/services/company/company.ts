@@ -17,8 +17,9 @@ type UpdateCompanyParams = Omit<
   ExcludedFields
 > &
   GetCompanyParams
+type DeleteCompanyParams = Parameters<typeof db.company.delete>[0]['where']
 
-// Required for RedwoodJS
+// Required by RedwoodJS
 function beforeResolver(rules) {
   rules.add(requireAuth)
 }
@@ -29,8 +30,7 @@ async function createCompany({ data }: CreateCompanyParams) {
   // Create an empty companyProfile
   await createCompanyProfile({
     data: {
-      companyId: company.id,
-      ...data
+      companyId: company.id
     }
   })
 
@@ -59,15 +59,19 @@ async function updateCompany({
   })
 }
 
+async function deleteCompany(where: DeleteCompanyParams) {
+  await db.company.delete({ where })
+
+  return true
+}
+
 // GraphQL resolver for composition fields (optional)
 export const Company = {
   profile: (_, { root }) => getCompanyProfile({ companyId: root.id })
 }
 
-export {
-  beforeResolver,
-  getCompany,
-  createCompany,
-  updateCompany,
-  getCompanies
-}
+export { beforeResolver }
+// GraphQL API & services
+export { getCompany, getCompanies, deleteCompany }
+// Services only
+export { createCompany, updateCompany }

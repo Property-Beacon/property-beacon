@@ -15,6 +15,7 @@ export const schema = gql`
     mayor: String
     # Resolver from address.sdl.js
     address: Address
+    updatedAt: DateTime
   }
 
   input UpdateCompanyProfile {
@@ -37,6 +38,5 @@ export const schema = gql`
       companyId: String!
       data: UpdateCompanyProfile
     ): CompanyProfile!
-    deleteCompanyProfile(companyId: String!): Boolean
   }
 `

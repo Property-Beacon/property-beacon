@@ -56,11 +56,30 @@ async function updateAddressByCompanyProfileId({
   return db.address.update({ data, where: { companyProfileId } })
 }
 
+async function deleteAddressByUserProfileId({
+  userProfileId
+}: {
+  userProfileId: UserProfileId
+}) {
+  return db.address.delete({ where: { userProfileId } })
+}
+
+async function deleteAddressByCompanyProfileId({
+  companyProfileId
+}: {
+  companyProfileId: CompanyProfileId
+}) {
+  return db.address.delete({ where: { companyProfileId } })
+}
+
+export { beforeResolver }
+// GraphQL API & services
+export { getAddressByUserProfileId, getAddressByCompanyProfileId }
+// Services only
 export {
-  beforeResolver,
   createAddress,
-  getAddressByUserProfileId,
-  getAddressByCompanyProfileId,
   updateAddressByUserProfileId,
-  updateAddressByCompanyProfileId
+  updateAddressByCompanyProfileId,
+  deleteAddressByUserProfileId,
+  deleteAddressByCompanyProfileId
 }

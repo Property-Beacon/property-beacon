@@ -6,6 +6,8 @@ export const schema = gql`
     shortName: String
     website: String
     profile: CompanyProfile
+    updatedAt: DateTime
+    createdAt: DateTime!
   }
 
   input UpdateCompany {
@@ -21,6 +23,7 @@ export const schema = gql`
   }
 
   type Mutation {
+    deleteCompany(id: String!): Boolean
     createCompany(data: UpdateCompany): Company!
     updateCompany(id: String!, data: UpdateCompany): Company!
   }

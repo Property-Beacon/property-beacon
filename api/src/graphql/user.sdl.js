@@ -10,16 +10,15 @@ export const schema = gql`
     id: String!
     role: Role!
     email: String!
-    issuer: String!
     logOn: DateTime!
     logOff: DateTime
     profile: UserProfile!
+    createdAt: DateTime!
   }
 
   type Query {
     getUserById(id: String!): User!
     getUserByEmail(email: String!): User!
-    getUserByIssuer(issuer: String!): User!
     getUsersByRole(role: Role!): [User!]!
   }
 

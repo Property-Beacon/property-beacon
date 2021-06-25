@@ -5,7 +5,7 @@
       "import { requireAuth } from 'src/lib/auth'",
       "import { db } from 'src/lib/db'",
       "",
-      "// Required for RedwoodJS",
+      "// Required by RedwoodJS",
       "function beforeResolver(rules) {",
       "rules.add(requireAuth)",
       "}",
@@ -16,6 +16,14 @@
       "",
       "export {",
       "beforeResolver",
+      "}",
+      "",
+      "// GraphQL API & services",
+      "export {",
+      "}",
+      "",
+      "// Services",
+      "export {",
       "}"
     ],
     "description": "Boilerplate of services (api/src/services)"
@@ -34,5 +42,19 @@
       "`"
     ],
     "description": "Boilerplate of GraphQL SDL (api/src/graphql)"
+  },
+  "Boilerplate of services jest": {
+    "prefix": ["rw:jest:services"],
+    "body": [
+      "describe('services/${TM_FILENAME_BASE/.test//}', () => {",
+      "",
+      "it('your test name', async () => {",
+      "",
+      "})",
+      "",
+      "})",
+      ""
+    ],
+    "description": "Boilerplate of services jest"
   }
 }

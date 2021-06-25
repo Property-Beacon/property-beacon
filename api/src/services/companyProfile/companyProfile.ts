@@ -7,7 +7,7 @@ import {
   UpdateAddressParams
 } from 'src/services/address/address'
 
-type ExcludedFields = 'id' | 'Company'
+type ExcludedFields = 'id' | 'Company' | 'updatedAt' | 'address'
 type CreateCompanyProfileData = Omit<
   Parameters<typeof db.companyProfile.create>[0]['data'],
   ExcludedFields
@@ -20,8 +20,8 @@ type CreateCompanyProfileParams = {
 export type UpdateCompanyProfile = {
   data: Omit<
     Parameters<typeof db.companyProfile.update>[0]['data'],
-    ExcludedFields
-  > & { address: UpdateAddressParams }
+    ExcludedFields | 'companyId'
+  > & { address?: UpdateAddressParams }
 } & { companyId: CreateCompanyProfileData['companyId'] }
 type GetCompanyProfileParams = Pick<
   Parameters<typeof db.companyProfile.findUnique>[0]['where'],
@@ -32,7 +32,7 @@ type DeleteCompanyProfile = Pick<
   'companyId'
 >
 
-// Required for RedwoodJS
+// Required by RedwoodJS
 function beforeResolver(rules) {
   rules.add(requireAuth)
 }
@@ -93,10 +93,8 @@ export const CompanyProfile = {
     getAddressByCompanyProfileId({ companyProfileId: root.id })
 }
 
-export {
-  beforeResolver,
-  getCompanyProfile,
-  createCompanyProfile,
-  updateCompanyProfile,
-  deleteCompanyProfile
-}
+export { beforeResolver }
+// GraphQL API & services
+export { updateCompanyProfile }
+// Services only
+export { getCompanyProfile, createCompanyProfile, deleteCompanyProfile }

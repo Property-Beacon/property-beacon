@@ -16,11 +16,8 @@ type UpdateUserData = {
 type UpdateUserParams = {
   data: UpdateUserData
 }
-type UpdateUsersParams = UpdateUserParams & {
-  role: Parameters<typeof db.user.updateMany>[0]['where']['role']
-}
 
-// Required for RedwoodJS
+// Required by RedwoodJS
 function beforeResolver(rules) {
   rules.add(requireAuth)
 }
@@ -32,11 +29,11 @@ function beforeResolver(rules) {
  */
 async function createUser({ data }: CreateUserParams) {
   // TODO: base on email domain to assign role
-  const { issuer: _, ...user } = await db.user.create({
+  const user = await db.user.create({
     data
   })
 
-  // Create an empty userProfile for new user
+  // Create a new userProfile
   await createUserProfile({
     data: {
       userId: user.id
@@ -49,9 +46,11 @@ async function createUser({ data }: CreateUserParams) {
 async function getUserById({ id }: GetUserParams) {
   return db.user.findUnique({ where: { id } })
 }
+
 async function getUserByEmail({ email }: GetUserParams) {
   return db.user.findUnique({ where: { email } })
 }
+
 async function getUserByIssuer({ issuer }: GetUserParams) {
   return db.user.findUnique({ where: { issuer } })
 }
@@ -73,11 +72,12 @@ async function updateUserByIssuer({
   issuer,
   data
 }: UpdateUserParams & { issuer: string }) {
-  return db.user.update({ data, where: { issuer } })
-}
+  const user = await db.user.update({
+    data,
+    where: { issuer }
+  })
 
-async function updateUsersByRole({ role, data }: UpdateUsersParams) {
-  return db.user.updateMany({ data, where: { role } })
+  return user
 }
 
 async function deleteUser({ where }: { where: DeleteUserParams }) {
@@ -96,9 +96,11 @@ async function deleteUser({ where }: { where: DeleteUserParams }) {
 async function deleteUserById({ id }: DeleteUserParams) {
   return deleteUser({ where: { id } })
 }
+
 async function deleteUserByEmail({ email }: DeleteUserParams) {
   return deleteUser({ where: { email } })
 }
+
 async function deleteUserByIssuer({ issuer }: DeleteUserParams) {
   return deleteUser({ where: { issuer } })
 }
@@ -111,18 +113,21 @@ export const User = {
     })
 }
 
+export { beforeResolver }
+// GraphQL API & services
 export {
-  beforeResolver,
-  createUser,
   getUserById,
   getUserByEmail,
-  getUserByIssuer,
   getUsersByRole,
-  updateUserById,
-  updateUserByEmail,
-  updateUserByIssuer,
-  updateUsersByRole,
   deleteUserById,
   deleteUserByEmail,
   deleteUserByIssuer
+}
+// Services only
+export {
+  createUser,
+  getUserByIssuer,
+  updateUserById,
+  updateUserByEmail,
+  updateUserByIssuer
 }
