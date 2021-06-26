@@ -12,10 +12,14 @@ All technical 👨‍💻👩‍💻 documentations of Property Beacon
 
 ### Architecture 🏗️
 
-- Web
-- API
-- [Authentication](docs/AUTHENTICATION.md)
-- [DB (Prisma + Postgres)](docs/DATABASE.md)
+- Backend
+
+  - [DB (Prisma + PostgreSQL)](docs/DATABASE.md)
+  - [Authentication](docs/AUTHENTICATION.md)
+  - [Services](docs/SERVICES.md)
+  - [GraphQL API](docs/GRAPHQL.md)
+
+- Frontend
 
 ### Coding conventions and standards
 
@@ -25,7 +29,9 @@ All technical 👨‍💻👩‍💻 documentations of Property Beacon
 - TailwindCSS
 - GraphQL
 - Prisma
-- Postgres
+- PostgreSQL
+- Jest
+- Storybook
 
 ## Getting Started 👨‍💻👩‍💻
 

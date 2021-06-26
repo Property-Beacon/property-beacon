@@ -44,7 +44,7 @@
     "description": "Boilerplate of GraphQL SDL (api/src/graphql)"
   },
   "Boilerplate of services jest": {
-    "prefix": ["rw:jest:services"],
+    "prefix": ["rw:jest:service"],
     "body": [
       "describe('services/${TM_FILENAME_BASE/.test//}', () => {",
       "",
