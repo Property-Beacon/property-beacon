@@ -24,3 +24,13 @@ body {
   @apply bg-base-200;
   @apply text-neutral;
 }
+
+.navbar,
+.layout-content {
+  max-width: 1120px;
+  @apply mx-auto;
+}
+
+.layout-content {
+  @apply mt-20;
+}

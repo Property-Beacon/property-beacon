@@ -1,15 +1,14 @@
 import { useAuth } from '@redwoodjs/auth'
-import { FiLogOut } from 'react-icons/fi'
-import { useState, MouseEvent, useEffect } from 'react'
 import { Link, routes } from '@redwoodjs/router'
+import { MouseEvent } from 'react'
+import { FiLogOut } from 'react-icons/fi'
+import { RiArrowDownSLine } from 'react-icons/ri'
 
 const MainLayout: React.FunctionComponent = ({ children }) => {
-  const { loading, logOut } = useAuth()
-  const [isLoading, setIsLoading] = useState(loading)
+  const { loading, logOut, isAuthenticated } = useAuth()
 
   const handleLogOut = (e: MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation()
-    setIsLoading(true)
 
     logOut()
       .then()
@@ -17,57 +16,71 @@ const MainLayout: React.FunctionComponent = ({ children }) => {
         // TODO logging
         console.error(error)
       })
-      .finally(() => {
-        setIsLoading(false)
-      })
   }
 
-  useEffect(() => {
-    setIsLoading(loading)
-  }, [loading])
-
   return (
-    <div className="grid grid-cols-1 gap-6 p-2 lg:p-6 xl:grid-cols-3 lg:bg-base-200 rounded-box">
-      <div className="navbar col-span-1 shadow-lg xl:col-span-3 bg-neutral-focus text-neutral-content rounded-box">
-        <div className="pl-4 pr-2">
-          <img
-            width={24}
-            height={24}
-            loading="lazy"
-            alt="Property Beacon"
-            src="/images/icons/icon-128x128.png"
-          />
-        </div>
-        <div className="flex-none hidden sm:block">
-          <span className="text-lg text-accent font-bold">Property Beacon</span>
-        </div>
-        <div className="flex justify-end sm:justify-center flex-1 px-2 mx-2">
-          <div className="items-stretch flex">
+    <div className="p-3">
+      <div className="navbar shadow-lg bg-neutral text-base-300 rounded-box py-3 px-4 sm:px-6">
+        <img
+          width={36}
+          height={36}
+          loading="lazy"
+          alt="Property Beacon"
+          src="/images/icons/icon-128x128.png"
+        />
+        <div className="flex-1 justify-end gap-1">
+          <div className="hidden sm:block">
             <Link
               to={routes.home()}
               className="btn btn-ghost btn-sm rounded-btn"
             >
-              <span>Home</span>
+              <span>Blog</span>
             </Link>
             <Link
-              to={routes.about()}
+              to={routes.home()}
+              className="btn btn-ghost btn-sm rounded-btn"
+            >
+              <span>Help</span>
+            </Link>
+            <Link
+              to={routes.home()}
               className="btn btn-ghost btn-sm rounded-btn"
             >
               <span>About</span>
             </Link>
           </div>
-        </div>
-        <div className="flex-none">
-          <button
-            disabled={isLoading}
-            onClick={handleLogOut}
-            className="btn btn-square btn-ghost"
-          >
-            <FiLogOut size={24} />
-          </button>
+          {loading ? (
+            <button className="btn btn-sm btn-ghost rounded-btn loading text-gray-500">
+              Loading
+            </button>
+          ) : isAuthenticated ? (
+            <>
+              <Link
+                to={routes.dashboard()}
+                className="btn btn-ghost btn-sm rounded-btn"
+              >
+                <span>Dashboard</span>
+              </Link>
+              <div className="flex items-center pl-2">
+                <div className="rounded-full w-8 h-8 mr-1 overflow-hidden">
+                  <img
+                    alt="avatar"
+                    src="http://daisyui.com/tailwind-css-component-profile-1@56w.png"
+                  />
+                </div>
+                <RiArrowDownSLine size={20} />
+              </div>
+              <button
+                onClick={handleLogOut}
+                className="btn btn-sm btn-square btn-ghost"
+              >
+                <FiLogOut size={20} />
+              </button>
+            </>
+          ) : null}
         </div>
       </div>
-      <main className="col-span-1 xl:col-span-3">{children}</main>
+      <main className="layout-content">{children}</main>
     </div>
   )
 }
