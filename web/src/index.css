@@ -34,3 +34,19 @@ body {
 .layout-content {
   @apply mt-20;
 }
+
+.home :not(.login-box) > .card {
+  flex-basis: theme('spacing.96');
+  max-width: theme('spacing.80');
+  @apply glass text-center shadow-2xl flex-grow flex-shrink w-full;
+}
+
+@screen lg {
+  .home .login-box {
+    flex-basis: 600px;
+  }
+  .home :not(.login-box) > .card {
+    height: theme('spacing.96');
+    flex-basis: auto;
+  }
+}

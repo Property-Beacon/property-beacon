@@ -21,13 +21,15 @@ const MainLayout: React.FunctionComponent = ({ children }) => {
   return (
     <div className="p-3">
       <div className="navbar shadow-lg bg-neutral text-base-300 rounded-box py-3 px-4 sm:px-6">
-        <img
-          width={36}
-          height={36}
-          loading="lazy"
-          alt="Property Beacon"
-          src="/images/icons/icon-128x128.png"
-        />
+        <Link to={routes.home()}>
+          <img
+            width={36}
+            height={36}
+            loading="lazy"
+            alt="Property Beacon"
+            src="/images/icons/icon-128x128.png"
+          />
+        </Link>
         <div className="flex-1 justify-end gap-1">
           <div className="hidden sm:block">
             <Link
