@@ -1,12 +1,12 @@
 import { Magic } from '@magic-sdk/admin'
 import { AuthenticationError, ForbiddenError } from '@redwoodjs/api'
-
 import { logger } from 'src/lib/logger'
 import {
   createUser,
   getUserByIssuer,
   updateUserByIssuer
 } from 'src/services/user'
+import { getUserProfile } from 'src/services/userProfile'
 
 /**
  * getCurrentUser returns the user information together with
@@ -26,10 +26,15 @@ export const getCurrentUser = async (_, { token }) => {
   try {
     const { issuer, email } = await mAdmin.users.getMetadataByToken(token)
     const user = await getUserByIssuer({ issuer })
+    const _user = user
+      ? await updateUserByIssuer({
+          issuer,
+          data: { logOn: new Date() }
+        })
+      : await createUser({ data: { issuer, email } })
+    const userProfile = await getUserProfile({ userId: _user.id })
 
-    return user
-      ? updateUserByIssuer({ issuer, data: { logOn: new Date() } })
-      : createUser({ data: { issuer, email } })
+    return { ..._user, roles: [_user.role], profile: userProfile }
   } catch (error) {
     logger.error(
       error,

@@ -1,13 +1,15 @@
 import { useAuth } from '@redwoodjs/auth'
 import { Link, routes } from '@redwoodjs/router'
 import { MouseEvent } from 'react'
-import { FiLogOut } from 'react-icons/fi'
+import { FiLogOut, FiSettings, FiUser } from 'react-icons/fi'
 import { RiArrowDownSLine } from 'react-icons/ri'
+import Avatar from 'src/components/Avatar/Avatar'
 
 const MainLayout: React.FunctionComponent = ({ children }) => {
-  const { loading, logOut, isAuthenticated } = useAuth()
+  const { loading, logOut, currentUser, isAuthenticated } = useAuth()
 
-  const handleLogOut = (e: MouseEvent<HTMLButtonElement>) => {
+  const handleLogOut = (e: MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault()
     e.stopPropagation()
 
     logOut()
@@ -61,23 +63,37 @@ const MainLayout: React.FunctionComponent = ({ children }) => {
                 to={routes.dashboard()}
                 className="btn btn-ghost btn-sm rounded-btn"
               >
-                <span>Dashboard</span>
+                <span className="hidden sm:inline">Dashboard</span>
               </Link>
-              <div className="flex items-center pl-2">
-                <div className="rounded-full w-8 h-8 mr-1 overflow-hidden">
-                  <img
-                    alt="avatar"
-                    src="http://daisyui.com/tailwind-css-component-profile-1@56w.png"
-                  />
-                </div>
-                <RiArrowDownSLine size={20} />
+              <div className="pl-2 dropdown dropdown-end">
+                <button tabIndex={0} className="flex items-center">
+                  <Avatar className="rounded-full w-8 h-8" />
+                  <RiArrowDownSLine size={20} />
+                </button>
+                <ul className="menu shadow-lg dropdown-content bg-base-100 rounded-box w-52 mt-4 text-neutral">
+                  <li>
+                    <Link to={routes.home()}>
+                      <FiUser size={20} />
+                      <span className="mx-2">Profile</span>
+                      <span className="badge badge-info badge-sm">
+                        {currentUser.role}
+                      </span>
+                    </Link>
+                  </li>
+                  <li>
+                    <Link to={routes.home()}>
+                      <FiSettings size={20} />
+                      <span className="ml-2">Settings</span>
+                    </Link>
+                  </li>
+                  <li className="border-t">
+                    <a href="/" onClick={handleLogOut}>
+                      <FiLogOut size={20} />
+                      <span className="ml-2">Logout</span>
+                    </a>
+                  </li>
+                </ul>
               </div>
-              <button
-                onClick={handleLogOut}
-                className="btn btn-sm btn-square btn-ghost"
-              >
-                <FiLogOut size={20} />
-              </button>
             </>
           ) : null}
         </div>

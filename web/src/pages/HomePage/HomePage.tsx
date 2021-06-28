@@ -57,7 +57,7 @@ const HomePage = () => {
             audiences in the community.
           </p>
           <Link
-            className="btn btn-accent"
+            className="btn btn-primary"
             to={isAuthenticated ? routes.dashboard() : routes.home()}
           >
             {isAuthenticated ? 'Go to Dashboard' : 'Get Started'}
@@ -96,7 +96,9 @@ const HomePage = () => {
                   <div className="form-control mt-6">
                     <Submit
                       disabled={isLoading}
-                      className={`btn btn-accent ${isLoading ? 'loading' : ''}`}
+                      className={`btn btn-primary ${
+                        isLoading ? 'loading' : ''
+                      }`}
                     >
                       Sign in
                     </Submit>
@@ -109,10 +111,10 @@ const HomePage = () => {
       </div>
       <div className="flex flex-wrap items-center justify-center gap-14 mt-20">
         <div className="card">
-          <figure className="px-10 pt-10 text-accent">
+          <figure className="px-10 pt-10 text-primary">
             <RiSearchEyeLine size={80} />
           </figure>
-          <div className="badge mx-auto badge-accent text-xs mt-2">
+          <div className="badge mx-auto badge-primary text-xs mt-2">
             Community
           </div>
           <div className="card-body">
@@ -125,10 +127,12 @@ const HomePage = () => {
           </div>
         </div>
         <div className="card">
-          <figure className="px-10 pt-10 text-accent">
+          <figure className="px-10 pt-10 text-primary">
             <BiCheckShield size={80} />
           </figure>
-          <div className="badge mx-auto badge-accent text-xs mt-2">Council</div>
+          <div className="badge mx-auto badge-primary text-xs mt-2">
+            Council
+          </div>
           <div className="card-body">
             <h2 className="card-title">Enforcing</h2>
             <p className="font-light text-sm">
@@ -139,10 +143,10 @@ const HomePage = () => {
           </div>
         </div>
         <div className="card">
-          <figure className="px-10 pt-10 text-accent">
+          <figure className="px-10 pt-10 text-primary">
             <BiCalendarEdit size={80} />
           </figure>
-          <div className="badge mx-auto badge-accent text-xs mt-2">
+          <div className="badge mx-auto badge-primary text-xs mt-2">
             Real Estate Agent
           </div>
           <div className="card-body">
