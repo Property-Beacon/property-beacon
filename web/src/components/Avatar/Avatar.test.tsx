@@ -1,11 +1,11 @@
 import { render } from '@redwoodjs/testing'
 
-import AboutPage from './AboutPage'
+import Avatar from './Avatar'
 
-describe('AboutPage', () => {
+describe('Avatar', () => {
   it('renders successfully', () => {
     expect(() => {
-      render(<AboutPage />)
+      render(<Avatar />)
     }).not.toThrow()
   })
 })
