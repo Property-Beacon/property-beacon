@@ -35,7 +35,7 @@ const MainLayout: React.FunctionComponent = ({ children }) => {
   return (
     <div className="p-3">
       <div className="navbar shadow-lg bg-neutral text-base-300 rounded-box py-3 px-4 sm:px-6">
-        <Link to={routes.home()}>
+        <Link to={routes.home()} className="h-9">
           <img
             width={36}
             height={36}
@@ -44,7 +44,7 @@ const MainLayout: React.FunctionComponent = ({ children }) => {
             src="/images/icons/icon-128x128.png"
           />
         </Link>
-        <div className="flex-1 justify-end gap-1">
+        <div className="flex-1 justify-end">
           <div className="hidden sm:block">
             <Link
               to={routes.home()}

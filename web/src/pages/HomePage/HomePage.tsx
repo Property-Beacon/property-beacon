@@ -47,7 +47,7 @@ const HomePage = () => {
 
   return (
     <div className="home">
-      <div className="flex flex-col lg:flex-row items-center gap-10 lg:px-10">
+      <div className="flex flex-col lg:flex-row items-center lg:px-10">
         <div className="flex-1 text-center lg:text-left lg:py-20">
           <h1 className="text-4xl sm:text-5xl font-bold">Property signage,</h1>
           <h1 className="mb-5 text-4xl sm:text-5xl font-bold">Instantly</h1>
@@ -63,9 +63,10 @@ const HomePage = () => {
             {isAuthenticated ? 'Go to Dashboard' : 'Get Started'}
           </Link>
         </div>
+        <div className="m-5"></div>
         <div className="login-box">
           {!loading && !isAuthenticated && (
-            <div className="card flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100 ml-auto">
+            <div className="card flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100 mx-auto lg:ml-auto lg:mr-0">
               <Form onSubmit={onSubmit}>
                 {hasError && <FormError error={error} />}
                 <div className="card-body">
@@ -109,7 +110,7 @@ const HomePage = () => {
           )}
         </div>
       </div>
-      <div className="flex flex-wrap items-center justify-center gap-14 mt-20">
+      <div className="flex flex-col lg:flex-row items-center justify-center mt-20">
         <div className="card">
           <figure className="px-10 pt-10 text-primary">
             <RiSearchEyeLine size={80} />
@@ -126,6 +127,7 @@ const HomePage = () => {
             </p>
           </div>
         </div>
+        <div className="m-7"></div>
         <div className="card">
           <figure className="px-10 pt-10 text-primary">
             <BiCheckShield size={80} />
@@ -142,6 +144,7 @@ const HomePage = () => {
             </p>
           </div>
         </div>
+        <div className="m-7"></div>
         <div className="card">
           <figure className="px-10 pt-10 text-primary">
             <BiCalendarEdit size={80} />
