@@ -5,7 +5,7 @@ import MainLayout from './layouts/MainLayout/MainLayout'
 const Routes = () => (
   <Router useAuth={useAuth}>
     <Set wrap={MainLayout}>
-      <Route path="/" page={HomePage} name="home" prerender />
+      <Route path="/" page={HomePage} name="home" />
       <Private unauthenticated="home">
         <Route path="/dashboard" page={DashboardPage} name="dashboard" />
       </Private>
