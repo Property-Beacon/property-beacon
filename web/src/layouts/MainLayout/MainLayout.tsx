@@ -1,6 +1,6 @@
 import { useQuery } from '@apollo/client'
 import { useAuth } from '@redwoodjs/auth'
-import { Link, routes } from '@redwoodjs/router'
+import { Link, NavLink, routes } from '@redwoodjs/router'
 import type { QueryGetUserByIdArgs, User } from 'api/types/graphql'
 import { MouseEvent } from 'react'
 import { FiLogOut } from 'react-icons/fi'
@@ -71,12 +71,13 @@ const MainLayout: React.FunctionComponent = ({ children }) => {
             </button>
           ) : isAuthenticated ? (
             <>
-              <Link
+              <NavLink
                 to={routes.dashboard()}
+                activeClassName="text-primary"
                 className="btn btn-ghost btn-sm rounded-btn"
               >
                 <span className="hidden sm:inline">Dashboard</span>
-              </Link>
+              </NavLink>
               <div className="pl-2 dropdown dropdown-end">
                 <button tabIndex={0} className="flex items-center">
                   <Avatar className="rounded-full w-8 h-8" />
@@ -84,7 +85,11 @@ const MainLayout: React.FunctionComponent = ({ children }) => {
                 </button>
                 <ul className="menu shadow-lg dropdown-content bg-base-100 rounded-box w-60 mt-4 text-neutral">
                   <li>
-                    <Link to={routes.settings()} className="flex-col">
+                    <NavLink
+                      to={routes.settings()}
+                      className="flex-col"
+                      activeClassName="bg-primary-focus"
+                    >
                       <div className="flex w-full">
                         <span className="font-bold flex-1">
                           {userProfile?.fullName || '-'}
@@ -98,7 +103,7 @@ const MainLayout: React.FunctionComponent = ({ children }) => {
                           {currentUser.email}
                         </span>
                       </div>
-                    </Link>
+                    </NavLink>
                   </li>
                   <li>
                     <a href="/" onClick={handleLogOut}>
