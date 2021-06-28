@@ -6,7 +6,6 @@ import {
   getUserByIssuer,
   updateUserByIssuer
 } from 'src/services/user'
-import { getUserProfile } from 'src/services/userProfile'
 
 /**
  * getCurrentUser returns the user information together with
@@ -32,9 +31,8 @@ export const getCurrentUser = async (_, { token }) => {
           data: { logOn: new Date() }
         })
       : await createUser({ data: { issuer, email } })
-    const userProfile = await getUserProfile({ userId: _user.id })
 
-    return { ..._user, roles: [_user.role], profile: userProfile }
+    return { ..._user, roles: [_user.role] }
   } catch (error) {
     logger.error(
       error,

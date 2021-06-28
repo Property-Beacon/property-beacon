@@ -1,12 +1,24 @@
+import { useQuery } from '@apollo/client'
 import { useAuth } from '@redwoodjs/auth'
 import { Link, routes } from '@redwoodjs/router'
+import type { QueryGetUserByIdArgs, User } from 'api/types/graphql'
 import { MouseEvent } from 'react'
-import { FiLogOut, FiSettings, FiUser } from 'react-icons/fi'
+import { FiLogOut } from 'react-icons/fi'
 import { RiArrowDownSLine } from 'react-icons/ri'
-import Avatar from 'src/components/Avatar/Avatar'
+import Avatar, { USE_QUERY } from 'src/components/Avatar/Avatar'
 
 const MainLayout: React.FunctionComponent = ({ children }) => {
-  const { loading, logOut, currentUser, isAuthenticated } = useAuth()
+  const {
+    loading: authorizing,
+    logOut,
+    currentUser,
+    isAuthenticated
+  } = useAuth()
+  const { data, loading } = useQuery<
+    { getUserById: User },
+    QueryGetUserByIdArgs
+  >(USE_QUERY, { skip: !currentUser?.id, variables: { id: currentUser?.id } })
+  const userProfile = data?.getUserById?.profile
 
   const handleLogOut = (e: MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault()
@@ -53,7 +65,7 @@ const MainLayout: React.FunctionComponent = ({ children }) => {
               <span>About</span>
             </Link>
           </div>
-          {loading ? (
+          {loading || authorizing ? (
             <button className="btn btn-sm btn-ghost rounded-btn loading text-gray-500">
               Loading
             </button>
@@ -70,23 +82,25 @@ const MainLayout: React.FunctionComponent = ({ children }) => {
                   <Avatar className="rounded-full w-8 h-8" />
                   <RiArrowDownSLine size={20} />
                 </button>
-                <ul className="menu shadow-lg dropdown-content bg-base-100 rounded-box w-52 mt-4 text-neutral">
+                <ul className="menu shadow-lg dropdown-content bg-base-100 rounded-box w-60 mt-4 text-neutral">
                   <li>
-                    <Link to={routes.home()}>
-                      <FiUser size={20} />
-                      <span className="mx-2">Profile</span>
-                      <span className="badge badge-info badge-sm">
-                        {currentUser.role}
-                      </span>
+                    <Link to={routes.settings()} className="flex-col">
+                      <div className="flex w-full">
+                        <span className="font-bold flex-1">
+                          {userProfile?.fullName || '-'}
+                        </span>
+                        <span className="badge badge-accent badge-sm my-auto">
+                          {currentUser.role}
+                        </span>
+                      </div>
+                      <div className="flex w-full">
+                        <span className="flex-1 text-sm font-light text-left break-all">
+                          {currentUser.email}
+                        </span>
+                      </div>
                     </Link>
                   </li>
                   <li>
-                    <Link to={routes.home()}>
-                      <FiSettings size={20} />
-                      <span className="ml-2">Settings</span>
-                    </Link>
-                  </li>
-                  <li className="border-t">
                     <a href="/" onClick={handleLogOut}>
                       <FiLogOut size={20} />
                       <span className="ml-2">Logout</span>
