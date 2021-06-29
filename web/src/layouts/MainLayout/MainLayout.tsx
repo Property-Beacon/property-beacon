@@ -3,7 +3,7 @@ import { useAuth } from '@redwoodjs/auth'
 import { Link, NavLink, routes } from '@redwoodjs/router'
 import type { QueryGetUserByIdArgs, User } from 'api/types/graphql'
 import { MouseEvent } from 'react'
-import { FiLogOut } from 'react-icons/fi'
+import { FiBell, FiLogOut, FiMenu } from 'react-icons/fi'
 import { RiArrowDownSLine } from 'react-icons/ri'
 import Avatar, { USE_QUERY } from 'src/components/Avatar/Avatar'
 
@@ -74,10 +74,35 @@ const MainLayout: React.FunctionComponent = ({ children }) => {
               <NavLink
                 to={routes.dashboard()}
                 activeClassName="text-primary"
-                className="btn btn-ghost btn-sm rounded-btn"
+                className="btn btn-ghost btn-sm rounded-btn hidden sm:inline"
               >
-                <span className="hidden sm:inline">Dashboard</span>
+                <span>Dashboard</span>
               </NavLink>
+              <div className="flex dropdown dropdown-end">
+                <button className="avatar online mx-2">
+                  <FiBell size={22} className="self-center" />
+                </button>
+                <ul className="menu shadow-lg dropdown-content bg-base-100 rounded-box w-80 mt-12 text-neutral">
+                  <li className="text-xs">
+                    <a>New report from user Brian liu!</a>
+                  </li>
+                  <li className="text-xs">
+                    <a>
+                      Ray White has paid the booking fee on{' '}
+                      {new Date().toLocaleString()}
+                    </a>
+                  </li>
+                  <li className="text-xs">
+                    <a>New signage report from Peter!</a>
+                  </li>
+                  <li className="text-xs">
+                    <a>
+                      Ray White has paid their booking fee on{' '}
+                      {new Date().toLocaleString()}
+                    </a>
+                  </li>
+                </ul>
+              </div>
               <div className="pl-2 dropdown dropdown-end">
                 <button tabIndex={0} className="flex items-center">
                   <Avatar className="rounded-full w-8 h-8" />
@@ -114,7 +139,13 @@ const MainLayout: React.FunctionComponent = ({ children }) => {
                 </ul>
               </div>
             </>
-          ) : null}
+          ) : (
+            <>
+              <button className="btn btn-sm btn-ghost sm:hidden">
+                <FiMenu size={22} />
+              </button>
+            </>
+          )}
         </div>
       </div>
       <main className="layout-content">{children}</main>

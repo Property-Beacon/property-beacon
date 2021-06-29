@@ -28,7 +28,7 @@ body {
 
   --btn-text-case: 'capitalize';
 
-  @apply bg-base-200;
+  @apply bg-base-300;
   @apply text-neutral;
 }
 
