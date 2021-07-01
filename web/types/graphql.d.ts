@@ -1,0 +1,270 @@
+export type Maybe<T> = T | null;
+export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
+export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
+export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
+/** All built-in and custom scalars, mapped to their actual values */
+export type Scalars = {
+  ID: string;
+  String: string;
+  Boolean: boolean;
+  Int: number;
+  Float: number;
+  Date: string;
+  DateTime: string;
+  JSON: Record<string, unknown>;
+  JSONObject: Record<string, unknown>;
+  Time: string;
+};
+
+export type Address = {
+  __typename?: 'Address';
+  name?: Maybe<Scalars['String']>;
+  state?: Maybe<Scalars['String']>;
+  street?: Maybe<Scalars['String']>;
+  suburb?: Maybe<Scalars['String']>;
+  country?: Maybe<Scalars['String']>;
+  postalCode?: Maybe<Scalars['String']>;
+  updatedAt?: Maybe<Scalars['DateTime']>;
+};
+
+export type Company = {
+  __typename?: 'Company';
+  id: Scalars['String'];
+  name?: Maybe<Scalars['String']>;
+  displayName?: Maybe<Scalars['String']>;
+  shortName?: Maybe<Scalars['String']>;
+  website?: Maybe<Scalars['String']>;
+  profile?: Maybe<CompanyProfile>;
+  updatedAt?: Maybe<Scalars['DateTime']>;
+  createdAt: Scalars['DateTime'];
+};
+
+export type CompanyProfile = {
+  __typename?: 'CompanyProfile';
+  id: Scalars['String'];
+  companyId: Scalars['String'];
+  phone?: Maybe<Scalars['String']>;
+  fax?: Maybe<Scalars['String']>;
+  mobile?: Maybe<Scalars['String']>;
+  fullName?: Maybe<Scalars['String']>;
+  email?: Maybe<Scalars['String']>;
+  abn?: Maybe<Scalars['String']>;
+  acn?: Maybe<Scalars['String']>;
+  crn?: Maybe<Scalars['String']>;
+  owner?: Maybe<Scalars['String']>;
+  mayor?: Maybe<Scalars['String']>;
+  address?: Maybe<Address>;
+  updatedAt?: Maybe<Scalars['DateTime']>;
+};
+
+
+
+
+
+export type Mutation = {
+  __typename?: 'Mutation';
+  createCompany: Company;
+  deleteCompany?: Maybe<Scalars['Boolean']>;
+  deleteUserByEmail: Scalars['Boolean'];
+  deleteUserById: Scalars['Boolean'];
+  deleteUserByIssuer: Scalars['Boolean'];
+  updateCompany: Company;
+  updateCompanyProfile: CompanyProfile;
+  updateUserProfile: UserProfile;
+};
+
+
+export type MutationCreateCompanyArgs = {
+  data?: Maybe<UpdateCompany>;
+};
+
+
+export type MutationDeleteCompanyArgs = {
+  id: Scalars['String'];
+};
+
+
+export type MutationDeleteUserByEmailArgs = {
+  email: Scalars['String'];
+};
+
+
+export type MutationDeleteUserByIdArgs = {
+  id: Scalars['String'];
+};
+
+
+export type MutationDeleteUserByIssuerArgs = {
+  issuer: Scalars['String'];
+};
+
+
+export type MutationUpdateCompanyArgs = {
+  id: Scalars['String'];
+  data?: Maybe<UpdateCompany>;
+};
+
+
+export type MutationUpdateCompanyProfileArgs = {
+  companyId: Scalars['String'];
+  data?: Maybe<UpdateCompanyProfile>;
+};
+
+
+export type MutationUpdateUserProfileArgs = {
+  userId: Scalars['String'];
+  data: UpdateUserProfile;
+};
+
+export type Query = {
+  __typename?: 'Query';
+  getAddressByCompanyProfileId: Address;
+  getAddressByUserProfileId: Address;
+  getCompanies: Array<Company>;
+  getCompany: Company;
+  getUserByEmail: User;
+  getUserById: User;
+  getUsersByRole: Array<User>;
+  redwood?: Maybe<Redwood>;
+};
+
+
+export type QueryGetAddressByCompanyProfileIdArgs = {
+  companyProfileId: Scalars['String'];
+};
+
+
+export type QueryGetAddressByUserProfileIdArgs = {
+  userProfileId: Scalars['String'];
+};
+
+
+export type QueryGetCompanyArgs = {
+  id: Scalars['String'];
+};
+
+
+export type QueryGetUserByEmailArgs = {
+  email: Scalars['String'];
+};
+
+
+export type QueryGetUserByIdArgs = {
+  id: Scalars['String'];
+};
+
+
+export type QueryGetUsersByRoleArgs = {
+  role: Role;
+};
+
+export type Redwood = {
+  __typename?: 'Redwood';
+  version?: Maybe<Scalars['String']>;
+  currentUser?: Maybe<Scalars['JSON']>;
+  prismaVersion?: Maybe<Scalars['String']>;
+};
+
+export type Role =
+  | 'USER'
+  | 'ADMIN'
+  | 'CLIENT'
+  | 'CUSTOMER';
+
+
+export type UpdateAddress = {
+  name?: Maybe<Scalars['String']>;
+  state?: Maybe<Scalars['String']>;
+  street?: Maybe<Scalars['String']>;
+  suburb?: Maybe<Scalars['String']>;
+  country?: Maybe<Scalars['String']>;
+  postalCode?: Maybe<Scalars['String']>;
+};
+
+export type UpdateCompany = {
+  name?: Maybe<Scalars['String']>;
+  displayName?: Maybe<Scalars['String']>;
+  shortName?: Maybe<Scalars['String']>;
+  website?: Maybe<Scalars['String']>;
+};
+
+export type UpdateCompanyProfile = {
+  phone?: Maybe<Scalars['String']>;
+  fax?: Maybe<Scalars['String']>;
+  mobile?: Maybe<Scalars['String']>;
+  fullName?: Maybe<Scalars['String']>;
+  email?: Maybe<Scalars['String']>;
+  abn?: Maybe<Scalars['String']>;
+  acn?: Maybe<Scalars['String']>;
+  crn?: Maybe<Scalars['String']>;
+  owner?: Maybe<Scalars['String']>;
+  mayor?: Maybe<Scalars['String']>;
+  address?: Maybe<UpdateAddress>;
+};
+
+export type UpdateUserProfile = {
+  phone?: Maybe<Scalars['String']>;
+  avatar?: Maybe<Scalars['String']>;
+  mobile?: Maybe<Scalars['String']>;
+  lastName?: Maybe<Scalars['String']>;
+  firstName?: Maybe<Scalars['String']>;
+  address?: Maybe<UpdateAddress>;
+};
+
+export type User = {
+  __typename?: 'User';
+  id: Scalars['String'];
+  role: Role;
+  email: Scalars['String'];
+  logOn: Scalars['DateTime'];
+  logOff?: Maybe<Scalars['DateTime']>;
+  profile: UserProfile;
+  createdAt: Scalars['DateTime'];
+};
+
+export type UserProfile = {
+  __typename?: 'UserProfile';
+  phone?: Maybe<Scalars['String']>;
+  avatar?: Maybe<Scalars['String']>;
+  mobile?: Maybe<Scalars['String']>;
+  address?: Maybe<Address>;
+  lastName?: Maybe<Scalars['String']>;
+  firstName?: Maybe<Scalars['String']>;
+  created?: Maybe<Scalars['DateTime']>;
+  updatedAt?: Maybe<Scalars['DateTime']>;
+  fullName?: Maybe<Scalars['String']>;
+};
+
+export type GetUserByIdVariables = Exact<{
+  id: Scalars['String'];
+}>;
+
+
+export type GetUserById = (
+  { __typename?: 'Query' }
+  & { getUserById: (
+    { __typename?: 'User' }
+    & Pick<User, 'email'>
+    & { profile: (
+      { __typename?: 'UserProfile' }
+      & Pick<UserProfile, 'avatar' | 'fullName' | 'firstName' | 'lastName' | 'mobile' | 'phone'>
+    ) }
+  ) }
+);
+
+export type Unnamed_1_Variables = Exact<{
+  id: Scalars['String'];
+}>;
+
+
+export type Unnamed_1_ = (
+  { __typename?: 'Query' }
+  & { getUserById: (
+    { __typename?: 'User' }
+    & Pick<User, 'role' | 'email' | 'logOn' | 'logOff' | 'createdAt'>
+    & { profile: (
+      { __typename?: 'UserProfile' }
+      & Pick<UserProfile, 'avatar' | 'fullName' | 'firstName' | 'lastName' | 'mobile' | 'phone' | 'updatedAt'>
+    ) }
+  ) }
+);
