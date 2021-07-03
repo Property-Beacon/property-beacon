@@ -1,7 +1,7 @@
 import { useApolloClient } from '@apollo/client'
 import { useAuth } from '@redwoodjs/auth'
 import { Link, NavLink, routes } from '@redwoodjs/router'
-import { MouseEvent, useState } from 'react'
+import { MouseEvent, useEffect, useState } from 'react'
 import { FiBell, FiLogOut, FiMenu } from 'react-icons/fi'
 import { RiArrowDownSLine } from 'react-icons/ri'
 import AvatarCell, { QUERY } from 'src/components/AvatarCell'
@@ -13,26 +13,35 @@ const MainLayout: React.FunctionComponent = ({ children }) => {
   const {
     loading: authorizing,
     logOut,
-    currentUser,
+    currentUser, // Only unique fields are reliable from currentUser
     isAuthenticated
   } = useAuth()
 
-  if (currentUser?.id) {
-    watchQuery<GetUserById, GetUserByIdVariables>({
-      query: QUERY,
-      variables: { id: currentUser.id },
-      fetchPolicy: 'cache-first',
-      nextFetchPolicy: 'cache-first'
-    }).subscribe(
-      ({
-        data: {
-          getUserById: { profile }
-        }
-      }) => {
-        setFullName(profile?.fullName)
+  useEffect(
+    () => {
+      if (currentUser?.id && !fullName) {
+        watchQuery<GetUserById, GetUserByIdVariables>({
+          query: QUERY,
+          variables: { id: currentUser.id },
+          fetchPolicy: 'cache-first',
+          nextFetchPolicy: 'cache-first'
+        }).subscribe(
+          ({
+            data: {
+              getUserById: { profile }
+            }
+          }) => {
+            if (profile?.fullName) {
+              setFullName(profile.fullName)
+            }
+          }
+        )
       }
-    )
-  }
+    },
+    // MainLayout is rendered before authentication response, so need to watch currentUser changes
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [currentUser?.id, fullName]
+  )
 
   const handleLogOut = (e: MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault()
@@ -127,7 +136,7 @@ const MainLayout: React.FunctionComponent = ({ children }) => {
                 <ul className="menu shadow-lg dropdown-content bg-base-100 rounded-box w-60 mt-4 text-neutral">
                   <li>
                     <NavLink
-                      to={routes.settings()}
+                      to={routes.settings({ name: 'profile' })}
                       className="flex-col"
                       activeClassName="bg-primary-focus"
                     >

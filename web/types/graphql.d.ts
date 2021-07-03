@@ -244,23 +244,6 @@ export type GetUserById = (
   { __typename?: 'Query' }
   & { getUserById: (
     { __typename?: 'User' }
-    & Pick<User, 'email'>
-    & { profile: (
-      { __typename?: 'UserProfile' }
-      & Pick<UserProfile, 'avatar' | 'fullName' | 'firstName' | 'lastName' | 'mobile' | 'phone'>
-    ) }
-  ) }
-);
-
-export type Unnamed_1_Variables = Exact<{
-  id: Scalars['String'];
-}>;
-
-
-export type Unnamed_1_ = (
-  { __typename?: 'Query' }
-  & { getUserById: (
-    { __typename?: 'User' }
     & Pick<User, 'role' | 'email' | 'logOn' | 'logOff' | 'createdAt'>
     & { profile: (
       { __typename?: 'UserProfile' }
