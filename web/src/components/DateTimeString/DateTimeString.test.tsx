@@ -1,11 +1,11 @@
 import { render } from '@redwoodjs/testing'
 
-import Avatar from './Avatar'
+import DateTimeString from './DateTimeString'
 
-describe('Avatar', () => {
+describe('DateTimeString', () => {
   it('renders successfully', () => {
     expect(() => {
-      render(<Avatar />)
+      render(<DateTimeString />)
     }).not.toThrow()
   })
 })

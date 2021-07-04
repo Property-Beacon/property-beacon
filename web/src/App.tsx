@@ -1,11 +1,9 @@
-import { Magic } from 'magic-sdk'
+import { AuthProvider, useAuth } from '@redwoodjs/auth'
 import { FatalErrorBoundary } from '@redwoodjs/web'
-import { useAuth, AuthProvider } from '@redwoodjs/auth'
 import { RedwoodApolloProvider } from '@redwoodjs/web/apollo'
-
-import Routes from 'src/Routes'
+import { Magic } from 'magic-sdk'
 import FatalErrorPage from 'src/pages/FatalErrorPage/FatalErrorPage'
-
+import Routes from 'src/Routes'
 import './index.css'
 
 const m = new Magic(process.env.MAGICLINK_PUBLIC)

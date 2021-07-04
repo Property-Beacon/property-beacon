@@ -32,6 +32,10 @@ body {
   @apply text-neutral;
 }
 
+::selection {
+  @apply bg-primary-focus text-primary-content;
+}
+
 .navbar,
 .layout-content {
   max-width: 1120px;

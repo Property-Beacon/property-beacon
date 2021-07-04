@@ -1,24 +1,47 @@
-import { useQuery } from '@apollo/client'
+import { useApolloClient } from '@apollo/client'
 import { useAuth } from '@redwoodjs/auth'
 import { Link, NavLink, routes } from '@redwoodjs/router'
-import type { QueryGetUserByIdArgs, User } from 'api/types/graphql'
-import { MouseEvent } from 'react'
+import { MouseEvent, useEffect, useState } from 'react'
 import { FiBell, FiLogOut, FiMenu } from 'react-icons/fi'
 import { RiArrowDownSLine } from 'react-icons/ri'
-import Avatar, { USE_QUERY } from 'src/components/Avatar/Avatar'
+import AvatarCell, { QUERY } from 'src/components/AvatarCell'
+import type { GetUserById, GetUserByIdVariables } from 'web/types/graphql'
 
 const MainLayout: React.FunctionComponent = ({ children }) => {
+  const [fullName, setFullName] = useState('')
+  const { watchQuery } = useApolloClient()
   const {
     loading: authorizing,
     logOut,
-    currentUser,
+    currentUser, // Only unique fields are reliable from currentUser
     isAuthenticated
   } = useAuth()
-  const { data, loading } = useQuery<
-    { getUserById: User },
-    QueryGetUserByIdArgs
-  >(USE_QUERY, { skip: !currentUser?.id, variables: { id: currentUser?.id } })
-  const userProfile = data?.getUserById?.profile
+
+  useEffect(
+    () => {
+      if (currentUser?.id && !fullName) {
+        watchQuery<GetUserById, GetUserByIdVariables>({
+          query: QUERY,
+          variables: { id: currentUser.id },
+          fetchPolicy: 'cache-first',
+          nextFetchPolicy: 'cache-first'
+        }).subscribe(
+          ({
+            data: {
+              getUserById: { profile }
+            }
+          }) => {
+            if (profile?.fullName) {
+              setFullName(profile.fullName)
+            }
+          }
+        )
+      }
+    },
+    // MainLayout is rendered before authentication response, so need to watch currentUser changes
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [currentUser?.id, fullName]
+  )
 
   const handleLogOut = (e: MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault()
@@ -65,7 +88,7 @@ const MainLayout: React.FunctionComponent = ({ children }) => {
               <span>About</span>
             </Link>
           </div>
-          {loading || authorizing ? (
+          {authorizing ? (
             <button className="btn btn-sm btn-ghost rounded-btn loading text-gray-500">
               Loading
             </button>
@@ -105,27 +128,29 @@ const MainLayout: React.FunctionComponent = ({ children }) => {
               </div>
               <div className="pl-2 dropdown dropdown-end">
                 <button tabIndex={0} className="flex items-center">
-                  <Avatar className="rounded-full w-8 h-8" />
+                  <div className="rounded-full w-8 h-8">
+                    <AvatarCell id={currentUser?.id} />
+                  </div>
                   <RiArrowDownSLine size={20} />
                 </button>
                 <ul className="menu shadow-lg dropdown-content bg-base-100 rounded-box w-60 mt-4 text-neutral">
                   <li>
                     <NavLink
-                      to={routes.settings()}
+                      to={routes.settings({ name: 'profile' })}
                       className="flex-col"
                       activeClassName="bg-primary-focus"
                     >
                       <div className="flex w-full">
                         <span className="font-bold flex-1">
-                          {userProfile?.fullName || '-'}
+                          {fullName || 'unknown'}
                         </span>
                         <span className="badge badge-accent badge-sm my-auto">
-                          {currentUser.role}
+                          {currentUser?.role || 'unknown'}
                         </span>
                       </div>
                       <div className="flex w-full">
                         <span className="flex-1 text-sm font-light text-left break-all">
-                          {currentUser.email}
+                          {currentUser?.email || 'unknown'}
                         </span>
                       </div>
                     </NavLink>
