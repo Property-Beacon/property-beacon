@@ -210,6 +210,7 @@ export type UpdateUserProfile = {
   mobile?: Maybe<Scalars['String']>;
   lastName?: Maybe<Scalars['String']>;
   firstName?: Maybe<Scalars['String']>;
+  companyId?: Maybe<Scalars['String']>;
   address?: Maybe<UpdateAddress>;
 };
 
@@ -229,6 +230,7 @@ export type UserProfile = {
   phone?: Maybe<Scalars['String']>;
   avatar?: Maybe<Scalars['String']>;
   mobile?: Maybe<Scalars['String']>;
+  companyId?: Maybe<Scalars['String']>;
   address?: Maybe<Address>;
   lastName?: Maybe<Scalars['String']>;
   firstName?: Maybe<Scalars['String']>;
@@ -465,6 +467,7 @@ export type UserProfileResolvers<ContextType = any, ParentType extends Resolvers
   phone?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   avatar?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   mobile?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  companyId?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   address?: Resolver<Maybe<ResolversTypes['Address']>, ParentType, ContextType>;
   lastName?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   firstName?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;

@@ -1,87 +1,116 @@
 import { RiInformationLine } from 'react-icons/ri'
-import DateTimeString from 'src/components/DateTimeString'
-import type { GetUserById } from 'web/types/graphql'
 
 interface Props {
-  user: GetUserById['getUserById']
+  companyId: string
 }
 
-const ProfileCard = ({ user }: Props) => {
+const OrganizationCard = ({ companyId: _ }: Props) => {
   return (
     <>
       <div className="flex gap-10 flex-col lg:flex-row lg:items-start mt-10">
         <div className="card shadow-lg bg-base-100 flex-1">
           <div className="card-body">
-            <div className="card-title">Personal Information</div>
+            <div className="card-title">Organization Information</div>
             <table className="table table-zebra w-full">
               <tbody>
                 <tr>
                   <th className="lg:w-48">Name</th>
-                  <td className="text-sm">{user.profile?.fullName ?? '-'}</td>
-                </tr>
-                <tr>
-                  <th className="lg:w-48">
-                    Email
-                    <div
-                      data-tip="Contact us to change it"
-                      className="tooltip tooltip-primary font-light"
-                    >
-                      <RiInformationLine
-                        size={18}
-                        className="text-primary align-text-bottom inline ml-0.5"
-                      />
-                    </div>
-                  </th>
-                  <td className="text-sm">{user.email}</td>
-                </tr>
-                <tr>
-                  <th className="lg:w-48">
-                    Role
-                    <div
-                      data-tip="TODO"
-                      className="tooltip tooltip-primary font-light"
-                    >
-                      <RiInformationLine
-                        size={18}
-                        className="text-primary align-text-bottom inline ml-0.5"
-                      />
-                    </div>
-                  </th>
-                  <td className="text-sm">{user.role}</td>
-                </tr>
-                <tr>
-                  <th className="lg:w-48">Last logged in</th>
-                  <td className="text-sm">
-                    <DateTimeString date={user.logOn} />
-                  </td>
-                </tr>
-                {user.logOff ? (
-                  <tr>
-                    <th className="lg:w-48">Last logged off</th>
-                    <td>
-                      <DateTimeString date={user.logOff} />
-                    </td>
-                  </tr>
-                ) : null}
-                <tr>
-                  <th className="lg:w-48">First Name</th>
                   <td>
                     <input
                       type="text"
-                      placeholder="e.g. David"
+                      placeholder="e.g. NSW ECUMENICAL COUNCIL INC"
                       className="input input-sm input-bordered w-full"
-                      value={user.profile?.firstName}
                     />
                   </td>
                 </tr>
                 <tr>
-                  <th className="lg:w-48">Last Name</th>
+                  <th className="lg:w-48">Short name</th>
                   <td>
                     <input
                       type="text"
-                      placeholder="e.g. Jones"
+                      placeholder="e.g. NSW ECUMENICAL"
                       className="input input-sm input-bordered w-full"
-                      value={user.profile?.lastName}
+                    />
+                  </td>
+                </tr>
+                <tr>
+                  <th className="lg:w-48">Display name</th>
+                  <td>
+                    <input
+                      type="text"
+                      placeholder="e.g. NSW ECUMENICAL COUNCIL INC"
+                      className="input input-sm input-bordered w-full"
+                    />
+                  </td>
+                </tr>
+                <tr>
+                  <th className="lg:w-48">Full name</th>
+                  <td>
+                    <input
+                      type="text"
+                      placeholder="e.g. NEW SOUTH WALES ECUMENICAL COUNCIL INCORPORATED"
+                      className="input input-sm input-bordered w-full"
+                    />
+                  </td>
+                </tr>
+                <tr>
+                  <th className="lg:w-48">
+                    Registration No.
+                    <div
+                      data-tip="ABN | ACN"
+                      className="tooltip tooltip-primary font-light"
+                    >
+                      <RiInformationLine
+                        size={18}
+                        className="text-primary align-text-bottom inline ml-0.5"
+                      />
+                    </div>
+                  </th>
+                  <td>
+                    <input
+                      type="text"
+                      placeholder="e.g. 64 781 737 080"
+                      className="input input-sm input-bordered w-full"
+                    />
+                  </td>
+                </tr>
+                <tr>
+                  <th className="lg:w-48">Email</th>
+                  <td>
+                    <input
+                      type="text"
+                      placeholder="e.g. example@domain.com"
+                      className="input input-sm input-bordered w-full"
+                    />
+                  </td>
+                </tr>
+                <tr>
+                  <th className="lg:w-48">Website</th>
+                  <td>
+                    <input
+                      type="text"
+                      placeholder="e.g. https://www.example.com"
+                      className="input input-sm input-bordered w-full"
+                    />
+                  </td>
+                </tr>
+                <tr>
+                  <th className="lg:w-48">Manager</th>
+                  <td>
+                    <input
+                      type="text"
+                      placeholder="e.g. John Smith"
+                      className="input input-sm input-bordered w-full"
+                    />
+                  </td>
+                </tr>
+                <tr>
+                  <th className="lg:w-48">Mayer</th>
+                  <td>
+                    <input
+                      type="text"
+                      placeholder="e.g. John Smith"
+                      className="input input-sm input-bordered w-full"
                     />
                   </td>
                 </tr>
@@ -92,7 +121,6 @@ const ProfileCard = ({ user }: Props) => {
                       type="text"
                       placeholder="e.g. +61400000000"
                       className="input input-sm input-bordered w-full"
-                      value={user.profile?.phone}
                     />
                   </td>
                 </tr>
@@ -103,7 +131,16 @@ const ProfileCard = ({ user }: Props) => {
                       type="text"
                       placeholder="e.g. +61400000000"
                       className="input input-sm input-bordered w-full"
-                      value={user.profile?.mobile}
+                    />
+                  </td>
+                </tr>
+                <tr>
+                  <th className="lg:w-48">Fax</th>
+                  <td>
+                    <input
+                      type="text"
+                      placeholder="e.g. +61400000000"
+                      className="input input-sm input-bordered w-full"
                     />
                   </td>
                 </tr>
@@ -194,4 +231,4 @@ const ProfileCard = ({ user }: Props) => {
   )
 }
 
-export default ProfileCard
+export default OrganizationCard

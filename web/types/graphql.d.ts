@@ -208,6 +208,7 @@ export type UpdateUserProfile = {
   mobile?: Maybe<Scalars['String']>;
   lastName?: Maybe<Scalars['String']>;
   firstName?: Maybe<Scalars['String']>;
+  companyId?: Maybe<Scalars['String']>;
   address?: Maybe<UpdateAddress>;
 };
 
@@ -227,6 +228,7 @@ export type UserProfile = {
   phone?: Maybe<Scalars['String']>;
   avatar?: Maybe<Scalars['String']>;
   mobile?: Maybe<Scalars['String']>;
+  companyId?: Maybe<Scalars['String']>;
   address?: Maybe<Address>;
   lastName?: Maybe<Scalars['String']>;
   firstName?: Maybe<Scalars['String']>;
@@ -247,7 +249,7 @@ export type GetUserById = (
     & Pick<User, 'role' | 'email' | 'logOn' | 'logOff' | 'createdAt'>
     & { profile: (
       { __typename?: 'UserProfile' }
-      & Pick<UserProfile, 'avatar' | 'fullName' | 'firstName' | 'lastName' | 'mobile' | 'phone' | 'updatedAt'>
+      & Pick<UserProfile, 'avatar' | 'fullName' | 'firstName' | 'lastName' | 'mobile' | 'phone' | 'companyId' | 'updatedAt'>
     ) }
   ) }
 );

@@ -6,11 +6,12 @@ import { RiAdminLine } from 'react-icons/ri'
 import AvatarCell, { QUERY } from 'src/components/AvatarCell'
 import DateTimeString from 'src/components/DateTimeString'
 import type { GetUserById, GetUserByIdVariables } from 'web/types/graphql'
+import OrganizationCard from './OrganizationCard'
 import ProfileCard from './ProfileCard'
 
 const SettingsPage = () => {
   // Only unique fields are reliable from currentUser
-  const { currentUser } = useAuth()
+  const { hasRole, currentUser } = useAuth()
   const { name } = useParams()
   const [loading, setLoading] = useState(true)
   const [user, setUser] = useState<GetUserById['getUserById']>(currentUser)
@@ -85,16 +86,24 @@ const SettingsPage = () => {
         </div>
       </div>
       <div className="tabs mt-14">
-        <NavLink
-          activeClassName="border-primary font-bold text-neutral"
-          className="tab tab-bordered text-lg font-semibold"
-          to={routes.settings({ name: 'profile' })}
-        >
-          Profile
-        </NavLink>
+        {['profile', 'organization'].map((name) => (
+          <NavLink
+            key={name}
+            activeClassName="border-primary font-bold text-neutral"
+            className="tab tab-bordered text-lg font-semibold capitalize"
+            to={routes.settings({ name })}
+          >
+            {name}
+          </NavLink>
+        ))}
       </div>
       <div className="mt-4">
         {name === 'profile' && <ProfileCard user={user} />}
+        {name === 'organization' &&
+          !!user.profile?.companyId &&
+          hasRole(['ADMIN', 'CUSTOMER', 'CLIENT']) && (
+            <OrganizationCard companyId={user.profile.companyId} />
+          )}
       </div>
     </div>
   )

@@ -3,6 +3,7 @@ export const schema = gql`
     phone: String
     avatar: String
     mobile: String
+    companyId: String
     address: Address
     lastName: String
     firstName: String
@@ -18,6 +19,7 @@ export const schema = gql`
     mobile: String
     lastName: String
     firstName: String
+    companyId: String
     address: UpdateAddress
   }
 

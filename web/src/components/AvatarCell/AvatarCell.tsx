@@ -17,6 +17,7 @@ export const QUERY = gql`
         lastName
         mobile
         phone
+        companyId
         updatedAt
       }
     }
