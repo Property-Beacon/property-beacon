@@ -31,6 +31,7 @@ export type Company = {
   __typename?: 'Company';
   id: Scalars['String'];
   name?: Maybe<Scalars['String']>;
+  logo?: Maybe<Scalars['String']>;
   displayName?: Maybe<Scalars['String']>;
   shortName?: Maybe<Scalars['String']>;
   website?: Maybe<Scalars['String']>;
@@ -183,6 +184,7 @@ export type UpdateAddress = {
 
 export type UpdateCompany = {
   name?: Maybe<Scalars['String']>;
+  logo?: Maybe<Scalars['String']>;
   displayName?: Maybe<Scalars['String']>;
   shortName?: Maybe<Scalars['String']>;
   website?: Maybe<Scalars['String']>;
@@ -225,9 +227,11 @@ export type User = {
 
 export type UserProfile = {
   __typename?: 'UserProfile';
+  id: Scalars['String'];
   phone?: Maybe<Scalars['String']>;
   avatar?: Maybe<Scalars['String']>;
   mobile?: Maybe<Scalars['String']>;
+  userId?: Maybe<Scalars['String']>;
   companyId?: Maybe<Scalars['String']>;
   address?: Maybe<Address>;
   lastName?: Maybe<Scalars['String']>;
@@ -244,12 +248,33 @@ export type GetUserByIdVariables = Exact<{
 
 export type GetUserById = (
   { __typename?: 'Query' }
-  & { getUserById: (
+  & { user: (
     { __typename?: 'User' }
-    & Pick<User, 'role' | 'email' | 'logOn' | 'logOff' | 'createdAt'>
+    & Pick<User, 'id' | 'role' | 'email' | 'logOn' | 'logOff' | 'createdAt'>
     & { profile: (
       { __typename?: 'UserProfile' }
-      & Pick<UserProfile, 'avatar' | 'fullName' | 'firstName' | 'lastName' | 'mobile' | 'phone' | 'companyId' | 'updatedAt'>
+      & Pick<UserProfile, 'id' | 'avatar' | 'fullName' | 'firstName' | 'lastName' | 'mobile' | 'phone' | 'companyId' | 'updatedAt'>
     ) }
+  ) }
+);
+
+export type GetCompanyVariables = Exact<{
+  id: Scalars['String'];
+}>;
+
+
+export type GetCompany = (
+  { __typename?: 'Query' }
+  & { company: (
+    { __typename?: 'Company' }
+    & Pick<Company, 'id' | 'name' | 'logo' | 'shortName' | 'displayName' | 'website' | 'updatedAt' | 'createdAt'>
+    & { profile?: Maybe<(
+      { __typename?: 'CompanyProfile' }
+      & Pick<CompanyProfile, 'id' | 'companyId' | 'phone' | 'fax' | 'mobile' | 'fullName' | 'email' | 'abn' | 'acn' | 'crn' | 'owner' | 'mayor' | 'updatedAt'>
+      & { address?: Maybe<(
+        { __typename?: 'Address' }
+        & Pick<Address, 'name' | 'state' | 'street' | 'suburb' | 'country' | 'postalCode' | 'updatedAt'>
+      )> }
+    )> }
   ) }
 );

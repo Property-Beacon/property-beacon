@@ -28,7 +28,7 @@ const MainLayout: React.FunctionComponent = ({ children }) => {
         }).subscribe(
           ({
             data: {
-              getUserById: { profile }
+              user: { profile }
             }
           }) => {
             if (profile?.fullName) {
@@ -128,7 +128,7 @@ const MainLayout: React.FunctionComponent = ({ children }) => {
               </div>
               <div className="pl-2 dropdown dropdown-end">
                 <button tabIndex={0} className="flex items-center">
-                  <div className="rounded-full w-8 h-8">
+                  <div className="rounded-full w-8 h-8 text-sm">
                     <AvatarCell id={currentUser?.id} />
                   </div>
                   <RiArrowDownSLine size={20} />
@@ -142,15 +142,15 @@ const MainLayout: React.FunctionComponent = ({ children }) => {
                     >
                       <div className="flex w-full">
                         <span className="font-bold flex-1">
-                          {fullName || 'unknown'}
+                          {fullName || 'n/a'}
                         </span>
                         <span className="badge badge-accent badge-sm my-auto">
-                          {currentUser?.role || 'unknown'}
+                          {currentUser?.role || 'n/a'}
                         </span>
                       </div>
                       <div className="flex w-full">
                         <span className="flex-1 text-sm font-light text-left break-all">
-                          {currentUser?.email || 'unknown'}
+                          {currentUser?.email || 'n/a'}
                         </span>
                       </div>
                     </NavLink>

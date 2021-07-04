@@ -2,6 +2,7 @@ export const schema = gql`
   type Company {
     id: String!
     name: String
+    logo: String
     displayName: String
     shortName: String
     website: String
@@ -12,6 +13,7 @@ export const schema = gql`
 
   input UpdateCompany {
     name: String
+    logo: String
     displayName: String
     shortName: String
     website: String

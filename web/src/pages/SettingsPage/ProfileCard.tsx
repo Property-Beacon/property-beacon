@@ -3,7 +3,7 @@ import DateTimeString from 'src/components/DateTimeString'
 import type { GetUserById } from 'web/types/graphql'
 
 interface Props {
-  user: GetUserById['getUserById']
+  user: GetUserById['user']
 }
 
 const ProfileCard = ({ user }: Props) => {

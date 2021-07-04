@@ -14,7 +14,7 @@ const SettingsPage = () => {
   const { hasRole, currentUser } = useAuth()
   const { name } = useParams()
   const [loading, setLoading] = useState(true)
-  const [user, setUser] = useState<GetUserById['getUserById']>(currentUser)
+  const [user, setUser] = useState<GetUserById['user']>(currentUser)
   const { watchQuery } = useApolloClient()
 
   useEffect(
@@ -24,7 +24,7 @@ const SettingsPage = () => {
         variables: { id: currentUser.id },
         fetchPolicy: 'cache-first',
         nextFetchPolicy: 'cache-first'
-      }).subscribe(({ loading, data: { getUserById: userData } }) => {
+      }).subscribe(({ loading, data: { user: userData } }) => {
         setLoading(loading)
         setUser(userData)
       })
@@ -80,7 +80,7 @@ const SettingsPage = () => {
               </div>
             </div>
           </div>
-          <div className="w-32 h-32 mx-auto">
+          <div className="w-32 h-32 mx-auto text-5xl">
             <AvatarCell id={currentUser.id} />
           </div>
         </div>
