@@ -21,6 +21,15 @@ export const QUERY = gql`
         phone
         companyId
         updatedAt
+        address {
+          name
+          state
+          street
+          suburb
+          country
+          postalCode
+          updatedAt
+        }
       }
     }
   }

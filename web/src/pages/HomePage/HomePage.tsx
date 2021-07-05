@@ -71,10 +71,8 @@ const HomePage = () => {
                 {hasError && <FormError error={error} />}
                 <div className="card-body">
                   <div className="form-control">
-                    <Label name="email" className="label">
-                      <span className="text-xs">
-                        Hassle-free with our secured passwordless login
-                      </span>
+                    <Label name="email" className="label text-xs">
+                      Hassle-free with our secured passwordless login
                     </Label>
                     <EmailField
                       name="email"

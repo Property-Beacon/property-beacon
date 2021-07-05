@@ -58,9 +58,9 @@ export const beforeQuery = (props) => {
 const CompanyLogo = ({ company, loading, error }: Props) => (
   <div className="avatar placeholder h-full w-full">
     {loading ? (
-      <div className="bg-primary-focus text-primary-content h-full w-full rounded-full animate-pulse"></div>
+      <div className="bg-primary-focus text-primary-content h-full w-full mask mask-squircle animate-pulse"></div>
     ) : error ? (
-      <div className="bg-base-100 h-full w-full rounded-full">
+      <div className="bg-base-100 h-full w-full mask mask-squircle">
         <div data-tip={error.message} className="tooltip tooltip-error">
           <AiOutlineStop size={16} className="text-error" />
         </div>
@@ -68,7 +68,7 @@ const CompanyLogo = ({ company, loading, error }: Props) => (
     ) : company?.logo ? (
       <img alt="company-logo" loading="lazy" src={company.logo} />
     ) : (
-      <div className="bg-primary-focus text-primary-content h-full w-full rounded-full">
+      <div className="bg-primary-focus text-primary-content h-full w-full mask mask-squircle">
         {(
           (
             company?.displayName ||

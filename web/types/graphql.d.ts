@@ -254,6 +254,10 @@ export type GetUserById = (
     & { profile: (
       { __typename?: 'UserProfile' }
       & Pick<UserProfile, 'id' | 'avatar' | 'fullName' | 'firstName' | 'lastName' | 'mobile' | 'phone' | 'companyId' | 'updatedAt'>
+      & { address?: Maybe<(
+        { __typename?: 'Address' }
+        & Pick<Address, 'name' | 'state' | 'street' | 'suburb' | 'country' | 'postalCode' | 'updatedAt'>
+      )> }
     ) }
   ) }
 );
