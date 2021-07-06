@@ -68,7 +68,7 @@ describe('services/company', () => {
       name: 'Test Company 2',
       website: 'https://www.tc2.com.au'
     }
-    const company = await updateCompany({ id: companyId, ...newData })
+    const company = await updateCompany({ id: companyId, data: newData })
 
     expect(company.name).toEqual(newData.name)
     expect(company.logo).toEqual(data.logo)

@@ -1,21 +1,80 @@
-import { FieldError, Form, Submit, TelField, TextField } from '@redwoodjs/forms'
+import {
+  FieldError,
+  Form,
+  FormError,
+  Submit,
+  TelField,
+  TextField
+} from '@redwoodjs/forms'
+import { useMutation } from '@redwoodjs/web'
+import { useCallback } from 'react'
+import { useForm } from 'react-hook-form'
 import { RiInformationLine } from 'react-icons/ri'
 import DateTimeString from 'src/components/DateTimeString'
-import type { GetUserById } from 'web/types/graphql'
+import type {
+  GetUserById,
+  UpdateUserProfile,
+  UserProfile
+} from 'web/types/graphql'
+import AddressForm from './AddressForm'
 import FormFieldTr from './FormFieldTr'
 
 interface Props {
   user: GetUserById['user']
 }
 
-const ProfileCard = ({ user }: Props) => {
-  const loading = false
-  const handleSubmit = (data) => {
-    console.log(data)
+export const MUTATION = gql`
+  mutation UpdateUserProfile($userId: String!, $data: UpdateUserProfile!) {
+    userProfile: updateUserProfile(userId: $userId, data: $data) {
+      id
+      avatar
+      fullName
+      firstName
+      lastName
+      mobile
+      phone
+      companyId
+      updatedAt
+      address {
+        name
+        state
+        street
+        suburb
+        country
+        postalCode
+        updatedAt
+      }
+    }
   }
+`
+
+const ProfileCard = ({ user }: Props) => {
+  const { formState, reset, ...formMethods } = useForm<UpdateUserProfile>()
+  const [updateProfile, { loading, error }] = useMutation<UserProfile>(
+    MUTATION,
+    {
+      onCompleted: () => {
+        reset()
+      }
+    }
+  )
+  const handleSubmit = useCallback(
+    ({ address, ...profile }: UpdateUserProfile) => {
+      const data = formState.dirtyFields.address
+        ? { address, ...profile }
+        : { ...profile }
+      updateProfile({ variables: { userId: user.id, data } })
+    },
+    [formState, user, updateProfile]
+  )
 
   return (
-    <Form onSubmit={handleSubmit}>
+    <Form
+      formMethods={{ reset, formState, ...formMethods }}
+      onSubmit={handleSubmit}
+      validation={{ mode: 'onBlur' }}
+    >
+      {error && <FormError error={error} />}
       <div className="flex gap-10 flex-col lg:flex-row lg:items-start mt-10">
         <div className="card shadow-lg bg-base-100 flex-1">
           <div className="card-body">
@@ -86,6 +145,7 @@ const ProfileCard = ({ user }: Props) => {
                     disabled={loading}
                     placeholder="e.g. David"
                     defaultValue={user?.profile?.firstName}
+                    validation={{ pattern: /^[A-Za-z-]+$/i }}
                     className="input input-sm input-bordered w-full"
                     errorClassName="input input-bordered input-error"
                   />
@@ -100,6 +160,7 @@ const ProfileCard = ({ user }: Props) => {
                     disabled={loading}
                     placeholder="e.g. Jones"
                     defaultValue={user?.profile?.lastName}
+                    validation={{ pattern: /^[A-Za-z]+$/i }}
                     className="input input-sm input-bordered w-full"
                     errorClassName="input input-bordered input-error"
                   />
@@ -150,98 +211,22 @@ const ProfileCard = ({ user }: Props) => {
             </div>
             <table className="table table-zebra w-full">
               <tbody>
-                <FormFieldTr name="address.name" label="Name">
-                  <TextField
-                    name="address.name"
-                    disabled={loading}
-                    placeholder="e.g. My house"
-                    defaultValue={user?.profile?.address?.name}
-                    className="input input-sm input-bordered w-full"
-                    errorClassName="input input-bordered input-error"
-                  />
-                  <FieldError
-                    name="address.name"
-                    className="mt-1 label-text-alt text-error"
-                  />
-                </FormFieldTr>
-                <FormFieldTr name="address.street" label="Street">
-                  <TextField
-                    name="address.street"
-                    disabled={loading}
-                    placeholder="e.g. 120/20 George St."
-                    defaultValue={user?.profile?.address?.street}
-                    className="input input-sm input-bordered w-full"
-                    errorClassName="input input-bordered input-error"
-                  />
-                  <FieldError
-                    name="address.street"
-                    className="mt-1 label-text-alt text-error"
-                  />
-                </FormFieldTr>
-                <FormFieldTr name="address.suburb" label="Suburb">
-                  <TextField
-                    name="address.suburb"
-                    disabled={loading}
-                    placeholder="e.g. Sydney"
-                    defaultValue={user?.profile?.address?.suburb}
-                    className="input input-sm input-bordered w-full"
-                    errorClassName="input input-bordered input-error"
-                  />
-                  <FieldError
-                    name="address.suburb"
-                    className="mt-1 label-text-alt text-error"
-                  />
-                </FormFieldTr>
-                <FormFieldTr name="address.state" label="State">
-                  <TextField
-                    name="address.state"
-                    disabled={loading}
-                    placeholder="e.g. NSW"
-                    defaultValue={user?.profile?.address?.state}
-                    className="input input-sm input-bordered w-full"
-                    errorClassName="input input-bordered input-error"
-                  />
-                  <FieldError
-                    name="address.state"
-                    className="mt-1 label-text-alt text-error"
-                  />
-                </FormFieldTr>
-                <FormFieldTr name="address.postalCode" label="Postal code">
-                  <TextField
-                    name="address.postalCode"
-                    disabled={loading}
-                    placeholder="e.g. 2200"
-                    defaultValue={user?.profile?.address?.postalCode}
-                    className="input input-sm input-bordered w-full"
-                    errorClassName="input input-bordered input-error"
-                  />
-                  <FieldError
-                    name="address.postalCode"
-                    className="mt-1 label-text-alt text-error"
-                  />
-                </FormFieldTr>
-                <FormFieldTr name="address.country" label="Country">
-                  <TextField
-                    name="address.country"
-                    disabled={loading}
-                    placeholder="e.g. Australia"
-                    defaultValue={user?.profile?.address?.country}
-                    className="input input-sm input-bordered w-full"
-                    errorClassName="input input-bordered input-error"
-                  />
-                  <FieldError
-                    name="address.country"
-                    className="mt-1 label-text-alt text-error"
-                  />
-                </FormFieldTr>
+                <AddressForm
+                  loading={loading}
+                  address={user?.profile?.address}
+                />
               </tbody>
             </table>
           </div>
         </div>
       </div>
       <div className="my-10 text-right">
-        <Submit className="btn btn-primary mr-2">Save</Submit>
-        <button className="btn btn-ghost">Cancel</button>
+        <Submit
+          disabled={loading || !formState.isDirty}
+          className={`btn btn-primary mr-2 ${loading ? 'loading' : ''}`}
+        >
+          Save
+        </Submit>
       </div>
     </Form>
   )

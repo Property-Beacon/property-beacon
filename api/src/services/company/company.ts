@@ -12,11 +12,9 @@ type CreateCompanyParams = {
 type GetCompanyParams = {
   id: Parameters<typeof db.company.findUnique>[0]['where']['id']
 }
-type UpdateCompanyParams = Omit<
-  Parameters<typeof db.company.update>[0]['data'],
-  ExcludedFields
-> &
-  GetCompanyParams
+type UpdateCompanyParams = {
+  data: Omit<Parameters<typeof db.company.update>[0]['data'], ExcludedFields>
+} & GetCompanyParams
 type DeleteCompanyParams = Parameters<typeof db.company.delete>[0]['where']
 
 // Required by RedwoodJS
@@ -48,13 +46,10 @@ async function getCompanies() {
 
 async function updateCompany({
   id,
-  name,
-  displayName,
-  shortName,
-  website
+  data: { name, logo, displayName, shortName, website }
 }: UpdateCompanyParams) {
   return db.company.update({
-    data: { name, displayName, shortName, website },
+    data: { name, logo, displayName, shortName, website },
     where: { id }
   })
 }

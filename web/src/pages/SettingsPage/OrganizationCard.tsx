@@ -3,25 +3,121 @@ import {
   EmailField,
   FieldError,
   Form,
+  FormError,
+  Submit,
   TelField,
   TextField,
   UrlField
 } from '@redwoodjs/forms'
+import { useMutation } from '@redwoodjs/web'
 import { useEffect, useState } from 'react'
+import { useForm } from 'react-hook-form'
 import CompanyLogoCell, { QUERY } from 'src/components/CompanyLogoCell'
-import type { GetCompany, GetCompanyVariables } from 'web/types/graphql'
+import type {
+  GetCompany,
+  GetCompanyVariables,
+  UpdateCompany,
+  UpdateCompanyProfile
+} from 'web/types/graphql'
+import AddressForm from './AddressForm'
 import FormFieldTr from './FormFieldTr'
+
+// TODO: Due to reusing the same AddressForm, data is attached to the same layer as profile
+type OrganizationForm = UpdateCompany & {
+  profile: UpdateCompanyProfile
+  address: UpdateCompanyProfile['address']
+}
 
 interface Props {
   companyId: string
 }
 
+export const MUTATION = gql`
+  mutation UpdateCompany($id: String!, $data: UpdateCompany!) {
+    company: updateCompany(id: $id, data: $data) {
+      id
+      name
+      logo
+      displayName
+      shortName
+      website
+      updatedAt
+      createdAt
+    }
+  }
+`
+
+export const PROFILE_MUTATION = gql`
+  mutation UpdateCompanyProfile(
+    $companyId: String!
+    $data: UpdateCompanyProfile!
+  ) {
+    companyProfile: updateCompanyProfile(companyId: $companyId, data: $data) {
+      id
+      companyId
+      phone
+      fax
+      mobile
+      fullName
+      email
+      abn
+      acn
+      crn
+      owner
+      mayor
+      updatedAt
+      address {
+        name
+        state
+        street
+        suburb
+        country
+        postalCode
+        updatedAt
+      }
+    }
+  }
+`
+
 const OrganizationCard = ({ companyId }: Props) => {
   const { watchQuery } = useApolloClient()
+  const { formState, reset, ...formMethods } = useForm<OrganizationForm>()
+  const [
+    updateCompany,
+    { loading: companyUpdating, error: companyUpdateError }
+  ] = useMutation(MUTATION, {
+    onCompleted: () => {
+      reset()
+    }
+  })
+  const [
+    updateCompanyProfile,
+    { loading: companyProfileUpdating, error: companyProfileUpdateError }
+  ] = useMutation(PROFILE_MUTATION, {
+    onCompleted: () => {
+      reset()
+    }
+  })
   const [company, setCompany] = useState<GetCompany['company']>()
-  const loading = false
-  const handleSubmit = (data) => {
-    console.log(data)
+  const error = companyUpdateError || companyProfileUpdateError
+  const loading = companyUpdating || companyProfileUpdating
+  // TODO: Due to reusing the same AddressForm, data is attached to the same layer as profile
+  const handleSubmit = ({ address, profile, ...data }) => {
+    const {
+      profile: dirtyProfile,
+      address: dirtyAddress,
+      ...dirtyOthers
+    } = formState.dirtyFields
+
+    if (Object.keys(dirtyOthers).length) {
+      updateCompany({ variables: { id: companyId, data } })
+    }
+
+    if (dirtyProfile || dirtyAddress) {
+      updateCompanyProfile({
+        variables: { companyId, data: { ...profile, address } }
+      })
+    }
   }
 
   useEffect(
@@ -40,7 +136,12 @@ const OrganizationCard = ({ companyId }: Props) => {
   )
 
   return (
-    <Form onSubmit={handleSubmit}>
+    <Form
+      onSubmit={handleSubmit}
+      validation={{ mode: 'onBlur' }}
+      formMethods={{ reset, formState, ...formMethods }}
+    >
+      {error && <FormError error={error} />}
       <div className="flex gap-10 flex-col lg:flex-row lg:items-start mt-10">
         <div className="card shadow-lg bg-base-100 flex-1">
           <div className="card-body">
@@ -181,9 +282,9 @@ const OrganizationCard = ({ companyId }: Props) => {
                     className="mt-1 label-text-alt text-error"
                   />
                 </FormFieldTr>
-                <FormFieldTr name="profile.manager" label="Manager">
+                <FormFieldTr name="profile.owner" label="Manager">
                   <TextField
-                    name="profile.manager"
+                    name="profile.owner"
                     disabled={loading}
                     placeholder="e.g. John Smith"
                     defaultValue={company?.profile?.owner}
@@ -191,7 +292,7 @@ const OrganizationCard = ({ companyId }: Props) => {
                     errorClassName="input input-bordered input-error"
                   />
                   <FieldError
-                    name="profile.manager"
+                    name="profile.owner"
                     className="mt-1 label-text-alt text-error"
                   />
                 </FormFieldTr>
@@ -265,98 +366,22 @@ const OrganizationCard = ({ companyId }: Props) => {
             </div>
             <table className="table table-zebra w-full">
               <tbody>
-                <FormFieldTr name="address.name" label="Name">
-                  <TextField
-                    name="address.name"
-                    disabled={loading}
-                    placeholder="e.g. My house"
-                    defaultValue={company?.profile?.address?.name}
-                    className="input input-sm input-bordered w-full"
-                    errorClassName="input input-bordered input-error"
-                  />
-                  <FieldError
-                    name="address.name"
-                    className="mt-1 label-text-alt text-error"
-                  />
-                </FormFieldTr>
-                <FormFieldTr name="address.street" label="Street">
-                  <TextField
-                    name="address.street"
-                    disabled={loading}
-                    placeholder="e.g. 120/20 George St."
-                    defaultValue={company?.profile?.address?.street}
-                    className="input input-sm input-bordered w-full"
-                    errorClassName="input input-bordered input-error"
-                  />
-                  <FieldError
-                    name="address.street"
-                    className="mt-1 label-text-alt text-error"
-                  />
-                </FormFieldTr>
-                <FormFieldTr name="address.suburb" label="Suburb">
-                  <TextField
-                    name="address.suburb"
-                    disabled={loading}
-                    placeholder="e.g. Sydney"
-                    defaultValue={company?.profile?.address?.suburb}
-                    className="input input-sm input-bordered w-full"
-                    errorClassName="input input-bordered input-error"
-                  />
-                  <FieldError
-                    name="address.suburb"
-                    className="mt-1 label-text-alt text-error"
-                  />
-                </FormFieldTr>
-                <FormFieldTr name="address.state" label="State">
-                  <TextField
-                    name="address.state"
-                    disabled={loading}
-                    placeholder="e.g. NSW"
-                    defaultValue={company?.profile?.address?.state}
-                    className="input input-sm input-bordered w-full"
-                    errorClassName="input input-bordered input-error"
-                  />
-                  <FieldError
-                    name="address.state"
-                    className="mt-1 label-text-alt text-error"
-                  />
-                </FormFieldTr>
-                <FormFieldTr name="address.postalCode" label="Postal code">
-                  <TextField
-                    name="address.postalCode"
-                    disabled={loading}
-                    placeholder="e.g. 2200"
-                    defaultValue={company?.profile?.address?.postalCode}
-                    className="input input-sm input-bordered w-full"
-                    errorClassName="input input-bordered input-error"
-                  />
-                  <FieldError
-                    name="address.postalCode"
-                    className="mt-1 label-text-alt text-error"
-                  />
-                </FormFieldTr>
-                <FormFieldTr name="address.country" label="Country">
-                  <TextField
-                    name="address.country"
-                    disabled={loading}
-                    placeholder="e.g. Australia"
-                    defaultValue={company?.profile?.address?.country}
-                    className="input input-sm input-bordered w-full"
-                    errorClassName="input input-bordered input-error"
-                  />
-                  <FieldError
-                    name="address.country"
-                    className="mt-1 label-text-alt text-error"
-                  />
-                </FormFieldTr>
+                <AddressForm
+                  loading={loading}
+                  address={company?.profile?.address}
+                />
               </tbody>
             </table>
           </div>
         </div>
       </div>
       <div className="my-10 text-right">
-        <button className="btn btn-primary mr-2">Save</button>
-        <button className="btn btn-ghost">Cancel</button>
+        <Submit
+          disabled={loading || !formState.isDirty}
+          className={`btn btn-primary mr-2 ${loading ? 'loading' : ''}`}
+        >
+          Save
+        </Submit>
       </div>
     </Form>
   )

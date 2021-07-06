@@ -76,7 +76,7 @@ export type Mutation = {
 
 
 export type MutationCreateCompanyArgs = {
-  data?: Maybe<UpdateCompany>;
+  data: UpdateCompany;
 };
 
 
@@ -102,7 +102,7 @@ export type MutationDeleteUserByIssuerArgs = {
 
 export type MutationUpdateCompanyArgs = {
   id: Scalars['String'];
-  data?: Maybe<UpdateCompany>;
+  data: UpdateCompany;
 };
 
 
@@ -279,6 +279,56 @@ export type GetCompany = (
         { __typename?: 'Address' }
         & Pick<Address, 'name' | 'state' | 'street' | 'suburb' | 'country' | 'postalCode' | 'updatedAt'>
       )> }
+    )> }
+  ) }
+);
+
+export type UpdateCompanyVariables = Exact<{
+  id: Scalars['String'];
+  data: UpdateCompany;
+}>;
+
+
+export type UpdateCompany = (
+  { __typename?: 'Mutation' }
+  & { company: (
+    { __typename?: 'Company' }
+    & Pick<Company, 'id' | 'name' | 'logo' | 'displayName' | 'shortName' | 'website' | 'updatedAt' | 'createdAt'>
+  ) }
+);
+
+export type UpdateCompanyProfileVariables = Exact<{
+  companyId: Scalars['String'];
+  data: UpdateCompanyProfile;
+}>;
+
+
+export type UpdateCompanyProfile = (
+  { __typename?: 'Mutation' }
+  & { companyProfile: (
+    { __typename?: 'CompanyProfile' }
+    & Pick<CompanyProfile, 'id' | 'companyId' | 'phone' | 'fax' | 'mobile' | 'fullName' | 'email' | 'abn' | 'acn' | 'crn' | 'owner' | 'mayor' | 'updatedAt'>
+    & { address?: Maybe<(
+      { __typename?: 'Address' }
+      & Pick<Address, 'name' | 'state' | 'street' | 'suburb' | 'country' | 'postalCode' | 'updatedAt'>
+    )> }
+  ) }
+);
+
+export type UpdateUserProfileVariables = Exact<{
+  userId: Scalars['String'];
+  data: UpdateUserProfile;
+}>;
+
+
+export type UpdateUserProfile = (
+  { __typename?: 'Mutation' }
+  & { userProfile: (
+    { __typename?: 'UserProfile' }
+    & Pick<UserProfile, 'id' | 'avatar' | 'fullName' | 'firstName' | 'lastName' | 'mobile' | 'phone' | 'companyId' | 'updatedAt'>
+    & { address?: Maybe<(
+      { __typename?: 'Address' }
+      & Pick<Address, 'name' | 'state' | 'street' | 'suburb' | 'country' | 'postalCode' | 'updatedAt'>
     )> }
   ) }
 );
