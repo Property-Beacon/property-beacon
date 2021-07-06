@@ -8,7 +8,7 @@ declare module 'csstype' {
 }
 
 declare module '@redwoodjs/auth' {
-  interface CurrentUser extends User {}
+  interface CurrentUser extends Omit<User, 'profile'> {}
   interface AuthContextInterface {
     hasRole(role: Role | Role[]): boolean
   }

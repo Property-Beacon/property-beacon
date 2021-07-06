@@ -13,6 +13,7 @@ import { RiInformationLine } from 'react-icons/ri'
 import DateTimeString from 'src/components/DateTimeString'
 import type {
   GetUserById,
+  MakeOptional,
   UpdateUserProfile,
   UserProfile
 } from 'web/types/graphql'
@@ -20,7 +21,7 @@ import AddressForm from './AddressForm'
 import FormFieldTr from './FormFieldTr'
 
 interface Props {
-  user: GetUserById['user']
+  user: MakeOptional<GetUserById['user'], 'profile'>
 }
 
 export const MUTATION = gql`

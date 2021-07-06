@@ -5,16 +5,25 @@ import { useEffect, useState } from 'react'
 import { RiAdminLine } from 'react-icons/ri'
 import AvatarCell, { QUERY } from 'src/components/AvatarCell'
 import DateTimeString from 'src/components/DateTimeString'
-import type { GetUserById, GetUserByIdVariables } from 'web/types/graphql'
+import type {
+  GetUserById,
+  GetUserByIdVariables,
+  MakeOptional
+} from 'web/types/graphql'
 import OrganizationCard from './OrganizationCard'
 import ProfileCard from './ProfileCard'
 
+type UserData = MakeOptional<GetUserById['user'], 'profile'>
+
 const SettingsPage = () => {
   // Only unique fields are reliable from currentUser
-  const { hasRole, currentUser } = useAuth()
+  const {
+    hasRole,
+    currentUser: { roles: _, ...currentUser }
+  } = useAuth()
   const { name } = useParams()
   const [loading, setLoading] = useState(true)
-  const [user, setUser] = useState<GetUserById['user']>(currentUser)
+  const [user, setUser] = useState<UserData>(currentUser)
   const { watchQuery } = useApolloClient()
   const commonTabs = ['profile']
   const tabs = hasRole(['ADMIN', 'CUSTOMER', 'CLIENT'])
