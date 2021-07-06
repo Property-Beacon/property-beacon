@@ -49,6 +49,7 @@ model Company {
   displayName String?
   shortName   String?
   website     String?
+  logo        String?
   updatedAt   DateTime?       @updatedAt
   createdAt   DateTime        @default(now())
 }

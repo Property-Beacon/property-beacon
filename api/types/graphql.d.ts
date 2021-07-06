@@ -33,6 +33,7 @@ export type Company = {
   __typename?: 'Company';
   id: Scalars['String'];
   name?: Maybe<Scalars['String']>;
+  logo?: Maybe<Scalars['String']>;
   displayName?: Maybe<Scalars['String']>;
   shortName?: Maybe<Scalars['String']>;
   website?: Maybe<Scalars['String']>;
@@ -77,7 +78,7 @@ export type Mutation = {
 
 
 export type MutationCreateCompanyArgs = {
-  data?: Maybe<UpdateCompany>;
+  data: UpdateCompany;
 };
 
 
@@ -103,7 +104,7 @@ export type MutationDeleteUserByIssuerArgs = {
 
 export type MutationUpdateCompanyArgs = {
   id: Scalars['String'];
-  data?: Maybe<UpdateCompany>;
+  data: UpdateCompany;
 };
 
 
@@ -185,6 +186,7 @@ export type UpdateAddress = {
 
 export type UpdateCompany = {
   name?: Maybe<Scalars['String']>;
+  logo?: Maybe<Scalars['String']>;
   displayName?: Maybe<Scalars['String']>;
   shortName?: Maybe<Scalars['String']>;
   website?: Maybe<Scalars['String']>;
@@ -227,9 +229,11 @@ export type User = {
 
 export type UserProfile = {
   __typename?: 'UserProfile';
+  id: Scalars['String'];
   phone?: Maybe<Scalars['String']>;
   avatar?: Maybe<Scalars['String']>;
   mobile?: Maybe<Scalars['String']>;
+  userId?: Maybe<Scalars['String']>;
   companyId?: Maybe<Scalars['String']>;
   address?: Maybe<Address>;
   lastName?: Maybe<Scalars['String']>;
@@ -376,6 +380,7 @@ export type AddressResolvers<ContextType = any, ParentType extends ResolversPare
 export type CompanyResolvers<ContextType = any, ParentType extends ResolversParentTypes['Company'] = ResolversParentTypes['Company']> = {
   id?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   name?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  logo?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   displayName?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   shortName?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   website?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
@@ -420,12 +425,12 @@ export interface JsonObjectScalarConfig extends GraphQLScalarTypeConfig<Resolver
 }
 
 export type MutationResolvers<ContextType = any, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = {
-  createCompany?: Resolver<ResolversTypes['Company'], ParentType, ContextType, RequireFields<MutationCreateCompanyArgs, never>>;
+  createCompany?: Resolver<ResolversTypes['Company'], ParentType, ContextType, RequireFields<MutationCreateCompanyArgs, 'data'>>;
   deleteCompany?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType, RequireFields<MutationDeleteCompanyArgs, 'id'>>;
   deleteUserByEmail?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType, RequireFields<MutationDeleteUserByEmailArgs, 'email'>>;
   deleteUserById?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType, RequireFields<MutationDeleteUserByIdArgs, 'id'>>;
   deleteUserByIssuer?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType, RequireFields<MutationDeleteUserByIssuerArgs, 'issuer'>>;
-  updateCompany?: Resolver<ResolversTypes['Company'], ParentType, ContextType, RequireFields<MutationUpdateCompanyArgs, 'id'>>;
+  updateCompany?: Resolver<ResolversTypes['Company'], ParentType, ContextType, RequireFields<MutationUpdateCompanyArgs, 'id' | 'data'>>;
   updateCompanyProfile?: Resolver<ResolversTypes['CompanyProfile'], ParentType, ContextType, RequireFields<MutationUpdateCompanyProfileArgs, 'companyId'>>;
   updateUserProfile?: Resolver<ResolversTypes['UserProfile'], ParentType, ContextType, RequireFields<MutationUpdateUserProfileArgs, 'userId' | 'data'>>;
 };
@@ -464,9 +469,11 @@ export type UserResolvers<ContextType = any, ParentType extends ResolversParentT
 };
 
 export type UserProfileResolvers<ContextType = any, ParentType extends ResolversParentTypes['UserProfile'] = ResolversParentTypes['UserProfile']> = {
+  id?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   phone?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   avatar?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   mobile?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  userId?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   companyId?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   address?: Resolver<Maybe<ResolversTypes['Address']>, ParentType, ContextType>;
   lastName?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;

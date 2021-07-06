@@ -15,6 +15,7 @@ describe('services/company', () => {
   const data = {
     name: 'Test Company',
     shortName: 'TC',
+    logo: 'company-logo.png',
     displayName: 'Test Company Pty Ltd.',
     website: 'https://www.tc.com.au'
   }
@@ -33,6 +34,7 @@ describe('services/company', () => {
 
     expect(company.id).not.toBeNull()
     expect(company.name).toEqual(data.name)
+    expect(company.logo).toEqual(data.logo)
     expect(company.shortName).toEqual(data.shortName)
     expect(company.displayName).toEqual(data.displayName)
     expect(company.website).toEqual(data.website)
@@ -66,9 +68,10 @@ describe('services/company', () => {
       name: 'Test Company 2',
       website: 'https://www.tc2.com.au'
     }
-    const company = await updateCompany({ id: companyId, ...newData })
+    const company = await updateCompany({ id: companyId, data: newData })
 
     expect(company.name).toEqual(newData.name)
+    expect(company.logo).toEqual(data.logo)
     expect(company.shortName).toEqual(data.shortName)
     expect(company.displayName).toEqual(data.displayName)
     expect(company.website).toEqual(newData.website)

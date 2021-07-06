@@ -1,14 +1,80 @@
+import {
+  FieldError,
+  Form,
+  FormError,
+  Submit,
+  TelField,
+  TextField
+} from '@redwoodjs/forms'
+import { useMutation } from '@redwoodjs/web'
+import { useCallback } from 'react'
+import { useForm } from 'react-hook-form'
 import { RiInformationLine } from 'react-icons/ri'
 import DateTimeString from 'src/components/DateTimeString'
-import type { GetUserById } from 'web/types/graphql'
+import type {
+  GetUserById,
+  UpdateUserProfile,
+  UserProfile
+} from 'web/types/graphql'
+import AddressForm from './AddressForm'
+import FormFieldTr from './FormFieldTr'
 
 interface Props {
-  user: GetUserById['getUserById']
+  user: GetUserById['user']
 }
 
+export const MUTATION = gql`
+  mutation UpdateUserProfile($userId: String!, $data: UpdateUserProfile!) {
+    userProfile: updateUserProfile(userId: $userId, data: $data) {
+      id
+      avatar
+      fullName
+      firstName
+      lastName
+      mobile
+      phone
+      companyId
+      updatedAt
+      address {
+        name
+        state
+        street
+        suburb
+        country
+        postalCode
+        updatedAt
+      }
+    }
+  }
+`
+
 const ProfileCard = ({ user }: Props) => {
+  const { formState, reset, ...formMethods } = useForm<UpdateUserProfile>()
+  const [updateProfile, { loading, error }] = useMutation<UserProfile>(
+    MUTATION,
+    {
+      onCompleted: () => {
+        reset()
+      }
+    }
+  )
+  const handleSubmit = useCallback(
+    ({ address, ...profile }: UpdateUserProfile) => {
+      const data = formState.dirtyFields.address
+        ? { address, ...profile }
+        : { ...profile }
+      updateProfile({ variables: { userId: user.id, data } })
+    },
+    [formState, user, updateProfile]
+  )
+
   return (
-    <>
+    <Form
+      formMethods={{ reset, formState, ...formMethods }}
+      onSubmit={handleSubmit}
+      validation={{ mode: 'onBlur' }}
+    >
+      {error && <FormError error={error} />}
       <div className="flex gap-10 flex-col lg:flex-row lg:items-start mt-10">
         <div className="card shadow-lg bg-base-100 flex-1">
           <div className="card-body">
@@ -16,11 +82,13 @@ const ProfileCard = ({ user }: Props) => {
             <table className="table table-zebra w-full">
               <tbody>
                 <tr>
-                  <th className="lg:w-48">Name</th>
-                  <td className="text-sm">{user.profile?.fullName ?? '-'}</td>
+                  <th className="lg:w-48 hidden md:table-cell">Name</th>
+                  <td className="text-sm rounded-lg md:rounded-none">
+                    {user?.profile?.fullName ?? '-'}
+                  </td>
                 </tr>
                 <tr>
-                  <th className="lg:w-48">
+                  <th className="lg:w-48 hidden md:table-cell">
                     Email
                     <div
                       data-tip="Contact us to change it"
@@ -32,10 +100,12 @@ const ProfileCard = ({ user }: Props) => {
                       />
                     </div>
                   </th>
-                  <td className="text-sm">{user.email}</td>
+                  <td className="text-sm rounded-lg md:rounded-none">
+                    {user.email}
+                  </td>
                 </tr>
                 <tr>
-                  <th className="lg:w-48">
+                  <th className="lg:w-48 hidden md:table-cell">
                     Role
                     <div
                       data-tip="TODO"
@@ -47,66 +117,86 @@ const ProfileCard = ({ user }: Props) => {
                       />
                     </div>
                   </th>
-                  <td className="text-sm">{user.role}</td>
+                  <td className="text-sm rounded-lg md:rounded-none">
+                    {user.role}
+                  </td>
                 </tr>
                 <tr>
-                  <th className="lg:w-48">Last logged in</th>
-                  <td className="text-sm">
+                  <th className="lg:w-48 hidden md:table-cell">
+                    Last logged in
+                  </th>
+                  <td className="text-sm rounded-lg md:rounded-none">
                     <DateTimeString date={user.logOn} />
                   </td>
                 </tr>
                 {user.logOff ? (
                   <tr>
-                    <th className="lg:w-48">Last logged off</th>
-                    <td>
+                    <th className="lg:w-48 hidden md:table-cell">
+                      Last logged off
+                    </th>
+                    <td className="text-sm rounded-lg md:rounded-none">
                       <DateTimeString date={user.logOff} />
                     </td>
                   </tr>
                 ) : null}
-                <tr>
-                  <th className="lg:w-48">First Name</th>
-                  <td>
-                    <input
-                      type="text"
-                      placeholder="e.g. David"
-                      className="input input-sm input-bordered w-full"
-                      value={user.profile?.firstName}
-                    />
-                  </td>
-                </tr>
-                <tr>
-                  <th className="lg:w-48">Last Name</th>
-                  <td>
-                    <input
-                      type="text"
-                      placeholder="e.g. Jones"
-                      className="input input-sm input-bordered w-full"
-                      value={user.profile?.lastName}
-                    />
-                  </td>
-                </tr>
-                <tr>
-                  <th className="lg:w-48">Phone</th>
-                  <td>
-                    <input
-                      type="text"
-                      placeholder="e.g. +61400000000"
-                      className="input input-sm input-bordered w-full"
-                      value={user.profile?.phone}
-                    />
-                  </td>
-                </tr>
-                <tr>
-                  <th className="lg:w-48">Mobile</th>
-                  <td>
-                    <input
-                      type="text"
-                      placeholder="e.g. +61400000000"
-                      className="input input-sm input-bordered w-full"
-                      value={user.profile?.mobile}
-                    />
-                  </td>
-                </tr>
+                <FormFieldTr name="firstName" label="First name">
+                  <TextField
+                    name="firstName"
+                    disabled={loading}
+                    placeholder="e.g. David"
+                    defaultValue={user?.profile?.firstName}
+                    validation={{ pattern: /^[A-Za-z-]+$/i }}
+                    className="input input-sm input-bordered w-full"
+                    errorClassName="input input-bordered input-error"
+                  />
+                  <FieldError
+                    name="firstName"
+                    className="mt-1 label-text-alt text-error"
+                  />
+                </FormFieldTr>
+                <FormFieldTr name="lastName" label="Last name">
+                  <TextField
+                    name="lastName"
+                    disabled={loading}
+                    placeholder="e.g. Jones"
+                    defaultValue={user?.profile?.lastName}
+                    validation={{ pattern: /^[A-Za-z]+$/i }}
+                    className="input input-sm input-bordered w-full"
+                    errorClassName="input input-bordered input-error"
+                  />
+                  <FieldError
+                    name="lastName"
+                    className="mt-1 label-text-alt text-error"
+                  />
+                </FormFieldTr>
+                <FormFieldTr name="phone" label="Phone">
+                  <TelField
+                    name="phone"
+                    disabled={loading}
+                    placeholder="e.g. +61400000000"
+                    defaultValue={user?.profile?.phone}
+                    className="input input-sm input-bordered w-full"
+                    errorClassName="input input-bordered input-error"
+                  />
+                  <FieldError
+                    name="phone"
+                    className="mt-1 label-text-alt text-error"
+                  />
+                </FormFieldTr>
+                <FormFieldTr name="mobile" label="Mobile">
+                  <TelField
+                    name="mobile"
+                    disabled={loading}
+                    placeholder="e.g. +61400000000"
+                    defaultValue={user?.profile?.mobile}
+                    className="input input-sm input-bordered w-full"
+                    errorClassName="input input-bordered input-error"
+                  />
+                  <FieldError
+                    name="mobile"
+                    className="mt-1 label-text-alt text-error"
+                  />
+                </FormFieldTr>
               </tbody>
             </table>
           </div>
@@ -121,76 +211,24 @@ const ProfileCard = ({ user }: Props) => {
             </div>
             <table className="table table-zebra w-full">
               <tbody>
-                <tr>
-                  <th className="lg:w-48">Name</th>
-                  <td>
-                    <input
-                      type="text"
-                      placeholder="e.g. My house"
-                      className="input input-sm input-bordered w-full"
-                    />
-                  </td>
-                </tr>
-                <tr>
-                  <th className="lg:w-48">Street</th>
-                  <td>
-                    <input
-                      type="text"
-                      placeholder="e.g. 120/20 George St."
-                      className="input input-sm input-bordered w-full"
-                    />
-                  </td>
-                </tr>
-                <tr>
-                  <th className="lg:w-48">Suburb</th>
-                  <td>
-                    <input
-                      type="text"
-                      placeholder="e.g. Sydney"
-                      className="input input-sm input-bordered w-full"
-                    />
-                  </td>
-                </tr>
-                <tr>
-                  <th className="lg:w-48">State</th>
-                  <td>
-                    <input
-                      type="text"
-                      placeholder="e.g. NSW"
-                      className="input input-sm input-bordered w-full"
-                    />
-                  </td>
-                </tr>
-                <tr>
-                  <th className="lg:w-48">Postal code</th>
-                  <td>
-                    <input
-                      type="text"
-                      placeholder="e.g. 2200"
-                      className="input input-sm input-bordered w-full"
-                    />
-                  </td>
-                </tr>
-                <tr>
-                  <th className="lg:w-48">Country</th>
-                  <td>
-                    <input
-                      type="text"
-                      placeholder="e.g. Australia"
-                      className="input input-sm input-bordered w-full"
-                    />
-                  </td>
-                </tr>
+                <AddressForm
+                  loading={loading}
+                  address={user?.profile?.address}
+                />
               </tbody>
             </table>
           </div>
         </div>
       </div>
       <div className="my-10 text-right">
-        <button className="btn btn-primary mr-2">Save</button>
-        <button className="btn btn-ghost">Cancel</button>
+        <Submit
+          disabled={loading || !formState.isDirty}
+          className={`btn btn-primary mr-2 ${loading ? 'loading' : ''}`}
+        >
+          Save
+        </Submit>
       </div>
-    </>
+    </Form>
   )
 }
 

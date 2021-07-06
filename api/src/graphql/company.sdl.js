@@ -2,6 +2,7 @@ export const schema = gql`
   type Company {
     id: String!
     name: String
+    logo: String
     displayName: String
     shortName: String
     website: String
@@ -12,6 +13,7 @@ export const schema = gql`
 
   input UpdateCompany {
     name: String
+    logo: String
     displayName: String
     shortName: String
     website: String
@@ -24,7 +26,7 @@ export const schema = gql`
 
   type Mutation {
     deleteCompany(id: String!): Boolean
-    createCompany(data: UpdateCompany): Company!
-    updateCompany(id: String!, data: UpdateCompany): Company!
+    createCompany(data: UpdateCompany!): Company!
+    updateCompany(id: String!, data: UpdateCompany!): Company!
   }
 `

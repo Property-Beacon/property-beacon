@@ -1,8 +1,10 @@
 export const schema = gql`
   type UserProfile {
+    id: String!
     phone: String
     avatar: String
     mobile: String
+    userId: String
     companyId: String
     address: Address
     lastName: String

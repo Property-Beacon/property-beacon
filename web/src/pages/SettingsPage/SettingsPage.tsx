@@ -14,8 +14,12 @@ const SettingsPage = () => {
   const { hasRole, currentUser } = useAuth()
   const { name } = useParams()
   const [loading, setLoading] = useState(true)
-  const [user, setUser] = useState<GetUserById['getUserById']>(currentUser)
+  const [user, setUser] = useState<GetUserById['user']>(currentUser)
   const { watchQuery } = useApolloClient()
+  const commonTabs = ['profile']
+  const tabs = hasRole(['ADMIN', 'CUSTOMER', 'CLIENT'])
+    ? [...commonTabs, 'organization']
+    : commonTabs
 
   useEffect(
     () => {
@@ -24,7 +28,7 @@ const SettingsPage = () => {
         variables: { id: currentUser.id },
         fetchPolicy: 'cache-first',
         nextFetchPolicy: 'cache-first'
-      }).subscribe(({ loading, data: { getUserById: userData } }) => {
+      }).subscribe(({ loading, data: { user: userData } }) => {
         setLoading(loading)
         setUser(userData)
       })
@@ -80,13 +84,13 @@ const SettingsPage = () => {
               </div>
             </div>
           </div>
-          <div className="w-32 h-32 mx-auto">
+          <div className="w-32 h-32 mx-auto text-5xl">
             <AvatarCell id={currentUser.id} />
           </div>
         </div>
       </div>
       <div className="tabs mt-14">
-        {['profile', 'organization'].map((name) => (
+        {tabs.map((name) => (
           <NavLink
             key={name}
             activeClassName="border-primary font-bold text-neutral"
@@ -100,8 +104,8 @@ const SettingsPage = () => {
       <div className="mt-4">
         {name === 'profile' && <ProfileCard user={user} />}
         {name === 'organization' &&
-          !!user.profile?.companyId &&
-          hasRole(['ADMIN', 'CUSTOMER', 'CLIENT']) && (
+          tabs.includes(name) &&
+          !!user.profile?.companyId && (
             <OrganizationCard companyId={user.profile.companyId} />
           )}
       </div>

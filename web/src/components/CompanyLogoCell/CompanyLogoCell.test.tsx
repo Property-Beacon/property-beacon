@@ -1,8 +1,8 @@
 import { render, screen } from '@redwoodjs/testing'
-import { Loading, Empty, Failure, Success } from './CompanyCell'
-import { standard } from './CompanyCell.mock'
+import { Loading, Empty, Failure, Success } from './CompanyLogoCell'
+import { standard } from './CompanyLogoCell.mock'
 
-describe('CompanyCell', () => {
+describe('CompanyLogoCell', () => {
   it('renders Loading successfully', () => {
     expect(() => {
       render(<Loading />)
@@ -29,7 +29,7 @@ describe('CompanyCell', () => {
 
   it('renders Success successfully', async () => {
     expect(() => {
-      render(<Success company={standard().company} />)
+      render(<Success companyLogo={standard().companyLogo} />)
     }).not.toThrow()
   })
 })
