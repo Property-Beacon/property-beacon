@@ -32,7 +32,7 @@ interface Props {
   companyId: string
 }
 
-export const MUTATION = gql`
+export const COMPANY_MUTATION = gql`
   mutation UpdateCompany($id: String!, $data: UpdateCompany!) {
     company: updateCompany(id: $id, data: $data) {
       id
@@ -47,7 +47,7 @@ export const MUTATION = gql`
   }
 `
 
-export const PROFILE_MUTATION = gql`
+export const COMPANY_PROFILE_MUTATION = gql`
   mutation UpdateCompanyProfile(
     $companyId: String!
     $data: UpdateCompanyProfile!
@@ -85,7 +85,7 @@ const OrganizationCard = ({ companyId }: Props) => {
   const [
     updateCompany,
     { loading: companyUpdating, error: companyUpdateError }
-  ] = useMutation(MUTATION, {
+  ] = useMutation(COMPANY_MUTATION, {
     onCompleted: () => {
       reset()
     }
@@ -93,7 +93,7 @@ const OrganizationCard = ({ companyId }: Props) => {
   const [
     updateCompanyProfile,
     { loading: companyProfileUpdating, error: companyProfileUpdateError }
-  ] = useMutation(PROFILE_MUTATION, {
+  ] = useMutation(COMPANY_PROFILE_MUTATION, {
     onCompleted: () => {
       reset()
     }
