@@ -69,6 +69,12 @@ MAGICLINK_PUBLIC={askMeTheKey}
 MAGICLINK_SECRET={askMeTheKey}
 ```
 
+add `Filestack` CDN key
+
+```
+REDWOOD_ENV_FILESTACK_API_KEY={askMeTheKey}
+```
+
 ### Local database (PostgreSQL + PgAdmin)
 
 Install `Docker Desktop` which comes with CLI `docker`

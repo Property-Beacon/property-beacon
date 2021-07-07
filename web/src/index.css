@@ -36,6 +36,10 @@ body {
   @apply bg-primary-focus text-primary-content;
 }
 
+button:focus {
+  outline: none;
+}
+
 .navbar,
 .layout-content {
   max-width: 1120px;
