@@ -1,11 +1,12 @@
 interface Props {
   date: Date | string
+  locale?: string
   options?: Intl.DateTimeFormatOptions
 }
 
-const DateTimeString = ({ date, options }: Props) => {
+const DateTimeString = ({ date, locale, options }: Props) => {
   const formatter = new Intl.DateTimeFormat(
-    navigator.language,
+    locale || navigator.language,
     options || {
       year: 'numeric',
       month: 'numeric',
