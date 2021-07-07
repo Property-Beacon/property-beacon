@@ -58,10 +58,10 @@ const SettingsPage = () => {
                 {user.profile?.fullName ?? '-'}
               </div>
             )}
-            <div className="flex place-items-center">
+            <div className="flex place-items-center flex-col-reverse sm:flex-row gap-1">
               <div className="badge badge-ghost badge-lg">{user.email}</div>
-              <div className="flex place-items-center text-success text-sm ml-1 font-semibold">
-                <RiAdminLine size={22} />
+              <div className="flex place-items-center text-success text-sm font-semibold">
+                <RiAdminLine size={20} />
                 {user.role}
               </div>
             </div>
