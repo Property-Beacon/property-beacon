@@ -36,6 +36,10 @@ body {
   @apply bg-primary-focus text-primary-content;
 }
 
+button:focus {
+  outline: none;
+}
+
 .navbar,
 .layout-content {
   max-width: 1120px;
@@ -58,7 +62,7 @@ body {
 
 @screen lg {
   .home .login-box {
-    flex-basis: 600px;
+    flex-basis: 500px;
   }
   .home :not(.login-box) > .card {
     height: theme('spacing.96');

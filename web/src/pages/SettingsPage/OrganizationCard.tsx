@@ -1,4 +1,4 @@
-import { useApolloClient } from '@apollo/client'
+import { useApolloClient, useMutation } from '@apollo/client'
 import {
   EmailField,
   FieldError,
@@ -9,15 +9,20 @@ import {
   TextField,
   UrlField
 } from '@redwoodjs/forms'
-import { useMutation } from '@redwoodjs/web'
 import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import CompanyLogoCell, { QUERY } from 'src/components/CompanyLogoCell'
+import ImageUploaderOverlay, {
+  FailedFile
+} from 'src/components/ImageUploaderOverlay'
+import { useMainLayoutContext } from 'src/layouts/MainLayout'
 import type {
   GetCompany,
   GetCompanyVariables,
   UpdateCompany,
-  UpdateCompanyProfile
+  UpdateCompanyProfile,
+  UpdateCompanyProfileVariables,
+  UpdateCompanyVariables
 } from 'web/types/graphql'
 import AddressForm from './AddressForm'
 import FormFieldTr from './FormFieldTr'
@@ -81,11 +86,13 @@ export const COMPANY_PROFILE_MUTATION = gql`
 
 const OrganizationCard = ({ companyId }: Props) => {
   const { watchQuery } = useApolloClient()
+  const { setAlert } = useMainLayoutContext()
+  const [showUploader, setShowUploader] = useState(false)
   const { formState, reset, ...formMethods } = useForm<OrganizationForm>()
   const [
     updateCompany,
     { loading: companyUpdating, error: companyUpdateError }
-  ] = useMutation(COMPANY_MUTATION, {
+  ] = useMutation<UpdateCompany, UpdateCompanyVariables>(COMPANY_MUTATION, {
     onCompleted: () => {
       reset()
     }
@@ -93,11 +100,14 @@ const OrganizationCard = ({ companyId }: Props) => {
   const [
     updateCompanyProfile,
     { loading: companyProfileUpdating, error: companyProfileUpdateError }
-  ] = useMutation(COMPANY_PROFILE_MUTATION, {
-    onCompleted: () => {
-      reset()
+  ] = useMutation<UpdateCompanyProfile, UpdateCompanyProfileVariables>(
+    COMPANY_PROFILE_MUTATION,
+    {
+      onCompleted: () => {
+        reset()
+      }
     }
-  })
+  )
   const [company, setCompany] = useState<GetCompany['company']>()
   const error = companyUpdateError || companyProfileUpdateError
   const loading = companyUpdating || companyProfileUpdating
@@ -118,6 +128,14 @@ const OrganizationCard = ({ companyId }: Props) => {
         variables: { companyId, data: { ...profile, address } }
       })
     }
+  }
+
+  const handleUploadSuccess = (urls) => {
+    updateCompany({ variables: { id: companyId, data: { logo: urls[0] } } })
+  }
+
+  const handleUploadError = (error: FailedFile[]) => {
+    setAlert({ level: 'error', message: error[0].message })
   }
 
   useEffect(
@@ -142,15 +160,44 @@ const OrganizationCard = ({ companyId }: Props) => {
       formMethods={{ reset, formState, ...formMethods }}
     >
       {error && <FormError error={error} />}
-      <div className="flex gap-10 flex-col lg:flex-row lg:items-start mt-10">
+      <div
+        className={`flex gap-10 flex-col lg:flex-row lg:items-start mt-10 ${
+          showUploader && 'opacity-95'
+        }`}
+      >
         <div className="card shadow-lg bg-base-100 flex-1">
           <div className="card-body">
             <div className="card-title">Organization Information</div>
             <div className="h-28 w-28 text-4xl mx-auto mt-10 mb-6">
-              <CompanyLogoCell id={companyId} />
+              <div
+                data-tip="Click to upload logo"
+                className="tooltip tooltip-primary w-full h-full"
+              >
+                <button
+                  disabled={loading}
+                  className="w-full h-full"
+                  onClick={() => setShowUploader(true)}
+                >
+                  <CompanyLogoCell id={companyId} />
+                </button>
+              </div>
             </div>
             <table className="table table-zebra w-full">
               <tbody>
+                <FormFieldTr name="displayName" label="Display name">
+                  <TextField
+                    name="displayName"
+                    disabled={loading}
+                    placeholder="e.g. NSW ECUMENICAL COUNCIL INC"
+                    defaultValue={company?.displayName}
+                    className="input input-sm input-bordered w-full"
+                    errorClassName="input input-bordered input-error"
+                  />
+                  <FieldError
+                    name="displayName"
+                    className="mt-1 label-text-alt text-error"
+                  />
+                </FormFieldTr>
                 <FormFieldTr name="name" label="Name">
                   <TextField
                     name="name"
@@ -179,17 +226,17 @@ const OrganizationCard = ({ companyId }: Props) => {
                     className="mt-1 label-text-alt text-error"
                   />
                 </FormFieldTr>
-                <FormFieldTr name="displayName" label="Display name">
+                <FormFieldTr name="profile.fullName" label="Full name">
                   <TextField
-                    name="displayName"
+                    name="profile.fullName"
                     disabled={loading}
-                    placeholder="e.g. NSW ECUMENICAL COUNCIL INC"
-                    defaultValue={company?.displayName}
+                    placeholder="e.g. NEW SOUTH WALES ECUMENICAL COUNCIL INCORPORATED"
+                    defaultValue={company?.profile?.fullName}
                     className="input input-sm input-bordered w-full"
                     errorClassName="input input-bordered input-error"
                   />
                   <FieldError
-                    name="displayName"
+                    name="profile.fullName"
                     className="mt-1 label-text-alt text-error"
                   />
                 </FormFieldTr>
@@ -204,20 +251,6 @@ const OrganizationCard = ({ companyId }: Props) => {
                   />
                   <FieldError
                     name="website"
-                    className="mt-1 label-text-alt text-error"
-                  />
-                </FormFieldTr>
-                <FormFieldTr name="profile.fullName" label="Full name">
-                  <TextField
-                    name="profile.fullName"
-                    disabled={loading}
-                    placeholder="e.g. NEW SOUTH WALES ECUMENICAL COUNCIL INCORPORATED"
-                    defaultValue={company?.profile?.fullName}
-                    className="input input-sm input-bordered w-full"
-                    errorClassName="input input-bordered input-error"
-                  />
-                  <FieldError
-                    name="profile.fullName"
                     className="mt-1 label-text-alt text-error"
                   />
                 </FormFieldTr>
@@ -375,7 +408,7 @@ const OrganizationCard = ({ companyId }: Props) => {
           </div>
         </div>
       </div>
-      <div className="my-10 text-right">
+      <div className={`my-10 text-right ${showUploader && 'opacity-95'}`}>
         <Submit
           disabled={loading || !formState.isDirty}
           className={`btn btn-primary mr-2 ${loading ? 'loading' : ''}`}
@@ -383,6 +416,13 @@ const OrganizationCard = ({ companyId }: Props) => {
           Save
         </Submit>
       </div>
+      {showUploader && (
+        <ImageUploaderOverlay
+          onError={handleUploadError}
+          onSuccess={handleUploadSuccess}
+          onClose={() => setShowUploader(false)}
+        />
+      )}
     </Form>
   )
 }

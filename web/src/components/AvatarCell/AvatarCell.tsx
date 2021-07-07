@@ -36,19 +36,21 @@ export const QUERY = gql`
 `
 
 type Props = {
-  user?: GetUserById['user']
   loading?: boolean
+  user?: GetUserById['user']
   error?: CellFailureProps['error']
 }
 
 const Avatar = ({ user, loading, error }: Props) => {
-  const avatar = user?.profile?.avatar
-  const initials = user?.profile?.firstName
-    ? [
-        (user?.profile.firstName || '').charAt(0).toUpperCase(),
-        (user?.profile?.lastName || '').charAt(0).toUpperCase()
-      ].join('')
-    : user?.email?.charAt(0).toUpperCase()
+  const avatar = user?.profile.avatar
+  const initials = user
+    ? user.profile.firstName
+      ? [
+          (user.profile.firstName || '').charAt(0).toUpperCase(),
+          (user.profile.lastName || '').charAt(0).toUpperCase()
+        ].join('')
+      : user.email.charAt(0).toUpperCase()
+    : '?'
 
   return (
     <div className="avatar placeholder h-full w-full">
@@ -56,15 +58,18 @@ const Avatar = ({ user, loading, error }: Props) => {
         <div className="bg-primary-focus text-primary-content h-full w-full rounded-full animate-pulse"></div>
       ) : error ? (
         <div className="bg-base-100 h-full w-full rounded-full">
-          <div data-tip={error.message} className="tooltip tooltip-error">
-            <AiOutlineStop size={16} className="text-error" />
-          </div>
+          <AiOutlineStop size={16} className="text-error" />
         </div>
       ) : avatar ? (
-        <img alt="avatar" loading="lazy" src={avatar} />
+        <img
+          alt="avatar"
+          src={avatar}
+          loading="lazy"
+          className="rounded-full"
+        />
       ) : (
         <div className="bg-primary-focus text-primary-content h-full w-full rounded-full">
-          {initials || 'N/A'}
+          {initials}
         </div>
       )}
     </div>

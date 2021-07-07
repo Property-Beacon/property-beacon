@@ -1,3 +1,4 @@
+import { useMutation } from '@apollo/client'
 import {
   FieldError,
   Form,
@@ -6,7 +7,6 @@ import {
   TelField,
   TextField
 } from '@redwoodjs/forms'
-import { useMutation } from '@redwoodjs/web'
 import { useCallback } from 'react'
 import { useForm } from 'react-hook-form'
 import { RiInformationLine } from 'react-icons/ri'
@@ -15,7 +15,7 @@ import type {
   GetUserById,
   MakeOptional,
   UpdateUserProfile,
-  UserProfile
+  UpdateUserProfileVariables
 } from 'web/types/graphql'
 import AddressForm from './AddressForm'
 import FormFieldTr from './FormFieldTr'
@@ -51,14 +51,14 @@ export const MUTATION = gql`
 
 const ProfileCard = ({ user }: Props) => {
   const { formState, reset, ...formMethods } = useForm<UpdateUserProfile>()
-  const [updateProfile, { loading, error }] = useMutation<UserProfile>(
-    MUTATION,
-    {
-      onCompleted: () => {
-        reset()
-      }
+  const [updateProfile, { loading, error }] = useMutation<
+    UpdateUserProfile,
+    UpdateUserProfileVariables
+  >(MUTATION, {
+    onCompleted: () => {
+      reset()
     }
-  )
+  })
   const handleSubmit = useCallback(
     ({ address, ...profile }: UpdateUserProfile) => {
       const data = formState.dirtyFields.address

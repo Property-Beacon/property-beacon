@@ -2,7 +2,7 @@
 
 <img src="web/public/images/icons/icon-72x72.png" alt="Property Beacon">
 
-Property Beacon is an online platform that enables the booking, monitoring and enforcing of compliant property signage withing the Real Estate sector.
+Property Beacon is an online platform that enables the booking, monitoring and enforcing of compliant property signage withing the council's zone.
 
 ## Docs 📁
 
@@ -20,6 +20,7 @@ All technical 👨‍💻👩‍💻 documentations of Property Beacon
   - [GraphQL API](docs/GRAPHQL.md)
 
 - Frontend
+  - [CDN](docs/CDN.md)
 
 ### Coding conventions and standards
 
@@ -67,6 +68,12 @@ then add `MagicLink`[(?)](docs/AUTHENTICATION.md) keys
 ```
 MAGICLINK_PUBLIC={askMeTheKey}
 MAGICLINK_SECRET={askMeTheKey}
+```
+
+add `Filestack` CDN[(?)](docs/CDN.md) key
+
+```
+REDWOOD_ENV_FILESTACK_API_KEY={askMeTheKey}
 ```
 
 ### Local database (PostgreSQL + PgAdmin)

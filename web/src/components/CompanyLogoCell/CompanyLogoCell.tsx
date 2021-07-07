@@ -42,8 +42,8 @@ export const QUERY = gql`
 `
 
 type Props = {
-  company?: GetCompany['company']
   loading?: boolean
+  company?: GetCompany['company']
   error?: CellFailureProps['error']
 }
 
@@ -60,13 +60,16 @@ const CompanyLogo = ({ company, loading, error }: Props) => (
     {loading ? (
       <div className="bg-primary-focus text-primary-content h-full w-full mask mask-squircle animate-pulse"></div>
     ) : error ? (
-      <div className="bg-base-100 h-full w-full mask mask-squircle">
-        <div data-tip={error.message} className="tooltip tooltip-error">
-          <AiOutlineStop size={16} className="text-error" />
-        </div>
+      <div className="bg-base-200 h-full w-full mask mask-squircle">
+        <AiOutlineStop size={16} className="text-error" />
       </div>
     ) : company?.logo ? (
-      <img alt="company-logo" loading="lazy" src={company.logo} />
+      <img
+        loading="lazy"
+        src={company.logo}
+        alt="company-logo"
+        className="mask mask-squircle"
+      />
     ) : (
       <div className="bg-primary-focus text-primary-content h-full w-full mask mask-squircle">
         {(
@@ -75,7 +78,7 @@ const CompanyLogo = ({ company, loading, error }: Props) => (
             company?.name ||
             company?.shortName ||
             ''
-          ).charAt(0) || 'n/a'
+          ).charAt(0) || '?'
         ).toUpperCase()}
       </div>
     )}
