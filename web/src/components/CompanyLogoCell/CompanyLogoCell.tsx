@@ -60,7 +60,7 @@ const CompanyLogo = ({ company, loading, error }: Props) => (
     {loading ? (
       <div className="bg-primary-focus text-primary-content h-full w-full mask mask-squircle animate-pulse"></div>
     ) : error ? (
-      <div className="bg-base-100 h-full w-full mask mask-squircle">
+      <div className="bg-base-200 h-full w-full mask mask-squircle">
         <AiOutlineStop size={16} className="text-error" />
       </div>
     ) : company?.logo ? (

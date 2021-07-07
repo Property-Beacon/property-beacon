@@ -171,10 +171,11 @@ const OrganizationCard = ({ companyId }: Props) => {
             <div className="h-28 w-28 text-4xl mx-auto mt-10 mb-6">
               <div
                 data-tip="Click to upload logo"
-                className="tooltip tooltip-primary"
+                className="tooltip tooltip-primary w-full h-full"
               >
                 <button
                   disabled={loading}
+                  className="w-full h-full"
                   onClick={() => setShowUploader(true)}
                 >
                   <CompanyLogoCell id={companyId} />
