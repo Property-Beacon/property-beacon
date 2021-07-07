@@ -118,11 +118,16 @@ const SettingsPage = () => {
                 </div>
               </div>
             </div>
-            <button disabled={updating} onClick={() => setShowUploader(true)}>
-              <div className="w-32 h-32 mx-auto text-5xl">
-                <AvatarCell id={currentUser.id} />
-              </div>
-            </button>
+            <div
+              data-tip="Click to upload photo"
+              className="tooltip tooltip-primary"
+            >
+              <button disabled={updating} onClick={() => setShowUploader(true)}>
+                <div className="w-32 h-32 mx-auto text-5xl">
+                  <AvatarCell id={currentUser.id} />
+                </div>
+              </button>
+            </div>
           </div>
         </div>
         <div className="tabs mt-14">

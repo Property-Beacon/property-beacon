@@ -168,13 +168,35 @@ const OrganizationCard = ({ companyId }: Props) => {
         <div className="card shadow-lg bg-base-100 flex-1">
           <div className="card-body">
             <div className="card-title">Organization Information</div>
-            <button disabled={loading} onClick={() => setShowUploader(true)}>
-              <div className="h-28 w-28 text-4xl mx-auto mt-10 mb-6">
-                <CompanyLogoCell id={companyId} />
+            <div className="h-28 w-28 text-4xl mx-auto mt-10 mb-6">
+              <div
+                data-tip="Click to upload logo"
+                className="tooltip tooltip-primary"
+              >
+                <button
+                  disabled={loading}
+                  onClick={() => setShowUploader(true)}
+                >
+                  <CompanyLogoCell id={companyId} />
+                </button>
               </div>
-            </button>
+            </div>
             <table className="table table-zebra w-full">
               <tbody>
+                <FormFieldTr name="displayName" label="Display name">
+                  <TextField
+                    name="displayName"
+                    disabled={loading}
+                    placeholder="e.g. NSW ECUMENICAL COUNCIL INC"
+                    defaultValue={company?.displayName}
+                    className="input input-sm input-bordered w-full"
+                    errorClassName="input input-bordered input-error"
+                  />
+                  <FieldError
+                    name="displayName"
+                    className="mt-1 label-text-alt text-error"
+                  />
+                </FormFieldTr>
                 <FormFieldTr name="name" label="Name">
                   <TextField
                     name="name"
@@ -203,17 +225,17 @@ const OrganizationCard = ({ companyId }: Props) => {
                     className="mt-1 label-text-alt text-error"
                   />
                 </FormFieldTr>
-                <FormFieldTr name="displayName" label="Display name">
+                <FormFieldTr name="profile.fullName" label="Full name">
                   <TextField
-                    name="displayName"
+                    name="profile.fullName"
                     disabled={loading}
-                    placeholder="e.g. NSW ECUMENICAL COUNCIL INC"
-                    defaultValue={company?.displayName}
+                    placeholder="e.g. NEW SOUTH WALES ECUMENICAL COUNCIL INCORPORATED"
+                    defaultValue={company?.profile?.fullName}
                     className="input input-sm input-bordered w-full"
                     errorClassName="input input-bordered input-error"
                   />
                   <FieldError
-                    name="displayName"
+                    name="profile.fullName"
                     className="mt-1 label-text-alt text-error"
                   />
                 </FormFieldTr>
@@ -228,20 +250,6 @@ const OrganizationCard = ({ companyId }: Props) => {
                   />
                   <FieldError
                     name="website"
-                    className="mt-1 label-text-alt text-error"
-                  />
-                </FormFieldTr>
-                <FormFieldTr name="profile.fullName" label="Full name">
-                  <TextField
-                    name="profile.fullName"
-                    disabled={loading}
-                    placeholder="e.g. NEW SOUTH WALES ECUMENICAL COUNCIL INCORPORATED"
-                    defaultValue={company?.profile?.fullName}
-                    className="input input-sm input-bordered w-full"
-                    errorClassName="input input-bordered input-error"
-                  />
-                  <FieldError
-                    name="profile.fullName"
                     className="mt-1 label-text-alt text-error"
                   />
                 </FormFieldTr>

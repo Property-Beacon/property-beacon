@@ -49,12 +49,13 @@ const HomePage = () => {
     <div className="home">
       <div className="flex flex-col lg:flex-row items-center lg:px-10">
         <div className="flex-1 text-center lg:text-left lg:py-20">
-          <h1 className="text-4xl sm:text-5xl font-bold">Property signage,</h1>
+          <h1 className="text-4xl sm:text-5xl font-bold">
+            Property signage compliance,
+          </h1>
           <h1 className="mb-5 text-4xl sm:text-5xl font-bold">Instantly</h1>
           <p className="mb-10 text-lg text-gray-500">
-            Monitoring, enforcing and booking property signage in few clicks. By
-            the community, for the community. Your Gateway to the broader
-            audiences in the community.
+            A intuitive way to regulate and monitor property signage activity
+            within the council’s zone for the community.
           </p>
           <Link
             className="btn btn-primary"
@@ -117,11 +118,11 @@ const HomePage = () => {
             Community
           </div>
           <div className="card-body">
-            <h2 className="card-title">Monitoring</h2>
+            <h2 className="card-title">Participation</h2>
             <p className="font-light text-sm">
-              Community is the best resource for councils to monitor illegal
-              usages of property signage on the council land. Just take a photo
-              then upload to Property Beacon to get rewards, simple as that.
+              Members of the community can participate in monitoring property
+              signage via the Property Beacon app, they can earn income and in
+              turn produce income for their council community.
             </p>
           </div>
         </div>
@@ -134,11 +135,10 @@ const HomePage = () => {
             Council
           </div>
           <div className="card-body">
-            <h2 className="card-title">Enforcing</h2>
+            <h2 className="card-title">Compliance</h2>
             <p className="font-light text-sm">
-              Property Beacon deals with all the tedious works for the councils,
-              aggregating, analyzing and verifying the reported data from the
-              community, councils just need to click a button to enforce.
+              Council registers on Property Beacon platform for aggregating,
+              analyzing, verifying signage records and enforces compliance.
             </p>
           </div>
         </div>
@@ -153,10 +153,8 @@ const HomePage = () => {
           <div className="card-body">
             <h2 className="card-title">Booking</h2>
             <p className="font-light text-sm">
-              Never been this easy for real estate agent to check regulations
-              and book signage with the relevant local council, do everything in
-              one place. The best way to campaign and reach out broader audience
-              in the community via Property Beacon.
+              Simple platform for agents to check regulations and book signage
+              activity for all sale and lease property promotions.
             </p>
           </div>
         </div>

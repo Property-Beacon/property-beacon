@@ -8,7 +8,7 @@ import {
 } from 'react-icons/ai'
 import { useMainLayoutContext } from './MainLayout'
 
-export type AlertType = {
+export type MainLayoutAlertType = {
   level?: 'info' | 'success' | 'warning' | 'error'
   message?: string
   sticky?: boolean
@@ -18,7 +18,7 @@ export type AlertType = {
   children?: ReactNode
 }
 
-const Alert = () => {
+const MainLayoutAlert = () => {
   const { alert, setAlert } = useMainLayoutContext()
   const alertLevelCls = alert?.level
     ? alert.level === 'error'
@@ -59,7 +59,7 @@ const Alert = () => {
           ) : alert.level === 'warning' ? (
             <AiOutlineWarning size={20} className="mr-1" />
           ) : (
-            <AiOutlineBell size={20} className="mr-1" />
+            <AiOutlineBell size={20} className="mr-1 text-success" />
           )}
           <span>{alert.message}</span>
         </div>
@@ -69,4 +69,4 @@ const Alert = () => {
   )
 }
 
-export default Alert
+export default MainLayoutAlert

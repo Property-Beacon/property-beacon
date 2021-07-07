@@ -14,11 +14,11 @@ import { FiBell, FiLogOut, FiMenu } from 'react-icons/fi'
 import { RiArrowDownSLine } from 'react-icons/ri'
 import AvatarCell, { QUERY } from 'src/components/AvatarCell'
 import type { GetUserById, GetUserByIdVariables } from 'web/types/graphql'
-import Alert, { AlertType } from './Alert'
+import MainLayoutAlert, { MainLayoutAlertType } from './MainLayoutAlert'
 
 export type MainLayoutContextType = {
-  alert?: AlertType
-  setAlert?: Dispatch<SetStateAction<AlertType>>
+  alert?: MainLayoutAlertType
+  setAlert?: Dispatch<SetStateAction<MainLayoutAlertType>>
 }
 
 const MainLayoutContext = createContext<MainLayoutContextType>({})
@@ -26,7 +26,7 @@ const useMainLayoutContext = () => useContext(MainLayoutContext)
 
 const MainLayout: React.FunctionComponent = ({ children }) => {
   const [fullName, setFullName] = useState('')
-  const [alert, setAlert] = useState<AlertType>()
+  const [alert, setAlert] = useState<MainLayoutAlertType>()
   const { watchQuery } = useApolloClient()
   const {
     loading: authorizing,
@@ -193,7 +193,7 @@ const MainLayout: React.FunctionComponent = ({ children }) => {
           </div>
         </div>
         <main className="layout-content relative">
-          <Alert />
+          <MainLayoutAlert />
           {children}
         </main>
       </div>

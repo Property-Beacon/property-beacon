@@ -62,7 +62,7 @@ button:focus {
 
 @screen lg {
   .home .login-box {
-    flex-basis: 600px;
+    flex-basis: 500px;
   }
   .home :not(.login-box) > .card {
     height: theme('spacing.96');

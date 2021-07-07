@@ -61,34 +61,34 @@ type UploadedFile = {
   originalFile: OriginalFile
 }
 
-type FilestackResponse = {
+type FileStackResponse = {
   filesFailed: FailedFile[]
   filesUploaded: UploadedFile[]
 }
 
 interface Props {
-  onSuccess: (url: string[]) => void
-  onError: (error: FailedFile[]) => void
-  onClose: () => void
-  onOpen?: () => void
   // Default 5 * 1024 * 1024 = 5MB
   maxSize?: number
   // Default image/*
   accept?: Accept
   // Default 1
   maxFiles?: number
+  onClose: () => void
+  onOpen?: () => void
+  onSuccess: (url: string[]) => void
+  onError: (error: FailedFile[]) => void
 }
 
 const ImageUploaderOverlay = ({
-  onSuccess,
+  onOpen,
   onError,
   onClose,
-  onOpen,
+  onSuccess,
   accept = 'image/*',
   maxSize = 5 * 1024 * 1024,
   maxFiles = 1
 }: Props) => {
-  const handleSuccess = ({ filesUploaded, filesFailed }: FilestackResponse) => {
+  const handleSuccess = ({ filesUploaded, filesFailed }: FileStackResponse) => {
     if (filesUploaded.length) {
       onSuccess(filesUploaded.map(({ url }) => url))
     }
