@@ -62,14 +62,25 @@ export const success = () => {
   return Success ? (
     <div className="flex gap-4 place-items-center">
       <div className="h-10 w-10">
-        <Success {...standard({ displayName: 'Display Name' })} />
+        <Success
+          {...standard({
+            displayName: 'Display Name',
+            id: 'a3f08caa-e057-11eb-ba80-0242ac130004'
+          })}
+        />
       </div>
       <div className="h-12 w-12">
-        <Success {...standard({ name: 'Name' })} />
+        <Success
+          {...standard({
+            name: 'Name',
+            id: 'a3f08caa-e057-11eb-ba80-0242ac130004'
+          })}
+        />
       </div>
       <div className="h-14 w-14">
         <Success
           {...standard({
+            id: 'a3f08caa-e057-11eb-ba80-0242ac130004',
             shortName: 'Short name'
           })}
         />
@@ -77,6 +88,7 @@ export const success = () => {
       <div className="h-16 w-16">
         <Success
           {...standard({
+            id: 'a3f08caa-e057-11eb-ba80-0242ac130004',
             logo: 'https://cdn.filestackcontent.com/UnhjmzkSAIHvcLV4orQl'
           })}
         />

@@ -1,22 +1,21 @@
-import type { GetCompany } from 'web/types/graphql'
-
-type CompanyMock = Pick<
-  GetCompany['company'],
-  'displayName' | 'shortName' | 'name' | 'logo'
->
+import type { Company } from 'web/types/graphql'
 
 // Define your own mock data here:
-export const standard = ({
-  name = '',
-  logo = '',
-  displayName = '',
-  shortName = ''
-}: CompanyMock) =>
-  ({
-    company: {
-      name,
-      logo,
-      shortName,
-      displayName
-    }
-  } as GetCompany)
+export const standard = (input?: Partial<Company>) => {
+  const dateStr = new Date().toLocaleString()
+
+  return {
+    company: (input
+      ? input
+      : {
+          id: 'a3f08caa-e057-11eb-ba80-0242ac130004',
+          name: 'Test Company',
+          displayName: 'Test Company Pty Ltd',
+          shortName: 'TC',
+          website: 'https://company.domain.com',
+          logo: 'https://cdn.filestackcontent.com/fpWIVZz7RSSdjY4pn5YP',
+          updatedAt: dateStr,
+          createdAt: dateStr
+        }) as Company
+  }
+}

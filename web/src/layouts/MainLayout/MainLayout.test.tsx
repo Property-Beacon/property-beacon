@@ -1,5 +1,4 @@
 import { render } from '@redwoodjs/testing'
-
 import MainLayout from './MainLayout'
 
 describe('MainLayout', () => {
