@@ -1,0 +1,36 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`FormFieldTr renders successfully 1`] = `
+<form
+  data-testid="test-form"
+>
+  <table>
+    <tbody>
+      <tr>
+        <th
+          class="lg:w-48 hidden md:table-cell capitalize"
+          data-testid="form-field-tr-th"
+        >
+          First name
+        </th>
+        <td
+          class="rounded-lg md:rounded-none"
+        >
+          <div
+            class="form-control"
+          >
+            <label
+              class="mb-2 capitalize font-semibold text-sm md:hidden"
+              data-testid="form-field-tr-label"
+              for="firstName"
+              name="firstName"
+            >
+              First name
+            </label>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</form>
+`;

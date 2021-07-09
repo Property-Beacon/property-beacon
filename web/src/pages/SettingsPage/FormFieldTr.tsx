@@ -8,11 +8,17 @@ interface Props {
 
 const FormFieldTr: FC<Props> = ({ name, label, children }) => (
   <tr>
-    <th className="lg:w-48 hidden md:table-cell capitalize">{label}</th>
+    <th
+      data-testid="form-field-tr-th"
+      className="lg:w-48 hidden md:table-cell capitalize"
+    >
+      {label}
+    </th>
     <td className="rounded-lg md:rounded-none">
       <div className="form-control">
         <Label
           name={name}
+          data-testid="form-field-tr-label"
           className="mb-2 capitalize font-semibold text-sm md:hidden"
         >
           {label}
