@@ -2,7 +2,7 @@ import { render, screen } from '@redwoodjs/testing'
 import DateTimeString from './DateTimeString'
 
 describe('DateTimeString', () => {
-  const date = new Date('2020-01-01')
+  const date = new Date(Date.UTC(2020, 0, 1, 0, 0, 0))
 
   it('renders successfully', () => {
     expect(() => {
