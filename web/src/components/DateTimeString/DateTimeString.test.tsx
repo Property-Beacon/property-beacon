@@ -6,7 +6,7 @@ describe('DateTimeString', () => {
 
   it('renders successfully', () => {
     expect(() => {
-      render(<DateTimeString date={date} locale="en-au" />)
+      render(<DateTimeString date={date} locale="en-AU" />)
     }).not.toThrow()
     const element = screen.getByText('01/01/2020, 11:00:00 am AEDT')
 
@@ -18,7 +18,7 @@ describe('DateTimeString', () => {
     render(
       <DateTimeString
         date={date}
-        locale="en-au"
+        locale="en-AU"
         options={{ year: 'numeric', month: 'numeric', day: 'numeric' }}
       />
     )
@@ -32,7 +32,7 @@ describe('DateTimeString', () => {
     render(
       <DateTimeString
         date={date}
-        locale="en-au"
+        locale="en-AU"
         options={{ hour: 'numeric', minute: 'numeric', second: 'numeric' }}
       />
     )
