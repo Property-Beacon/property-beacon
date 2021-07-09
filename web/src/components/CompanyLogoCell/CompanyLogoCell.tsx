@@ -56,11 +56,20 @@ export const beforeQuery = (props) => {
 }
 
 const CompanyLogo = ({ company, loading, error }: Props) => (
-  <div className="avatar placeholder h-full w-full">
+  <div
+    data-testid="company-logo-cell"
+    className="avatar placeholder h-full w-full"
+  >
     {loading ? (
-      <div className="bg-primary-focus text-primary-content h-full w-full mask mask-squircle animate-pulse"></div>
+      <div
+        data-testid="company-logo-cell-loading"
+        className="bg-primary-focus text-primary-content h-full w-full mask mask-squircle animate-pulse"
+      ></div>
     ) : error ? (
-      <div className="bg-base-200 h-full w-full mask mask-squircle">
+      <div
+        data-testid="company-logo-cell-error"
+        className="bg-base-200 h-full w-full mask mask-squircle"
+      >
         <AiOutlineStop size={16} className="text-error" />
       </div>
     ) : company?.logo ? (
@@ -69,9 +78,13 @@ const CompanyLogo = ({ company, loading, error }: Props) => (
         src={company.logo}
         alt="company-logo"
         className="mask mask-squircle"
+        data-testid="company-logo-cell-img"
       />
     ) : (
-      <div className="bg-primary-focus text-primary-content h-full w-full mask mask-squircle">
+      <div
+        data-testid="company-logo-cell-initials"
+        className="bg-primary-focus text-primary-content h-full w-full mask mask-squircle"
+      >
         {(
           (
             company?.displayName ||

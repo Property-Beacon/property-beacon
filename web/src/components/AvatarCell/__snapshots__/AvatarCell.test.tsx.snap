@@ -1,0 +1,64 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`AvatarCell renders Empty successfully 1`] = `
+<div
+  class="bg-primary-focus text-primary-content h-full w-full rounded-full"
+  data-testid="avatar-cell-initials"
+>
+  ?
+</div>
+`;
+
+exports[`AvatarCell renders Failure successfully 1`] = `
+<div
+  class="bg-base-100 h-full w-full rounded-full"
+  data-testid="avatar-cell-error"
+>
+  <svg
+    class="text-error"
+    fill="currentColor"
+    height="16"
+    stroke="currentColor"
+    stroke-width="0"
+    viewBox="0 0 1024 1024"
+    width="16"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <path
+      d="M512 64C264.6 64 64 264.6 64 512s200.6 448 448 448 448-200.6 448-448S759.4 64 512 64zm0 820c-205.4 0-372-166.6-372-372 0-89 31.3-170.8 83.5-234.8l523.3 523.3C682.8 852.7 601 884 512 884zm288.5-137.2L277.2 223.5C341.2 171.3 423 140 512 140c205.4 0 372 166.6 372 372 0 89-31.3 170.8-83.5 234.8z"
+    />
+  </svg>
+</div>
+`;
+
+exports[`AvatarCell renders Loading successfully 1`] = `
+<div
+  class="bg-primary-focus text-primary-content h-full w-full rounded-full animate-pulse"
+  data-testid="avatar-cell-loading"
+/>
+`;
+
+exports[`AvatarCell renders Success successfully 1`] = `
+<div
+  class="avatar placeholder h-full w-full"
+  data-testid="avatar-cell"
+>
+  <img
+    alt="avatar"
+    class="rounded-full"
+    data-testid="avatar-cell-img"
+    loading="lazy"
+    src="https://cdn.filestackcontent.com/fpWIVZz7RSSdjY4pn5YP"
+  />
+</div>
+`;
+
+exports[`AvatarCell renders avatar image 1`] = `
+<img
+  alt="avatar"
+  class="rounded-full"
+  data-testid="avatar-cell-img"
+  loading="lazy"
+  src="https://cdn.filestackcontent.com/fpWIVZz7RSSdjY4pn5YP"
+/>
+`;

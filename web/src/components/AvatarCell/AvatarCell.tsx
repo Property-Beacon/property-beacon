@@ -53,11 +53,17 @@ const Avatar = ({ user, loading, error }: Props) => {
     : '?'
 
   return (
-    <div className="avatar placeholder h-full w-full">
+    <div data-testid="avatar-cell" className="avatar placeholder h-full w-full">
       {loading ? (
-        <div className="bg-primary-focus text-primary-content h-full w-full rounded-full animate-pulse"></div>
+        <div
+          data-testid="avatar-cell-loading"
+          className="bg-primary-focus text-primary-content h-full w-full rounded-full animate-pulse"
+        ></div>
       ) : error ? (
-        <div className="bg-base-100 h-full w-full rounded-full">
+        <div
+          data-testid="avatar-cell-error"
+          className="bg-base-100 h-full w-full rounded-full"
+        >
           <AiOutlineStop size={16} className="text-error" />
         </div>
       ) : avatar ? (
@@ -66,9 +72,13 @@ const Avatar = ({ user, loading, error }: Props) => {
           src={avatar}
           loading="lazy"
           className="rounded-full"
+          data-testid="avatar-cell-img"
         />
       ) : (
-        <div className="bg-primary-focus text-primary-content h-full w-full rounded-full">
+        <div
+          data-testid="avatar-cell-initials"
+          className="bg-primary-focus text-primary-content h-full w-full rounded-full"
+        >
           {initials}
         </div>
       )}

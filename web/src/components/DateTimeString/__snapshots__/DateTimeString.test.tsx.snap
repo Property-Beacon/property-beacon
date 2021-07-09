@@ -1,0 +1,19 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`DateTimeString renders date string only 1`] = `
+<div>
+  01/01/2020
+</div>
+`;
+
+exports[`DateTimeString renders successfully 1`] = `
+<div>
+  01/01/2020, 11:00:00 am AEDT
+</div>
+`;
+
+exports[`DateTimeString renders time string only 1`] = `
+<div>
+  11:00:00 am
+</div>
+`;

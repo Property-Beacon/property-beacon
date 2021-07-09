@@ -62,17 +62,33 @@ export const success = () => {
   return Success ? (
     <div className="flex gap-4 place-items-center">
       <div className="h-10 w-10">
-        <Success {...standard({ email: 'example@domain.com' })} />
+        <Success
+          {...standard({
+            email: 'example@domain.com',
+            profile: {
+              id: '973cf2d6-e058-11eb-ba80-0242ac130004'
+            }
+          })}
+        />
       </div>
       <div className="h-12 w-12">
         <Success
-          {...standard({ profile: { firstName: 'David', lastName: 'Jones' } })}
+          {...standard({
+            email: 'example@domain.com',
+            profile: {
+              id: '973cf2d6-e058-11eb-ba80-0242ac130004',
+              firstName: 'David',
+              lastName: 'Jones'
+            }
+          })}
         />
       </div>
       <div className="h-14 w-14">
         <Success
           {...standard({
+            email: 'example@domain.com',
             profile: {
+              id: '973cf2d6-e058-11eb-ba80-0242ac130004',
               avatar: 'https://cdn.filestackcontent.com/fpWIVZz7RSSdjY4pn5YP'
             }
           })}
@@ -81,7 +97,9 @@ export const success = () => {
       <div className="h-16 w-16">
         <Success
           {...standard({
+            email: 'example@domain.com',
             profile: {
+              id: '973cf2d6-e058-11eb-ba80-0242ac130004',
               avatar: 'https://cdn.filestackcontent.com/fpWIVZz7RSSdjY4pn5YP'
             }
           })}
