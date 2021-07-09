@@ -1,6 +1,7 @@
 import { useAuth } from '@redwoodjs/auth'
 import { Private, Route, Router, Set } from '@redwoodjs/router'
 import MainLayout from './layouts/MainLayout/MainLayout'
+import SettingsPageLoading from './pages/SettingsPage/SettingsPageLoading'
 
 const Routes = () => (
   <Router useAuth={useAuth}>
@@ -8,7 +9,7 @@ const Routes = () => (
       <Route path="/" page={HomePage} name="home" />
       <Private unauthenticated="home">
         <Route path="/dashboard" page={DashboardPage} name="dashboard" />
-        <Route path="/settings/{name}" page={SettingsPage} name="settings" />
+        <Route path="/settings/{name}" page={SettingsPage} name="settings" whileLoading={SettingsPageLoading} />
       </Private>
     </Set>
     <Route notfound page={NotFoundPage} />

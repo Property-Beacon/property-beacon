@@ -77,7 +77,7 @@ const SettingsPage = () => {
           <div className="flex-col-reverse sm:flex-row place-items-center gap-6 card-body">
             <div className="flex-grow text-center sm:text-left">
               {loading || updating ? (
-                <div className="bg-base-300 animate-pulse h-9 mb-3 rounded w-1/2"></div>
+                <div className="bg-base-300 animate-pulse h-9 mb-3 rounded w-1/2 mx-auto sm:mx-0"></div>
               ) : (
                 <div className="card-title text-3xl font-bold">
                   {user.profile?.fullName ?? '-'}
