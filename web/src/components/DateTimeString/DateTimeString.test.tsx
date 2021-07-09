@@ -2,13 +2,13 @@ import { render, screen } from '@redwoodjs/testing'
 import DateTimeString from './DateTimeString'
 
 describe('DateTimeString', () => {
-  const date = new Date(Date.UTC(2020, 0, 1, 0, 0, 0))
+  const date = '2020-01-01T00:00:00'
 
   it('renders successfully', () => {
     expect(() => {
       render(<DateTimeString date={date} locale="en-AU" />)
     }).not.toThrow()
-    const element = screen.getByText('01/01/2020, 11:00:00 am AEDT')
+    const element = screen.getByText('01/01/2020, 12:00:00 am AEDT')
 
     expect(element).not.toBeUndefined()
     expect(element).toMatchSnapshot()
@@ -36,7 +36,7 @@ describe('DateTimeString', () => {
         options={{ hour: 'numeric', minute: 'numeric', second: 'numeric' }}
       />
     )
-    const element = screen.getByText('11:00:00 am')
+    const element = screen.getByText('12:00:00 am')
 
     expect(element).not.toBeUndefined()
     expect(element).toMatchSnapshot()
