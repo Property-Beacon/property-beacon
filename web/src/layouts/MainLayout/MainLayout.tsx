@@ -77,7 +77,7 @@ const MainLayout: React.FunctionComponent = ({ children }) => {
     <MainLayoutContext.Provider value={{ alert, setAlert }}>
       <div className="p-3">
         <div className="navbar shadow-lg bg-neutral text-base-300 rounded-box py-3 px-4 sm:px-6">
-          <Link to={routes.home()} className="h-9">
+          <Link to={routes.home()} className="h-9" data-testid="navbar-logo">
             <img
               width={36}
               height={36}
@@ -146,36 +146,57 @@ const MainLayout: React.FunctionComponent = ({ children }) => {
                   </ul>
                 </div>
                 <div className="pl-2 dropdown dropdown-end">
-                  <button tabIndex={0} className="flex items-center">
+                  <button
+                    tabIndex={0}
+                    className="flex items-center"
+                    data-testid="navbar-user-avatar"
+                  >
                     <div className="rounded-full w-8 h-8 text-sm">
                       <AvatarCell id={currentUser?.id} />
                     </div>
                     <RiArrowDownSLine size={20} />
                   </button>
-                  <ul className="menu shadow-lg dropdown-content bg-base-100 rounded-box w-60 mt-4 text-neutral">
+                  <ul
+                    data-testid="navbar-menu"
+                    className="menu shadow-lg dropdown-content bg-base-100 rounded-box w-60 mt-4 text-neutral"
+                  >
                     <li>
                       <NavLink
-                        to={routes.settings({ name: 'profile' })}
                         className="flex-col"
+                        data-testid="navbar-menu-user"
                         activeClassName="bg-primary-focus"
+                        to={routes.settings({ name: 'profile' })}
                       >
                         <div className="flex w-full">
-                          <span className="font-bold flex-1">
+                          <span
+                            data-testid="navbar-menu-user-fullname"
+                            className="font-bold flex-1"
+                          >
                             {fullName || 'n/a'}
                           </span>
-                          <span className="badge badge-accent badge-sm my-auto">
+                          <span
+                            data-testid="navbar-menu-user-role"
+                            className="badge badge-accent badge-sm my-auto"
+                          >
                             {currentUser?.role || 'n/a'}
                           </span>
                         </div>
                         <div className="flex w-full">
-                          <span className="flex-1 text-sm font-light text-left break-all">
+                          <span
+                            data-testid="navbar-menu-user-email"
+                            className="flex-1 text-sm font-light text-left break-all"
+                          >
                             {currentUser?.email || 'n/a'}
                           </span>
                         </div>
                       </NavLink>
                     </li>
                     <li>
-                      <a href="/" onClick={handleLogOut}>
+                      <a
+                        href="/"
+                        onClick={handleLogOut}
+                        data-testid="navbar-menu-logout"
+                      >
                         <FiLogOut size={20} />
                         <span className="ml-2">Logout</span>
                       </a>

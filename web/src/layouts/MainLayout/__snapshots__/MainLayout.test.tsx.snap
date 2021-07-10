@@ -1,0 +1,17 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`MainLayout renders successfully 1`] = `
+<a
+  class="h-9"
+  data-testid="navbar-logo"
+  href="/"
+>
+  <img
+    alt="Property Beacon"
+    height="36"
+    loading="lazy"
+    src="/images/icons/icon-128x128.png"
+    width="36"
+  />
+</a>
+`;
