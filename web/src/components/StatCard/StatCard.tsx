@@ -1,4 +1,4 @@
-import type { FC, ReactNode } from 'react'
+import type { FC, HTMLAttributes, ReactNode } from 'react'
 
 interface Props {
   variant?: ColorVariant
@@ -7,12 +7,14 @@ interface Props {
   numberFormatOptions?: Intl.NumberFormatOptions
 }
 
-const StatCard: FC<Props> = ({
+const StatCard: FC<Props & Omit<HTMLAttributes<HTMLDivElement>, 'title'>> = ({
   variant = 'neutral',
   children,
   title,
   number,
-  numberFormatOptions
+  numberFormatOptions,
+  className,
+  ...rest
 }) => {
   const numberFormatter = new Intl.NumberFormat(
     navigator.language,
@@ -38,7 +40,8 @@ const StatCard: FC<Props> = ({
   return (
     <div
       data-testid="stat-card"
-      className="bg-base-200 rounded-lg p-4 shadow-md relative overflow-hidden"
+      className={`bg-base-200 rounded-lg p-4 shadow-md relative overflow-hidden ${className}`}
+      {...rest}
     >
       <div
         className={`absolute h-full border-l-4 left-0 top-0 ${borderColor}`}
