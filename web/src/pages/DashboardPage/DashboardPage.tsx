@@ -1,9 +1,39 @@
+import { useApolloClient } from '@apollo/client'
+import { useAuth } from '@redwoodjs/auth'
+import { useEffect, useState } from 'react'
 import { BiTrendingDown, BiTrendingUp } from 'react-icons/bi'
-import StatCard from 'src/components/StatCard/StatCard'
+import { QUERY } from 'src/components/AvatarCell'
+import CompanyLogoCell from 'src/components/CompanyLogoCell'
+import StatCard from 'src/components/StatCard'
+import type { GetUserById, GetUserByIdVariables } from 'web/types/graphql'
 
 const DashboardPage = () => {
+  const {
+    hasRole,
+    currentUser: { id }
+  } = useAuth()
+  const { watchQuery } = useApolloClient()
+  const [companyId, setCompanyId] = useState<string | undefined>()
+
+  useEffect(
+    () => {
+      if (hasRole(['ADMIN', 'CUSTOMER', 'CLIENT'])) {
+        watchQuery<GetUserById, GetUserByIdVariables>({
+          query: QUERY,
+          variables: { id },
+          fetchPolicy: 'cache-first',
+          nextFetchPolicy: 'cache-first'
+        }).subscribe(({ data: { user } }) => {
+          setCompanyId(user?.profile?.companyId)
+        })
+      }
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    []
+  )
+
   return (
-    <div className="grid grid-cols-5 gap-4">
+    <div className="grid grid-cols-5 gap-8">
       <div className="card shadow-lg bg-base-100 col-span-full lg:col-span-4">
         <div className="card-body">
           <div className="flex gap-4 flex-col md:flex-row">
@@ -40,6 +70,11 @@ const DashboardPage = () => {
           </div>
         </div>
       </div>
+      {!!companyId && (
+        <div className="hidden lg:block w-48 h-48 mx-auto">
+          <CompanyLogoCell id={companyId} />
+        </div>
+      )}
     </div>
   )
 }
