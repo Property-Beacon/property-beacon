@@ -73,7 +73,7 @@ const HomePage = () => {
                 <div className="card-body">
                   <div className="form-control">
                     <Label name="email" className="label text-xs">
-                      Hassle-free with our secured passwordless login
+                      Hassle-free with our secure passwordless login
                     </Label>
                     <EmailField
                       name="email"
@@ -121,7 +121,7 @@ const HomePage = () => {
             <h2 className="card-title">Participation</h2>
             <p className="font-light text-sm">
               Members of the community can participate in monitoring property
-              signage via the Property Beacon app, they can earn income and in
+              signage via the Property Beacon app. They can earn income and in
               turn produce income for their council community.
             </p>
           </div>
