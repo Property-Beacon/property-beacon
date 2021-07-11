@@ -8,10 +8,7 @@ import StatCard from 'src/components/StatCard'
 import type { GetUserById, GetUserByIdVariables } from 'web/types/graphql'
 
 const DashboardPage = () => {
-  const {
-    hasRole,
-    currentUser: { id }
-  } = useAuth()
+  const { hasRole, currentUser } = useAuth()
   const { watchQuery } = useApolloClient()
   const [companyId, setCompanyId] = useState<string | undefined>()
 
@@ -20,7 +17,7 @@ const DashboardPage = () => {
       if (hasRole(['ADMIN', 'CUSTOMER', 'CLIENT'])) {
         watchQuery<GetUserById, GetUserByIdVariables>({
           query: QUERY,
-          variables: { id },
+          variables: { id: currentUser?.id },
           fetchPolicy: 'cache-first',
           nextFetchPolicy: 'cache-first'
         }).subscribe(({ data: { user } }) => {
