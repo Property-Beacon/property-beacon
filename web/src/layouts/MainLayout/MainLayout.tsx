@@ -31,6 +31,7 @@ const MainLayout: React.FunctionComponent = ({ children }) => {
   const {
     loading: authorizing,
     logOut,
+    hasRole,
     currentUser, // Only unique fields are reliable from currentUser
     isAuthenticated
   } = useAuth()
@@ -87,25 +88,45 @@ const MainLayout: React.FunctionComponent = ({ children }) => {
             />
           </Link>
           <div className="flex-1 justify-end">
-            <div className="hidden sm:block">
+            <div className="hidden md:block">
               <Link
                 to={routes.home()}
                 className="btn btn-ghost btn-sm rounded-btn"
               >
-                <span>Blog</span>
+                <span>Regulation</span>
               </Link>
-              <Link
-                to={routes.home()}
-                className="btn btn-ghost btn-sm rounded-btn"
-              >
-                <span>Help</span>
-              </Link>
-              <Link
-                to={routes.home()}
-                className="btn btn-ghost btn-sm rounded-btn"
-              >
-                <span>About</span>
-              </Link>
+              {hasRole(['ADMIN', 'CUSTOMER', 'CLIENT']) && (
+                <Link
+                  to={routes.home()}
+                  className="btn btn-ghost btn-sm rounded-btn"
+                >
+                  <span>Booking</span>
+                </Link>
+              )}
+              {hasRole(['ADMIN', 'USER', 'CLIENT']) && (
+                <Link
+                  to={routes.home()}
+                  className="btn btn-ghost btn-sm rounded-btn"
+                >
+                  <span>Incident</span>
+                </Link>
+              )}
+              {hasRole(['ADMIN', 'CLIENT', 'CUSTOMER']) && (
+                <Link
+                  to={routes.home()}
+                  className="btn btn-ghost btn-sm rounded-btn"
+                >
+                  <span>Enforcement</span>
+                </Link>
+              )}
+              {hasRole(['ADMIN', 'CLIENT', 'CUSTOMER']) && (
+                <Link
+                  to={routes.home()}
+                  className="btn btn-ghost btn-sm rounded-btn"
+                >
+                  <span>Members</span>
+                </Link>
+              )}
             </div>
             {authorizing ? (
               <button className="btn btn-sm btn-ghost rounded-btn loading text-gray-500">
