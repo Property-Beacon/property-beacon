@@ -1,4 +1,4 @@
-import { render, screen } from '@redwoodjs/testing'
+import { fireEvent, render, screen, waitFor } from '@redwoodjs/testing'
 import { FiBarChart, FiRefreshCw } from 'react-icons/fi'
 import StatCard from './StatCard'
 
@@ -12,12 +12,43 @@ describe('StatCard', () => {
       )
     }).not.toThrow()
 
+    expect(() => {
+      screen.getByTestId('stat-card-link')
+    }).toThrow()
+
     expect(screen.getByTestId('stat-card')).toMatchSnapshot()
     expect(screen.getByTestId('stat-card-title')).toHaveTextContent('Total')
     expect(screen.getByTestId('stat-card-number')).toHaveTextContent('999')
     expect(screen.getByTestId('stat-card-children')).toHaveTextContent(
       'description'
     )
+  })
+
+  it('renders clickable StatCard', async () => {
+    const mockFn = jest.fn()
+
+    render(
+      <StatCard title="Count" number={99} to="#">
+        This is clickable
+      </StatCard>
+    )
+
+    const StatCardLink = screen.getByTestId('stat-card-link')
+
+    expect(StatCardLink).toBeInTheDocument()
+    expect(StatCardLink).toMatchSnapshot()
+    expect(screen.getByTestId('stat-card-title')).toHaveTextContent('Count')
+    expect(screen.getByTestId('stat-card-number')).toHaveTextContent('99')
+    expect(screen.getByTestId('stat-card-children')).toHaveTextContent(
+      'This is clickable'
+    )
+
+    StatCardLink.addEventListener('click', mockFn)
+
+    fireEvent.click(screen.getByTestId('stat-card-link'))
+    await waitFor(() => expect(mockFn).toHaveBeenCalledTimes(1))
+
+    StatCardLink.removeEventListener('click', mockFn)
   })
 
   it('renders StatCard with custom title, number and children', () => {

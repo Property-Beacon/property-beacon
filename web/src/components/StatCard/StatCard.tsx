@@ -1,13 +1,14 @@
+import { Link } from '@redwoodjs/router'
 import type { FC, HTMLAttributes, ReactNode } from 'react'
 
-interface Props {
+type BaseProps = {
   variant?: ColorVariant
   title: ReactNode
   number: ReactNode
   numberFormatOptions?: Intl.NumberFormatOptions
-}
+} & Omit<HTMLAttributes<HTMLDivElement>, 'title'>
 
-const StatCard: FC<Props & Omit<HTMLAttributes<HTMLDivElement>, 'title'>> = ({
+const Base: FC<BaseProps> = ({
   variant = 'neutral',
   children,
   title,
@@ -63,7 +64,7 @@ const StatCard: FC<Props & Omit<HTMLAttributes<HTMLDivElement>, 'title'>> = ({
       {typeof children === 'string' ? (
         <div
           data-testid="stat-card-children"
-          className={`${textColor} text-sm`}
+          className={`${textColor} text-xs`}
         >
           {children}
         </div>
@@ -71,6 +72,20 @@ const StatCard: FC<Props & Omit<HTMLAttributes<HTMLDivElement>, 'title'>> = ({
         children
       )}
     </div>
+  )
+}
+
+interface Props extends BaseProps {
+  to?: string
+}
+
+const StatCard: FC<Props> = ({ to, className, ...rest }) => {
+  return to ? (
+    <Link to={to} className={className} data-testid="stat-card-link">
+      <Base {...rest} className="hover:bg-base-300" />
+    </Link>
+  ) : (
+    <Base {...rest} className={className} />
   )
 }
 

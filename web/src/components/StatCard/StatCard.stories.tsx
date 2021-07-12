@@ -36,6 +36,20 @@ export const variants = () => {
   )
 }
 
+export const clickable = () => (
+  <div className="flex">
+    <StatCard
+      to="#"
+      variant="error"
+      className="w-60"
+      number={98765}
+      title="Total submission"
+    >
+      This StatCard is clickable
+    </StatCard>
+  </div>
+)
+
 export const custom = () => {
   return (
     <div className="flex gap-4">
