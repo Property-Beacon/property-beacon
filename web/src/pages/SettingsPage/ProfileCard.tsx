@@ -11,6 +11,7 @@ import { useCallback } from 'react'
 import { useForm } from 'react-hook-form'
 import { RiInformationLine } from 'react-icons/ri'
 import DateTimeString from 'src/components/DateTimeString'
+import PhoneNumberInput from 'src/components/PhoneNumberInput'
 import type {
   GetUserById,
   MakeOptional,
@@ -61,10 +62,33 @@ const ProfileCard = ({ user }: Props) => {
   })
   const handleSubmit = useCallback(
     ({ address, ...profile }: UpdateUserProfile) => {
-      const data = formState.dirtyFields.address
-        ? { address, ...profile }
-        : { ...profile }
-      updateProfile({ variables: { userId: user.id, data } })
+      const { address: dirtyAddress, ...dirtyOthers } = formState.dirtyFields
+      const updateOthers = Object.keys(dirtyOthers || {}).reduce(
+        (prev, key) => {
+          prev[key] = profile[key]
+          return prev
+        },
+        {}
+      )
+      const updateAddress = Object.keys(dirtyAddress || {}).reduce(
+        (prev, key) => {
+          prev[key] = address[key]
+          return prev
+        },
+        {}
+      )
+
+      if (
+        Object.keys(updateOthers).length ||
+        Object.keys(updateAddress).length
+      ) {
+        updateProfile({
+          variables: {
+            userId: user.id,
+            data: { ...updateOthers, address: updateAddress }
+          }
+        })
+      }
     },
     [formState, user, updateProfile]
   )
@@ -171,31 +195,21 @@ const ProfileCard = ({ user }: Props) => {
                   />
                 </FormFieldTr>
                 <FormFieldTr name="phone" label="Phone">
-                  <TelField
+                  <PhoneNumberInput
                     name="phone"
                     disabled={loading}
-                    placeholder="e.g. +61400000000"
-                    defaultValue={user?.profile?.phone}
-                    className="input input-sm input-bordered w-full"
-                    errorClassName="input input-bordered input-error"
-                  />
-                  <FieldError
-                    name="phone"
-                    className="mt-1 label-text-alt text-error"
+                    inputComponent={TelField}
+                    value={user?.profile?.phone}
+                    className="input input-sm input-bordered  w-full"
                   />
                 </FormFieldTr>
                 <FormFieldTr name="mobile" label="Mobile">
-                  <TelField
+                  <PhoneNumberInput
                     name="mobile"
                     disabled={loading}
-                    placeholder="e.g. +61400000000"
-                    defaultValue={user?.profile?.mobile}
+                    inputComponent={TelField}
+                    value={user?.profile?.mobile}
                     className="input input-sm input-bordered w-full"
-                    errorClassName="input input-bordered input-error"
-                  />
-                  <FieldError
-                    name="mobile"
-                    className="mt-1 label-text-alt text-error"
                   />
                 </FormFieldTr>
               </tbody>

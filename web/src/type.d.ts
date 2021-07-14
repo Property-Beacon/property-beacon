@@ -13,3 +13,16 @@ declare module '@redwoodjs/auth' {
     hasRole(role: Role | Role[]): boolean
   }
 }
+
+// TailwindCSS variants
+declare global {
+  type ColorVariant =
+    | 'success'
+    | 'info'
+    | 'warning'
+    | 'error'
+    | 'primary'
+    | 'secondary'
+    | 'accent'
+    | 'neutral'
+}

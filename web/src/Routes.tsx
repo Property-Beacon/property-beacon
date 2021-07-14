@@ -9,7 +9,9 @@ const Routes = () => (
       <Route path="/" page={HomePage} name="home" />
       <Private unauthenticated="home">
         <Route path="/dashboard" page={DashboardPage} name="dashboard" />
-        <Route path="/settings/{name}" page={SettingsPage} name="settings" whileLoading={SettingsPageLoading} />
+      </Private>
+      <Private unauthenticated="home" whileLoadingAuth={SettingsPageLoading}>
+        <Route path="/settings/{name}" page={SettingsPage} name="settings" whileLoadingPage={SettingsPageLoading} />
       </Private>
     </Set>
     <Route notfound page={NotFoundPage} />
