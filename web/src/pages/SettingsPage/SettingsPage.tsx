@@ -146,13 +146,15 @@ const SettingsPage = () => {
         {/* A workaround of Filestack uploader stacking issue */}
         <div className={`mt-4 ${showUploader && 'opacity-95'}`}>
           {name === 'profile' && <ProfileCard user={user} />}
-          {name === 'organization' && tabs.includes(name) && loading ? (
-            <TabContentLoading />
-          ) : (
-            !!user.profile?.companyId && (
-              <OrganizationCard companyId={user.profile.companyId} />
+          {name === 'organization' && tabs.includes(name) ? (
+            loading ? (
+              <TabContentLoading />
+            ) : (
+              !!user.profile?.companyId && (
+                <OrganizationCard companyId={user.profile.companyId} />
+              )
             )
-          )}
+          ) : null}
         </div>
       </div>
       {showUploader && (
