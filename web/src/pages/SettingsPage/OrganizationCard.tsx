@@ -15,6 +15,7 @@ import CompanyLogoCell, { QUERY } from 'src/components/CompanyLogoCell'
 import ImageUploaderOverlay, {
   FailedFile
 } from 'src/components/ImageUploaderOverlay'
+import PhoneNumberInput from 'src/components/PhoneNumberInput'
 import { useMainLayoutContext } from 'src/layouts/MainLayout'
 import type {
   GetCompany,
@@ -118,14 +119,38 @@ const OrganizationCard = ({ companyId }: Props) => {
       address: dirtyAddress,
       ...dirtyOthers
     } = formState.dirtyFields
+    const updateOthers = Object.keys(dirtyOthers || {}).reduce((prev, key) => {
+      prev[key] = data[key]
+      return prev
+    }, {})
+    const updateAddress = Object.keys(dirtyAddress || {}).reduce(
+      (prev, key) => {
+        prev[key] = address[key]
+        return prev
+      },
+      {}
+    )
+    const updateProfile = Object.keys(dirtyProfile || {}).reduce(
+      (prev, key) => {
+        prev[key] = profile[key]
+        return prev
+      },
+      {}
+    )
 
-    if (Object.keys(dirtyOthers).length) {
-      updateCompany({ variables: { id: companyId, data } })
+    if (Object.keys(updateOthers).length) {
+      updateCompany({ variables: { id: companyId, data: updateOthers } })
     }
 
-    if (dirtyProfile || dirtyAddress) {
+    if (
+      Object.keys(updateAddress).length ||
+      Object.keys(updateProfile).length
+    ) {
       updateCompanyProfile({
-        variables: { companyId, data: { ...profile, address } }
+        variables: {
+          companyId,
+          data: { ...updateProfile, address: updateAddress }
+        }
       })
     }
   }
@@ -344,45 +369,30 @@ const OrganizationCard = ({ companyId }: Props) => {
                   />
                 </FormFieldTr>
                 <FormFieldTr name="profile.phone" label="Phone">
-                  <TelField
+                  <PhoneNumberInput
                     name="profile.phone"
                     disabled={loading}
-                    placeholder="e.g. +61400000000"
-                    defaultValue={company?.profile?.phone}
+                    inputComponent={TelField}
+                    value={company?.profile?.phone}
                     className="input input-sm input-bordered w-full"
-                    errorClassName="input input-bordered input-error"
-                  />
-                  <FieldError
-                    name="profile.phone"
-                    className="mt-1 label-text-alt text-error"
                   />
                 </FormFieldTr>
                 <FormFieldTr name="profile.mobile" label="Mobile">
-                  <TelField
+                  <PhoneNumberInput
                     name="profile.mobile"
                     disabled={loading}
-                    placeholder="e.g. +61400000000"
-                    defaultValue={company?.profile?.mobile}
+                    inputComponent={TelField}
+                    value={company?.profile?.mobile}
                     className="input input-sm input-bordered w-full"
-                    errorClassName="input input-bordered input-error"
-                  />
-                  <FieldError
-                    name="profile.mobile"
-                    className="mt-1 label-text-alt text-error"
                   />
                 </FormFieldTr>
                 <FormFieldTr name="profile.fax" label="Fax">
-                  <TelField
+                  <PhoneNumberInput
                     name="profile.fax"
                     disabled={loading}
-                    placeholder="e.g. +61400000000"
-                    defaultValue={company?.profile?.fax}
+                    inputComponent={TelField}
+                    value={company?.profile?.fax}
                     className="input input-sm input-bordered w-full"
-                    errorClassName="input input-bordered input-error"
-                  />
-                  <FieldError
-                    name="profile.fax"
-                    className="mt-1 label-text-alt text-error"
                   />
                 </FormFieldTr>
               </tbody>

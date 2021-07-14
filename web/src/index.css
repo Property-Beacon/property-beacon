@@ -12,6 +12,28 @@
  * END --- TAILWIND GENERATOR EDIT
  */
 
+:root {
+  /* react-phone-number-input css variables */
+
+  --PhoneInput-color--focus: none !important;
+  /* --PhoneInputInternationalIconPhone-opacity: 0.8;
+   --PhoneInputInternationalIconGlobe-opacity: 0.65;
+   --PhoneInputCountrySelect-marginRight: 0.35em;
+   --PhoneInputCountrySelectArrow-width: 0.3em;
+   --PhoneInputCountrySelectArrow-marginLeft: var(--PhoneInputCountrySelect-marginRight);
+   --PhoneInputCountrySelectArrow-borderWidth: 1px;
+   --PhoneInputCountrySelectArrow-opacity: 0.45;
+   --PhoneInputCountrySelectArrow-color: inherit;
+   --PhoneInputCountrySelectArrow-color--focus: var(--PhoneInput-color--focus);
+   --PhoneInputCountrySelectArrow-transform: rotate(45deg);
+   --PhoneInputCountryFlag-aspectRatio: 1.5;
+   --PhoneInputCountryFlag-height: 1em;
+   --PhoneInputCountryFlag-borderWidth: 1px; */
+  --PhoneInputCountryFlag-borderColor: none !important;
+  /* --PhoneInputCountryFlag-borderColor--focus: var(--PhoneInput-color--focus); */
+  --PhoneInputCountryFlag-backgroundColor--loading: none !important;
+}
+
 body {
   /* daisyui cupcake theme base colours var */
   --p: 183 47.4% 59%;
@@ -68,4 +90,10 @@ button:focus {
     height: theme('spacing.96');
     flex-basis: auto;
   }
+}
+
+/* Overwrite PhoneInput inner input styles */
+.PhoneInputInput {
+  background-color: transparent;
+  outline: inherit;
 }

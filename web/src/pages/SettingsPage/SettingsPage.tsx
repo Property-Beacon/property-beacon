@@ -18,6 +18,7 @@ import type {
 } from 'web/types/graphql'
 import OrganizationCard from './OrganizationCard'
 import ProfileCard, { MUTATION } from './ProfileCard'
+import TabContentLoading from './TabContentLoading'
 
 type UserData = MakeOptional<GetUserById['user'], 'profile'>
 
@@ -145,11 +146,13 @@ const SettingsPage = () => {
         {/* A workaround of Filestack uploader stacking issue */}
         <div className={`mt-4 ${showUploader && 'opacity-95'}`}>
           {name === 'profile' && <ProfileCard user={user} />}
-          {name === 'organization' &&
-            tabs.includes(name) &&
+          {name === 'organization' && tabs.includes(name) && loading ? (
+            <TabContentLoading />
+          ) : (
             !!user.profile?.companyId && (
               <OrganizationCard companyId={user.profile.companyId} />
-            )}
+            )
+          )}
         </div>
       </div>
       {showUploader && (
