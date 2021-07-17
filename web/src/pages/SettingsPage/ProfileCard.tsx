@@ -11,6 +11,7 @@ import { useCallback } from 'react'
 import { useForm } from 'react-hook-form'
 import { RiInformationLine } from 'react-icons/ri'
 import DateTimeString from 'src/components/DateTimeString'
+import GoogleAddressForm from 'src/components/GoogleAddressForm'
 import PhoneNumberInput from 'src/components/PhoneNumberInput'
 import type {
   GetUserById,
@@ -18,7 +19,6 @@ import type {
   UpdateUserProfile,
   UpdateUserProfileVariables
 } from 'web/types/graphql'
-import AddressForm from './AddressForm'
 import FormFieldTr from './FormFieldTr'
 
 interface Props {
@@ -38,13 +38,14 @@ export const MUTATION = gql`
       companyId
       updatedAt
       address {
-        name
+        premise
         state
         street
         suburb
         country
         postalCode
         updatedAt
+        formattedAddress
       }
     }
   }
@@ -170,7 +171,7 @@ const ProfileCard = ({ user }: Props) => {
                     disabled={loading}
                     placeholder="e.g. David"
                     defaultValue={user?.profile?.firstName}
-                    validation={{ pattern: /^[A-Za-z-]+$/i }}
+                    validation={{ pattern: /^[A-Za-z- ]+$/i }}
                     className="input input-sm input-bordered w-full"
                     errorClassName="input input-bordered input-error"
                   />
@@ -185,7 +186,7 @@ const ProfileCard = ({ user }: Props) => {
                     disabled={loading}
                     placeholder="e.g. Jones"
                     defaultValue={user?.profile?.lastName}
-                    validation={{ pattern: /^[A-Za-z]+$/i }}
+                    validation={{ pattern: /^[A-Za-z ]+$/i }}
                     className="input input-sm input-bordered w-full"
                     errorClassName="input input-bordered input-error"
                   />
@@ -224,14 +225,10 @@ const ProfileCard = ({ user }: Props) => {
                 (Optional)
               </span>
             </div>
-            <table className="table table-zebra w-full">
-              <tbody>
-                <AddressForm
-                  loading={loading}
-                  address={user?.profile?.address}
-                />
-              </tbody>
-            </table>
+            <GoogleAddressForm
+              loading={loading}
+              address={user?.profile?.address}
+            />
           </div>
         </div>
       </div>

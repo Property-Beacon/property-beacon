@@ -12,6 +12,7 @@ import {
 import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import CompanyLogoCell, { QUERY } from 'src/components/CompanyLogoCell'
+import GoogleAddressForm from 'src/components/GoogleAddressForm'
 import ImageUploaderOverlay, {
   FailedFile
 } from 'src/components/ImageUploaderOverlay'
@@ -25,7 +26,6 @@ import type {
   UpdateCompanyProfileVariables,
   UpdateCompanyVariables
 } from 'web/types/graphql'
-import AddressForm from './AddressForm'
 import FormFieldTr from './FormFieldTr'
 
 // TODO: Due to reusing the same AddressForm, data is attached to the same layer as profile
@@ -73,13 +73,14 @@ export const COMPANY_PROFILE_MUTATION = gql`
       mayor
       updatedAt
       address {
-        name
+        premise
         state
         street
         suburb
         country
         postalCode
         updatedAt
+        formattedAddress
       }
     }
   }
@@ -407,14 +408,10 @@ const OrganizationCard = ({ companyId }: Props) => {
                 (Optional)
               </span>
             </div>
-            <table className="table table-zebra w-full">
-              <tbody>
-                <AddressForm
-                  loading={loading}
-                  address={company?.profile?.address}
-                />
-              </tbody>
-            </table>
+            <GoogleAddressForm
+              loading={loading}
+              address={company?.profile?.address}
+            />
           </div>
         </div>
       </div>

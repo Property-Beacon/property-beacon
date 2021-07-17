@@ -2,12 +2,13 @@ import { requireAuth } from 'src/lib/auth'
 import { db } from 'src/lib/db'
 
 type AddressFields =
-  | 'name'
+  | 'premise'
   | 'state'
   | 'street'
   | 'suburb'
   | 'country'
   | 'postalCode'
+  | 'formattedAddress'
 type UniqueKeys = Parameters<typeof db.address.update>[0]['where']
 type UserProfileId = UniqueKeys['userProfileId']
 type CompanyProfileId = UniqueKeys['companyProfileId']

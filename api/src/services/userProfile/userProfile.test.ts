@@ -51,7 +51,7 @@ describe('services/userProfile', () => {
     )
 
     expect(address.id).not.toBeNull()
-    expect(address.name).toBeNull()
+    expect(address.premise).toBeNull()
     expect(address.companyProfileId).toBeNull()
     expect(address.country).toBeNull()
     expect(address.state).toBeNull()
@@ -78,7 +78,8 @@ describe('services/userProfile', () => {
         suburb: 'Crows Nest',
         postalCode: '2200',
         street: 'Albany Street',
-        name: 'My Address'
+        premise: 'Unit 1',
+        formattedAddress: '2024 North Old Bastrop Highway, San Marcos, TX, USA'
       }
     }
     const {
@@ -96,7 +97,15 @@ describe('services/userProfile', () => {
       data: userProfileData,
       userId
     })
-    const { country, state, suburb, postalCode, street, name } = address
+    const {
+      country,
+      state,
+      suburb,
+      postalCode,
+      street,
+      premise,
+      formattedAddress
+    } = address
 
     expect(_userId).toEqual(userId)
     expect(companyId).toBeNull()
@@ -114,9 +123,15 @@ describe('services/userProfile', () => {
     expect(new Date(address.updatedAt).getTime()).toBeGreaterThanOrEqual(
       now.getTime()
     )
-    expect({ country, state, suburb, postalCode, street, name }).toEqual(
-      userProfileData.address
-    )
+    expect({
+      country,
+      state,
+      suburb,
+      postalCode,
+      street,
+      premise,
+      formattedAddress
+    }).toEqual(userProfileData.address)
   })
 
   it('deleteUserProfile', async () => {
