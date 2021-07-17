@@ -28,13 +28,14 @@ export const QUERY = gql`
         mayor
         updatedAt
         address {
-          name
+          premise
           state
           street
           suburb
           country
           postalCode
           updatedAt
+          formattedAddress
         }
       }
     }

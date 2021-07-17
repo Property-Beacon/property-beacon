@@ -22,13 +22,14 @@ export const QUERY = gql`
         companyId
         updatedAt
         address {
-          name
+          premise
           state
           street
           suburb
           country
           postalCode
           updatedAt
+          formattedAddress
         }
       }
     }

@@ -20,11 +20,12 @@ export type Scalars = {
 
 export type Address = {
   __typename?: 'Address';
-  name?: Maybe<Scalars['String']>;
+  premise?: Maybe<Scalars['String']>;
   state?: Maybe<Scalars['String']>;
   street?: Maybe<Scalars['String']>;
   suburb?: Maybe<Scalars['String']>;
   country?: Maybe<Scalars['String']>;
+  formattedAddress?: Maybe<Scalars['String']>;
   postalCode?: Maybe<Scalars['String']>;
   updatedAt?: Maybe<Scalars['DateTime']>;
 };
@@ -176,11 +177,12 @@ export type Role =
 
 
 export type UpdateAddress = {
-  name?: Maybe<Scalars['String']>;
+  premise?: Maybe<Scalars['String']>;
   state?: Maybe<Scalars['String']>;
   street?: Maybe<Scalars['String']>;
   suburb?: Maybe<Scalars['String']>;
   country?: Maybe<Scalars['String']>;
+  formattedAddress?: Maybe<Scalars['String']>;
   postalCode?: Maybe<Scalars['String']>;
 };
 
@@ -367,11 +369,12 @@ export type ResolversParentTypes = {
 };
 
 export type AddressResolvers<ContextType = any, ParentType extends ResolversParentTypes['Address'] = ResolversParentTypes['Address']> = {
-  name?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  premise?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   state?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   street?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   suburb?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   country?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  formattedAddress?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   postalCode?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   updatedAt?: Resolver<Maybe<ResolversTypes['DateTime']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;

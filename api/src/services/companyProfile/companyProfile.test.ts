@@ -73,7 +73,8 @@ describe('services/companyProfile', () => {
         suburb: 'Crows Nest',
         postalCode: '2200',
         street: 'Albany Street',
-        name: 'My Address'
+        premise: 'Unit 2',
+        formattedAddress: '2024 North Old Bastrop Highway, San Marcos, TX, USA'
       }
     }
     const {
