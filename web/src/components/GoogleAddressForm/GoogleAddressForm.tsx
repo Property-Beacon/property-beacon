@@ -121,9 +121,9 @@ const GoogleAddressForm = ({ loading, address }: Props) => {
 
   return (
     <FormProvider {...formMethods}>
-      <div className="mb-8">
-        <div className="flex place-items-center mb-6 gap-2">
-          <HiOutlineLocationMarker size={24} className="text-secondary" />
+      <div className="mb-6">
+        <div className="flex place-items-center mb-4">
+          <HiOutlineLocationMarker size={32} className="text-secondary mr-2" />
           <TextField
             disabled={loading}
             ref={locationInputEl}
@@ -131,26 +131,26 @@ const GoogleAddressForm = ({ loading, address }: Props) => {
             name="address.formattedAddress"
             errorClassName="input input-error"
             defaultValue={address?.formattedAddress}
-            className="input input-sm input-bordered w-full"
+            className="input input-bordered w-full"
           />
         </div>
-        <div className="mb-6">
+        <div className="mb-4">
           <TextField
             name="address.premise"
             disabled={loading}
             placeholder="Premise"
             defaultValue={address?.premise}
-            className="input input-sm input-bordered w-full"
+            className="input input-bordered w-full"
             errorClassName="input input-error"
           />
         </div>
-        <div className="flex flex-col sm:flex-row mb-6 gap-6 sm:gap-4">
+        <div className="flex flex-col sm:flex-row mb-4">
           <TextField
             name="address.street"
             disabled={loading}
             placeholder="Street"
             defaultValue={address?.street}
-            className="input input-sm input-bordered w-full"
+            className="input input-bordered w-full mb-6 sm:mb-0 mr-4"
             errorClassName="input input-error"
           />
           <TextField
@@ -158,17 +158,17 @@ const GoogleAddressForm = ({ loading, address }: Props) => {
             disabled={loading}
             placeholder="Suburb"
             defaultValue={address?.suburb}
-            className="input input-sm input-bordered w-full"
+            className="input input-bordered w-full"
             errorClassName="input input-error"
           />
         </div>
-        <div className="flex flex-col sm:flex-row mb-6 gap-6 sm:gap-4">
+        <div className="flex flex-col sm:flex-row mb-4">
           <TextField
             name="address.state"
             disabled={loading}
             placeholder="state"
             defaultValue={address?.state}
-            className="input input-sm input-bordered w-full"
+            className="input input-bordered w-full mb-6 sm:mb-0 mr-4"
             errorClassName="input input-error"
           />
           <TextField
@@ -177,7 +177,7 @@ const GoogleAddressForm = ({ loading, address }: Props) => {
             placeholder="Postal code"
             validation={{ pattern: /^[0-9]+$/i }}
             defaultValue={address?.postalCode}
-            className="input input-sm input-bordered w-full"
+            className="input input-bordered w-full"
             errorClassName="input input-error"
           />
         </div>
@@ -187,7 +187,7 @@ const GoogleAddressForm = ({ loading, address }: Props) => {
           placeholder="Country"
           validation={{ pattern: /^[A-Za-z]+$/i }}
           defaultValue={address?.country}
-          className="input input-sm input-bordered w-full"
+          className="input input-bordered w-full"
           errorClassName="input input-error"
         />
       </div>

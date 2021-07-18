@@ -187,11 +187,11 @@ const OrganizationCard = ({ companyId }: Props) => {
     >
       {error && <FormError error={error} />}
       <div
-        className={`flex gap-10 flex-col lg:flex-row lg:items-start mt-10 ${
+        className={`flex flex-col lg:flex-row lg:items-start mt-10 ${
           showUploader && 'opacity-95'
         }`}
       >
-        <div className="card shadow-lg bg-base-100 flex-1">
+        <div className="card shadow-lg bg-base-100 flex-1 mb-10 lg:mr-10 lg:mb-0">
           <div className="card-body">
             <div className="card-title">Organization Information</div>
             <div className="h-28 w-28 text-4xl mx-auto mt-10 mb-6">
@@ -216,8 +216,8 @@ const OrganizationCard = ({ companyId }: Props) => {
                     disabled={loading}
                     placeholder="e.g. NSW ECUMENICAL COUNCIL INC"
                     defaultValue={company?.displayName}
-                    className="input input-sm input-bordered w-full"
-                    errorClassName="input input-bordered input-error"
+                    className="input input-bordered w-full"
+                    errorClassName="input input-error"
                   />
                   <FieldError
                     name="displayName"
@@ -230,8 +230,8 @@ const OrganizationCard = ({ companyId }: Props) => {
                     disabled={loading}
                     placeholder="e.g. NSW ECUMENICAL COUNCIL INC"
                     defaultValue={company?.name}
-                    className="input input-sm input-bordered w-full"
-                    errorClassName="input input-bordered input-error"
+                    className="input input-bordered w-full"
+                    errorClassName="input input-error"
                   />
                   <FieldError
                     name="name"
@@ -244,8 +244,8 @@ const OrganizationCard = ({ companyId }: Props) => {
                     disabled={loading}
                     placeholder="e.g. NSW ECUMENICAL"
                     defaultValue={company?.shortName}
-                    className="input input-sm input-bordered w-full"
-                    errorClassName="input input-bordered input-error"
+                    className="input input-bordered w-full"
+                    errorClassName="input input-error"
                   />
                   <FieldError
                     name="shortName"
@@ -258,8 +258,8 @@ const OrganizationCard = ({ companyId }: Props) => {
                     disabled={loading}
                     placeholder="e.g. NEW SOUTH WALES ECUMENICAL COUNCIL INCORPORATED"
                     defaultValue={company?.profile?.fullName}
-                    className="input input-sm input-bordered w-full"
-                    errorClassName="input input-bordered input-error"
+                    className="input input-bordered w-full"
+                    errorClassName="input input-error"
                   />
                   <FieldError
                     name="profile.fullName"
@@ -272,8 +272,8 @@ const OrganizationCard = ({ companyId }: Props) => {
                     disabled={loading}
                     placeholder="e.g. https://www.example.com"
                     defaultValue={company?.website}
-                    className="input input-sm input-bordered w-full"
-                    errorClassName="input input-bordered input-error"
+                    className="input input-bordered w-full"
+                    errorClassName="input input-error"
                   />
                   <FieldError
                     name="website"
@@ -286,8 +286,8 @@ const OrganizationCard = ({ companyId }: Props) => {
                     disabled={loading}
                     placeholder="e.g. 64 781 737 080"
                     defaultValue={company?.profile?.abn}
-                    className="input input-sm input-bordered w-full"
-                    errorClassName="input input-bordered input-error"
+                    className="input input-bordered w-full"
+                    errorClassName="input input-error"
                   />
                   <FieldError
                     name="profile.abn"
@@ -300,8 +300,8 @@ const OrganizationCard = ({ companyId }: Props) => {
                     disabled={loading}
                     placeholder="e.g. 64 781 737 080"
                     defaultValue={company?.profile?.acn}
-                    className="input input-sm input-bordered w-full"
-                    errorClassName="input input-bordered input-error"
+                    className="input input-bordered w-full"
+                    errorClassName="input input-error"
                   />
                   <FieldError
                     name="profile.acn"
@@ -314,8 +314,8 @@ const OrganizationCard = ({ companyId }: Props) => {
                     disabled={loading}
                     placeholder="e.g. 64 781 737 080"
                     defaultValue={company?.profile?.crn}
-                    className="input input-sm input-bordered w-full"
-                    errorClassName="input input-bordered input-error"
+                    className="input input-bordered w-full"
+                    errorClassName="input input-error"
                   />
                   <FieldError
                     name="profile.crn"
@@ -328,8 +328,8 @@ const OrganizationCard = ({ companyId }: Props) => {
                     disabled={loading}
                     placeholder="e.g. example@domain.com"
                     defaultValue={company?.profile?.email}
-                    className="input input-sm input-bordered w-full"
-                    errorClassName="input input-bordered input-error"
+                    className="input input-bordered w-full"
+                    errorClassName="input input-error"
                     validation={{
                       pattern: {
                         value: /[^@]+@[^\.]+\..+/
@@ -347,8 +347,8 @@ const OrganizationCard = ({ companyId }: Props) => {
                     disabled={loading}
                     placeholder="e.g. John Smith"
                     defaultValue={company?.profile?.owner}
-                    className="input input-sm input-bordered w-full"
-                    errorClassName="input input-bordered input-error"
+                    className="input input-bordered w-full"
+                    errorClassName="input input-error"
                   />
                   <FieldError
                     name="profile.owner"
@@ -361,8 +361,8 @@ const OrganizationCard = ({ companyId }: Props) => {
                     disabled={loading}
                     placeholder="e.g. John Smith"
                     defaultValue={company?.profile?.mayor}
-                    className="input input-sm input-bordered w-full"
-                    errorClassName="input input-bordered input-error"
+                    className="input input-bordered w-full"
+                    errorClassName="input input-error"
                   />
                   <FieldError
                     name="profile.mayor"
@@ -375,7 +375,7 @@ const OrganizationCard = ({ companyId }: Props) => {
                     disabled={loading}
                     inputComponent={TelField}
                     value={company?.profile?.phone}
-                    className="input input-sm input-bordered w-full"
+                    className="input input-bordered w-full"
                   />
                 </FormFieldTr>
                 <FormFieldTr name="profile.mobile" label="Mobile">
@@ -384,7 +384,7 @@ const OrganizationCard = ({ companyId }: Props) => {
                     disabled={loading}
                     inputComponent={TelField}
                     value={company?.profile?.mobile}
-                    className="input input-sm input-bordered w-full"
+                    className="input input-bordered w-full"
                   />
                 </FormFieldTr>
                 <FormFieldTr name="profile.fax" label="Fax">
@@ -393,7 +393,7 @@ const OrganizationCard = ({ companyId }: Props) => {
                     disabled={loading}
                     inputComponent={TelField}
                     value={company?.profile?.fax}
-                    className="input input-sm input-bordered w-full"
+                    className="input input-bordered w-full"
                   />
                 </FormFieldTr>
               </tbody>

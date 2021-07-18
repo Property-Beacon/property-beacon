@@ -3,8 +3,8 @@ import TabContentLoading from './TabContentLoading'
 const SettingsPageLoading = () => (
   <div>
     <div className="card shadow-lg bg-base-100 max-w-2xl">
-      <div className="flex-col-reverse sm:flex-row place-items-center gap-6 card-body">
-        <div className="flex-grow text-center sm:text-left w-full sm:w-auto">
+      <div className="flex-col-reverse sm:flex-row place-items-center card-body">
+        <div className="flex-grow text-center sm:text-left w-full sm:w-auto mt-6 sm:mt-0">
           <div className="bg-base-300 animate-pulse h-10 mb-3 rounded w-1/2 mx-auto sm:mx-0"></div>
           <div className="bg-base-300 animate-pulse h-6 mb-4 rounded w-1/2 mx-auto sm:mx-0"></div>
           <div className="bg-base-300 animate-pulse h-4 mb-1 rounded w-2/3 mx-auto sm:mx-0"></div>

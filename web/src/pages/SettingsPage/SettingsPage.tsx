@@ -75,8 +75,8 @@ const SettingsPage = () => {
     <>
       <div>
         <div className="card shadow-lg bg-base-100 max-w-2xl">
-          <div className="flex-col-reverse sm:flex-row place-items-center gap-6 card-body">
-            <div className="flex-grow text-center sm:text-left">
+          <div className="flex-col-reverse sm:flex-row place-items-center card-body">
+            <div className="flex-grow text-center sm:text-left mt-6 sm:mt-0">
               {loading || updating ? (
                 <div className="bg-base-300 animate-pulse h-9 mb-3 rounded w-1/2 mx-auto sm:mx-0"></div>
               ) : (
@@ -84,8 +84,10 @@ const SettingsPage = () => {
                   {user.profile?.fullName ?? '-'}
                 </div>
               )}
-              <div className="flex place-items-center flex-col-reverse sm:flex-row gap-1">
-                <div className="badge badge-ghost badge-lg">{user.email}</div>
+              <div className="flex place-items-center flex-col-reverse sm:flex-row">
+                <div className="badge badge-ghost badge-lg mt-1 sm:mt-0 sm:mr-1">
+                  {user.email}
+                </div>
                 <div className="flex place-items-center text-success text-sm font-semibold">
                   <RiAdminLine size={20} />
                   {user.role}

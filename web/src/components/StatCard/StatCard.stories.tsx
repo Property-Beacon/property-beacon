@@ -3,11 +3,16 @@ import StatCard from './StatCard'
 
 export const variants = () => {
   return (
-    <div className="flex gap-4">
-      <StatCard title="Total submission" number={1000}>
+    <div className="flex">
+      <StatCard title="Total submission" number={1000} className="mr-4">
         neutral (default)
       </StatCard>
-      <StatCard title="Total submission" number={1000000} variant="primary">
+      <StatCard
+        title="Total submission"
+        number={1000000}
+        variant="primary"
+        className="mr-4"
+      >
         primary
       </StatCard>
       <StatCard
@@ -17,16 +22,36 @@ export const variants = () => {
       >
         secondary
       </StatCard>
-      <StatCard title="Total submission" number={12.2} variant="accent">
+      <StatCard
+        title="Total submission"
+        number={12.2}
+        variant="accent"
+        className="mr-4"
+      >
         accent
       </StatCard>
-      <StatCard title="Total submission" number={66.0} variant="info">
+      <StatCard
+        title="Total submission"
+        number={66.0}
+        variant="info"
+        className="mr-4"
+      >
         info / 66.0
       </StatCard>
-      <StatCard title="Total submission" number={345.678} variant="success">
+      <StatCard
+        title="Total submission"
+        number={345.678}
+        variant="success"
+        className="mr-4"
+      >
         success
       </StatCard>
-      <StatCard title="Total submission" number={123.1312321} variant="warning">
+      <StatCard
+        title="Total submission"
+        number={123.1312321}
+        variant="warning"
+        className="mr-4"
+      >
         warning / 123.1312321
       </StatCard>
       <StatCard title="Total submission" number={0.12345533364} variant="error">
@@ -52,7 +77,7 @@ export const clickable = () => (
 
 export const custom = () => {
   return (
-    <div className="flex gap-4">
+    <div className="flex">
       <StatCard
         variant="success"
         title={

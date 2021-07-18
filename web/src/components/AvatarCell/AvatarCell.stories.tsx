@@ -3,14 +3,14 @@ import { standard } from './AvatarCell.mock'
 
 export const loading = () => {
   return Loading ? (
-    <div className="flex gap-4 place-items-center">
-      <div className="h-10 w-10">
+    <div className="flex place-items-center">
+      <div className="h-10 w-10 mr-4">
         <Loading />
       </div>
-      <div className="h-12 w-12">
+      <div className="h-12 w-12 mr-4">
         <Loading />
       </div>
-      <div className="h-14 w-14">
+      <div className="h-14 w-14 mr-4">
         <Loading />
       </div>
       <div className="h-16 w-16">
@@ -22,14 +22,14 @@ export const loading = () => {
 
 export const empty = () => {
   return Empty ? (
-    <div className="flex gap-4 place-items-center">
-      <div className="h-10 w-10">
+    <div className="flex place-items-center">
+      <div className="h-10 w-10 mr-4">
         <Empty />
       </div>
-      <div className="h-12 w-12">
+      <div className="h-12 w-12 mr-4">
         <Empty />
       </div>
-      <div className="h-14 w-14">
+      <div className="h-14 w-14 mr-4">
         <Empty />
       </div>
       <div className="h-16 w-16">
@@ -41,14 +41,14 @@ export const empty = () => {
 
 export const failure = () => {
   return Failure ? (
-    <div className="flex gap-4 place-items-center">
-      <div className="h-10 w-10">
+    <div className="flex place-items-center">
+      <div className="h-10 w-10 mr-4">
         <Failure error={new Error('oh no')} />
       </div>
-      <div className="h-12 w-12">
+      <div className="h-12 w-12 mr-4">
         <Failure error={new Error('oh no')} />
       </div>
-      <div className="h-14 w-14">
+      <div className="h-14 w-14 mr-4">
         <Failure error={new Error('oh no')} />
       </div>
       <div className="h-16 w-16">
@@ -60,8 +60,8 @@ export const failure = () => {
 
 export const success = () => {
   return Success ? (
-    <div className="flex gap-4 place-items-center">
-      <div className="h-10 w-10">
+    <div className="flex place-items-center">
+      <div className="h-10 w-10 mr-4">
         <Success
           {...standard({
             email: 'example@domain.com',
@@ -71,7 +71,7 @@ export const success = () => {
           })}
         />
       </div>
-      <div className="h-12 w-12">
+      <div className="h-12 w-12 mr-4">
         <Success
           {...standard({
             email: 'example@domain.com',
@@ -83,7 +83,7 @@ export const success = () => {
           })}
         />
       </div>
-      <div className="h-14 w-14">
+      <div className="h-14 w-14 mr-4">
         <Success
           {...standard({
             email: 'example@domain.com',
