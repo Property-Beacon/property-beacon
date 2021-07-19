@@ -38,6 +38,9 @@ export const MUTATION = gql`
       companyId
       updatedAt
       address {
+        lat
+        lng
+        gPlaceId
         premise
         state
         street
@@ -101,8 +104,8 @@ const ProfileCard = ({ user }: Props) => {
       validation={{ mode: 'onBlur' }}
     >
       {error && <FormError error={error} />}
-      <div className="flex gap-10 flex-col lg:flex-row lg:items-start mt-10">
-        <div className="card shadow-lg bg-base-100 flex-1">
+      <div className="flex flex-col lg:flex-row lg:items-start mt-10">
+        <div className="card shadow-lg bg-base-100 flex-1 mb-10 lg:mb-0 lg:mr-10">
           <div className="card-body">
             <div className="card-title">Personal Information</div>
             <table className="table table-zebra w-full">
@@ -172,8 +175,8 @@ const ProfileCard = ({ user }: Props) => {
                     placeholder="e.g. David"
                     defaultValue={user?.profile?.firstName}
                     validation={{ pattern: /^[A-Za-z- ]+$/i }}
-                    className="input input-sm input-bordered w-full"
-                    errorClassName="input input-bordered input-error"
+                    className="input input-bordered w-full"
+                    errorClassName="input input-error"
                   />
                   <FieldError
                     name="firstName"
@@ -187,8 +190,8 @@ const ProfileCard = ({ user }: Props) => {
                     placeholder="e.g. Jones"
                     defaultValue={user?.profile?.lastName}
                     validation={{ pattern: /^[A-Za-z ]+$/i }}
-                    className="input input-sm input-bordered w-full"
-                    errorClassName="input input-bordered input-error"
+                    className="input input-bordered w-full"
+                    errorClassName="input input-error"
                   />
                   <FieldError
                     name="lastName"
@@ -201,7 +204,7 @@ const ProfileCard = ({ user }: Props) => {
                     disabled={loading}
                     inputComponent={TelField}
                     value={user?.profile?.phone}
-                    className="input input-sm input-bordered  w-full"
+                    className="input input-bordered w-full"
                   />
                 </FormFieldTr>
                 <FormFieldTr name="mobile" label="Mobile">
@@ -210,7 +213,7 @@ const ProfileCard = ({ user }: Props) => {
                     disabled={loading}
                     inputComponent={TelField}
                     value={user?.profile?.mobile}
-                    className="input input-sm input-bordered w-full"
+                    className="input input-bordered w-full"
                   />
                 </FormFieldTr>
               </tbody>

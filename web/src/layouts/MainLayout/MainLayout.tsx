@@ -36,6 +36,13 @@ const MainLayout: React.FunctionComponent = ({ children }) => {
     isAuthenticated
   } = useAuth()
 
+  // A workaround of click and focus behavior not working on Safari
+  // https://gist.github.com/cvrebert/68659d0333a578d75372
+  const handleClickFocus = (e: MouseEvent<HTMLButtonElement>) => {
+    // Set button focus onClick since button can NOT be focused by clicking (even with tabindex)
+    e.currentTarget.focus()
+  }
+
   useEffect(
     () => {
       if (currentUser?.id && !fullName) {
@@ -142,7 +149,10 @@ const MainLayout: React.FunctionComponent = ({ children }) => {
                   <span>Dashboard</span>
                 </NavLink>
                 <div className="flex dropdown dropdown-end">
-                  <button className="avatar online mx-2">
+                  <button
+                    onClick={handleClickFocus}
+                    className="avatar online mx-2"
+                  >
                     <FiBell size={22} className="self-center" />
                   </button>
                   <ul className="menu shadow-lg dropdown-content bg-base-100 rounded-box w-80 mt-12 text-neutral">
@@ -169,6 +179,7 @@ const MainLayout: React.FunctionComponent = ({ children }) => {
                 <div className="pl-2 dropdown dropdown-end">
                   <button
                     tabIndex={0}
+                    onClick={handleClickFocus}
                     className="flex items-center"
                     data-testid="navbar-user-avatar"
                   >
@@ -183,6 +194,8 @@ const MainLayout: React.FunctionComponent = ({ children }) => {
                   >
                     <li>
                       <NavLink
+                        // A workaround for Safari as anchor support focus and click ONLY when the anchor has a tabindex
+                        tabIndex={0}
                         className="flex-col"
                         data-testid="navbar-menu-user"
                         activeClassName="bg-primary-focus"
@@ -215,6 +228,8 @@ const MainLayout: React.FunctionComponent = ({ children }) => {
                     <li>
                       <a
                         href="/"
+                        // A workaround for Safari as anchor support focus and click ONLY when the anchor has a tabindex
+                        tabIndex={0}
                         onClick={handleLogOut}
                         data-testid="navbar-menu-logout"
                       >

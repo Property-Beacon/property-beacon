@@ -73,12 +73,15 @@ describe('services/userProfile', () => {
       phone: '0412345678',
       mobile: '0221345678',
       address: {
+        lat: '10.213123',
+        lng: '130.12312',
         country: 'Australia',
         state: 'NSW',
         suburb: 'Crows Nest',
         postalCode: '2200',
         street: 'Albany Street',
         premise: 'Unit 1',
+        gPlaceId: 'ChIJkY9KDT6wEmsRNSQ8JHiCKTM',
         formattedAddress: '2024 North Old Bastrop Highway, San Marcos, TX, USA'
       }
     }
@@ -98,6 +101,9 @@ describe('services/userProfile', () => {
       userId
     })
     const {
+      lat,
+      lng,
+      gPlaceId,
       country,
       state,
       suburb,
@@ -124,6 +130,9 @@ describe('services/userProfile', () => {
       now.getTime()
     )
     expect({
+      lat,
+      lng,
+      gPlaceId,
       country,
       state,
       suburb,

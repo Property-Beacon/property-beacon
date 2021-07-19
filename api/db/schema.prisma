@@ -84,6 +84,9 @@ model Address {
   premise          String?
   formattedAddress String?
   suburb           String? // city,town,village,suburb,district,county
+  lat              String?
+  lng              String?
+  gPlaceId         String?
   updatedAt        DateTime?       @updatedAt
   UserProfile      UserProfile?    @relation(fields: [userProfileId], references: [id])
   CompanyProfile   CompanyProfile? @relation(fields: [companyProfileId], references: [id])

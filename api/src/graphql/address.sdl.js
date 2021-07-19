@@ -1,23 +1,29 @@
 export const schema = gql`
   type Address {
-    premise: String
+    lat: String
+    lng: String
     state: String
     street: String
     suburb: String
+    premise: String
     country: String
-    formattedAddress: String
+    gPlaceId: String
     postalCode: String
     updatedAt: DateTime
+    formattedAddress: String
   }
 
   input UpdateAddress {
-    premise: String
+    lat: String
+    lng: String
     state: String
     street: String
     suburb: String
+    premise: String
     country: String
-    formattedAddress: String
+    gPlaceId: String
     postalCode: String
+    formattedAddress: String
   }
 
   type Query {

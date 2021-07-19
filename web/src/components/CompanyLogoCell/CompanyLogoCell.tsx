@@ -28,6 +28,9 @@ export const QUERY = gql`
         mayor
         updatedAt
         address {
+          lat
+          lng
+          gPlaceId
           premise
           state
           street
