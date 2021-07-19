@@ -68,12 +68,15 @@ describe('services/companyProfile', () => {
     const data = {
       ...companyProfileData,
       address: {
-        country: 'Australia',
         state: 'NSW',
-        suburb: 'Crows Nest',
-        postalCode: '2200',
-        street: 'Albany Street',
+        lat: '10.213123',
+        lng: '130.12312',
         premise: 'Unit 2',
+        postalCode: '2200',
+        country: 'Australia',
+        suburb: 'Crows Nest',
+        street: 'Albany Street',
+        gPlaceId: 'ChIJkY9KDT6wEmsRNSQ8JHiCKTM',
         formattedAddress: '2024 North Old Bastrop Highway, San Marcos, TX, USA'
       }
     }

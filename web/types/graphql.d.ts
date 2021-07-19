@@ -18,14 +18,17 @@ export type Scalars = {
 
 export type Address = {
   __typename?: 'Address';
-  premise?: Maybe<Scalars['String']>;
+  lat?: Maybe<Scalars['String']>;
+  lng?: Maybe<Scalars['String']>;
   state?: Maybe<Scalars['String']>;
   street?: Maybe<Scalars['String']>;
   suburb?: Maybe<Scalars['String']>;
+  premise?: Maybe<Scalars['String']>;
   country?: Maybe<Scalars['String']>;
-  formattedAddress?: Maybe<Scalars['String']>;
+  gPlaceId?: Maybe<Scalars['String']>;
   postalCode?: Maybe<Scalars['String']>;
   updatedAt?: Maybe<Scalars['DateTime']>;
+  formattedAddress?: Maybe<Scalars['String']>;
 };
 
 export type Company = {
@@ -175,13 +178,16 @@ export type Role =
 
 
 export type UpdateAddress = {
-  premise?: Maybe<Scalars['String']>;
+  lat?: Maybe<Scalars['String']>;
+  lng?: Maybe<Scalars['String']>;
   state?: Maybe<Scalars['String']>;
   street?: Maybe<Scalars['String']>;
   suburb?: Maybe<Scalars['String']>;
+  premise?: Maybe<Scalars['String']>;
   country?: Maybe<Scalars['String']>;
-  formattedAddress?: Maybe<Scalars['String']>;
+  gPlaceId?: Maybe<Scalars['String']>;
   postalCode?: Maybe<Scalars['String']>;
+  formattedAddress?: Maybe<Scalars['String']>;
 };
 
 export type UpdateCompany = {
@@ -258,7 +264,7 @@ export type GetUserById = (
       & Pick<UserProfile, 'id' | 'avatar' | 'fullName' | 'firstName' | 'lastName' | 'mobile' | 'phone' | 'companyId' | 'updatedAt'>
       & { address?: Maybe<(
         { __typename?: 'Address' }
-        & Pick<Address, 'premise' | 'state' | 'street' | 'suburb' | 'country' | 'postalCode' | 'updatedAt' | 'formattedAddress'>
+        & Pick<Address, 'lat' | 'lng' | 'gPlaceId' | 'premise' | 'state' | 'street' | 'suburb' | 'country' | 'postalCode' | 'updatedAt' | 'formattedAddress'>
       )> }
     ) }
   ) }
@@ -279,7 +285,7 @@ export type GetCompany = (
       & Pick<CompanyProfile, 'id' | 'companyId' | 'phone' | 'fax' | 'mobile' | 'fullName' | 'email' | 'abn' | 'acn' | 'crn' | 'owner' | 'mayor' | 'updatedAt'>
       & { address?: Maybe<(
         { __typename?: 'Address' }
-        & Pick<Address, 'premise' | 'state' | 'street' | 'suburb' | 'country' | 'postalCode' | 'updatedAt' | 'formattedAddress'>
+        & Pick<Address, 'lat' | 'lng' | 'gPlaceId' | 'premise' | 'state' | 'street' | 'suburb' | 'country' | 'postalCode' | 'updatedAt' | 'formattedAddress'>
       )> }
     )> }
   ) }
@@ -312,7 +318,7 @@ export type UpdateCompanyProfile = (
     & Pick<CompanyProfile, 'id' | 'companyId' | 'phone' | 'fax' | 'mobile' | 'fullName' | 'email' | 'abn' | 'acn' | 'crn' | 'owner' | 'mayor' | 'updatedAt'>
     & { address?: Maybe<(
       { __typename?: 'Address' }
-      & Pick<Address, 'premise' | 'state' | 'street' | 'suburb' | 'country' | 'postalCode' | 'updatedAt' | 'formattedAddress'>
+      & Pick<Address, 'lat' | 'lng' | 'gPlaceId' | 'premise' | 'state' | 'street' | 'suburb' | 'country' | 'postalCode' | 'updatedAt' | 'formattedAddress'>
     )> }
   ) }
 );
@@ -330,7 +336,7 @@ export type UpdateUserProfile = (
     & Pick<UserProfile, 'id' | 'avatar' | 'fullName' | 'firstName' | 'lastName' | 'mobile' | 'phone' | 'companyId' | 'updatedAt'>
     & { address?: Maybe<(
       { __typename?: 'Address' }
-      & Pick<Address, 'premise' | 'state' | 'street' | 'suburb' | 'country' | 'postalCode' | 'updatedAt' | 'formattedAddress'>
+      & Pick<Address, 'lat' | 'lng' | 'gPlaceId' | 'premise' | 'state' | 'street' | 'suburb' | 'country' | 'postalCode' | 'updatedAt' | 'formattedAddress'>
     )> }
   ) }
 );

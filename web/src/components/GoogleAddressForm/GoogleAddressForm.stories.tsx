@@ -16,7 +16,7 @@ const GoogleAddressFormWrapper = () => {
       }}
       validation={{ mode: 'onBlur' }}
     >
-      <GoogleAddressForm loading address={{}} />
+      <GoogleAddressForm address={{}} />
     </Form>
   )
 }

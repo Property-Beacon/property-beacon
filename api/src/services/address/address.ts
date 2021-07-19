@@ -2,11 +2,14 @@ import { requireAuth } from 'src/lib/auth'
 import { db } from 'src/lib/db'
 
 type AddressFields =
-  | 'premise'
+  | 'lat'
+  | 'lng'
   | 'state'
   | 'street'
   | 'suburb'
+  | 'premise'
   | 'country'
+  | 'gPlaceId'
   | 'postalCode'
   | 'formattedAddress'
 type UniqueKeys = Parameters<typeof db.address.update>[0]['where']

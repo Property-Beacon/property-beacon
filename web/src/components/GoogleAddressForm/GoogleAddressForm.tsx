@@ -1,9 +1,12 @@
 import { Loader } from '@googlemaps/js-api-loader'
-import { TextField } from '@redwoodjs/forms'
-import { useEffect, useRef } from 'react'
+import { HiddenField, TextField } from '@redwoodjs/forms'
+import { useEffect, useRef, useState } from 'react'
 import { FormProvider, useFormContext } from 'react-hook-form'
 import { HiOutlineLocationMarker } from 'react-icons/hi'
 import type { Address } from 'web/types/graphql'
+
+// TODO: Hard code country for the moment as our focus market
+const COUNTRIES = ['au']
 
 interface Props {
   loading?: boolean
@@ -22,6 +25,7 @@ const ADDRESS_NAME_FORMAT = {
 }
 
 const GoogleAddressForm = ({ loading, address }: Props) => {
+  const [map, setMap] = useState<google.maps.Map>(null)
   const formMethods = useFormContext<{ address?: Address }>()
   const mapDivEl = useRef<HTMLDivElement>(null)
   const locationInputEl = useRef<HTMLInputElement>(null)
@@ -34,18 +38,30 @@ const GoogleAddressForm = ({ loading, address }: Props) => {
       })
 
       loader.load().then(() => {
-        const map = new google.maps.Map(mapDivEl.current, {
+        const _map = new google.maps.Map(mapDivEl.current, {
           zoom: 12,
           zoomControl: false,
           mapTypeControl: false,
           streetViewControl: false,
-          fullscreenControl: false,
-          // Default Sydney centre
-          center: { lat: -33.865143, lng: 151.2099 }
+          fullscreenControl: false
         })
-        const marker = new google.maps.Marker({ map, draggable: false })
+        const marker = new google.maps.Marker({ map: _map, draggable: false })
+        // TODO: Currently Autocomplete doesn't support debounce and need to work around it
         const autocomplete = new google.maps.places.Autocomplete(
-          locationInputEl.current
+          locationInputEl.current,
+          {
+            fields: [
+              /** Basic data are free but others are paid
+               * https://developers.google.com/maps/documentation/places/web-service/usage-and-billing#autocomplete
+               */
+              'name',
+              'types',
+              'geometry',
+              'place_id',
+              'address_components'
+            ],
+            componentRestrictions: { country: COUNTRIES }
+          }
         )
 
         autocomplete.addListener('place_changed', () => {
@@ -65,18 +81,18 @@ const GoogleAddressForm = ({ loading, address }: Props) => {
                 return component[ADDRESS_NAME_FORMAT[type]]
               }
             }
-            return ''
+            return
           }
 
           // Render address pin on the map
-          map.setCenter(place.geometry.location)
+          _map.setCenter(place.geometry.location)
           marker.setPosition(place.geometry.location)
           marker.setVisible(true)
 
           // Set form fields
           formMethods.setValue(
-            'address.name',
-            getAddressFieldValue('subpremise'),
+            'address.premise',
+            getAddressFieldValue('subpremise') ?? place.name,
             {
               shouldDirty: true
             }
@@ -112,12 +128,37 @@ const GoogleAddressForm = ({ loading, address }: Props) => {
               shouldDirty: true
             }
           )
+          !!place?.geometry?.location?.lat &&
+            formMethods.setValue('address.lat', place.geometry.location.lat(), {
+              shouldDirty: true
+            })
+          !!place?.geometry?.location?.lng &&
+            formMethods.setValue('address.lng', place.geometry.location.lng(), {
+              shouldDirty: true
+            })
+          !!place?.place_id &&
+            formMethods.setValue('address.gPlaceId', place.place_id, {
+              shouldDirty: true
+            })
         })
+
+        // Set map instance for component context
+        setMap(_map)
       })
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
     []
   )
+
+  useEffect(() => {
+    if (address && map && !map.getCenter()) {
+      // Default Sydney centre
+      map.setCenter({
+        lat: address?.lat ? parseFloat(address.lat) : -33.865143,
+        lng: address?.lng ? parseFloat(address.lng) : 151.2099
+      })
+    }
+  }, [map, loading, address])
 
   return (
     <FormProvider {...formMethods}>
@@ -146,16 +187,16 @@ const GoogleAddressForm = ({ loading, address }: Props) => {
         </div>
         <div className="flex flex-col sm:flex-row mb-4">
           <TextField
-            name="address.street"
             disabled={loading}
+            name="address.street"
             placeholder="Street"
             defaultValue={address?.street}
             className="input input-bordered w-full mb-6 sm:mb-0 mr-4"
             errorClassName="input input-error"
           />
           <TextField
-            name="address.suburb"
             disabled={loading}
+            name="address.suburb"
             placeholder="Suburb"
             defaultValue={address?.suburb}
             className="input input-bordered w-full"
@@ -164,16 +205,16 @@ const GoogleAddressForm = ({ loading, address }: Props) => {
         </div>
         <div className="flex flex-col sm:flex-row mb-4">
           <TextField
-            name="address.state"
             disabled={loading}
+            name="address.state"
             placeholder="state"
             defaultValue={address?.state}
             className="input input-bordered w-full mb-6 sm:mb-0 mr-4"
             errorClassName="input input-error"
           />
           <TextField
-            name="address.postalCode"
             disabled={loading}
+            name="address.postalCode"
             placeholder="Postal code"
             validation={{ pattern: /^[0-9]+$/i }}
             defaultValue={address?.postalCode}
@@ -182,14 +223,17 @@ const GoogleAddressForm = ({ loading, address }: Props) => {
           />
         </div>
         <TextField
-          name="address.country"
           disabled={loading}
+          name="address.country"
           placeholder="Country"
           validation={{ pattern: /^[A-Za-z]+$/i }}
           defaultValue={address?.country}
           className="input input-bordered w-full"
           errorClassName="input input-error"
         />
+        <HiddenField name="address.lat" defaultValue={address?.lat} />
+        <HiddenField name="address.lng" defaultValue={address?.lng} />
+        <HiddenField name="address.gPlaceId" defaultValue={address?.gPlaceId} />
       </div>
       <div className="h-80 shadow-md" ref={mapDivEl}></div>
     </FormProvider>

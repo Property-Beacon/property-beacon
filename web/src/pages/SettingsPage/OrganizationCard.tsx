@@ -73,6 +73,9 @@ export const COMPANY_PROFILE_MUTATION = gql`
       mayor
       updatedAt
       address {
+        lat
+        lng
+        gPlaceId
         premise
         state
         street

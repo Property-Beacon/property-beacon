@@ -38,6 +38,9 @@ export const MUTATION = gql`
       companyId
       updatedAt
       address {
+        lat
+        lng
+        gPlaceId
         premise
         state
         street
