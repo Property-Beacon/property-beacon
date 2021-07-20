@@ -203,9 +203,12 @@ const OrganizationCard = ({ companyId }: Props) => {
                 className="tooltip tooltip-primary w-full h-full"
               >
                 <button
+                  type="button"
                   disabled={loading}
                   className="w-full h-full"
-                  onClick={() => setShowUploader(true)}
+                  onClick={() => {
+                    setShowUploader(true)
+                  }}
                 >
                   <CompanyLogoCell id={companyId} />
                 </button>

@@ -21,6 +21,7 @@ All technical 👨‍💻👩‍💻 documentations of Property Beacon
 
 - Frontend
   - [CDN](docs/CDN.md)
+  - [Google Maps Javascript API](docs/GOOGLE_MAP.md)
 
 ### Coding conventions and standards
 
@@ -74,6 +75,12 @@ add `Filestack` CDN[(?)](docs/CDN.md) key
 
 ```
 REDWOOD_ENV_FILESTACK_API_KEY={askMeTheKey}
+```
+
+add `Google Maps Javascript API key` [(?)](docs/GOOGLE_MAP.md)
+
+```
+GOOGLE_MAP_API_KEY={askMeTheKey}
 ```
 
 ### Local database (PostgreSQL + PgAdmin)

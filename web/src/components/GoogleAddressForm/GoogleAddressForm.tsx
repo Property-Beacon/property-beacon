@@ -13,6 +13,17 @@ interface Props {
   address: Address
 }
 
+function isEqualGeometry(
+  g1?: google.maps.LatLngLiteral,
+  g2?: google.maps.LatLngLiteral
+) {
+  if (!g1 || !g2) {
+    return false
+  }
+
+  return g1.lat === g2.lat && g1.lng === g1.lng
+}
+
 // Google Place API data fields mapping
 const ADDRESS_NAME_FORMAT = {
   route: 'long_name',
@@ -26,6 +37,7 @@ const ADDRESS_NAME_FORMAT = {
 
 const GoogleAddressForm = ({ loading, address }: Props) => {
   const [map, setMap] = useState<google.maps.Map>(null)
+  const [marker, setMarker] = useState<google.maps.Marker>(null)
   const formMethods = useFormContext<{ address?: Address }>()
   const mapDivEl = useRef<HTMLDivElement>(null)
   const locationInputEl = useRef<HTMLInputElement>(null)
@@ -45,7 +57,7 @@ const GoogleAddressForm = ({ loading, address }: Props) => {
           streetViewControl: false,
           fullscreenControl: false
         })
-        const marker = new google.maps.Marker({ map: _map, draggable: false })
+        const _marker = new google.maps.Marker({ map: _map, draggable: false })
         // TODO: Currently Autocomplete doesn't support debounce and need to work around it
         const autocomplete = new google.maps.places.Autocomplete(
           locationInputEl.current,
@@ -65,7 +77,7 @@ const GoogleAddressForm = ({ loading, address }: Props) => {
         )
 
         autocomplete.addListener('place_changed', () => {
-          marker.setVisible(false)
+          _marker.setVisible(false)
 
           const place = autocomplete.getPlace()
 
@@ -75,24 +87,25 @@ const GoogleAddressForm = ({ loading, address }: Props) => {
             return
           }
 
-          const getAddressFieldValue = function (type) {
+          const getAddressFieldValue = (type) => {
             for (const component of place.address_components) {
               if (component.types[0] === type) {
                 return component[ADDRESS_NAME_FORMAT[type]]
               }
             }
-            return
+
+            return type === 'subpremise' ? place.name : ''
           }
 
           // Render address pin on the map
           _map.setCenter(place.geometry.location)
-          marker.setPosition(place.geometry.location)
-          marker.setVisible(true)
+          _marker.setPosition(place.geometry.location)
+          _marker.setVisible(true)
 
           // Set form fields
           formMethods.setValue(
             'address.premise',
-            getAddressFieldValue('subpremise') ?? place.name,
+            getAddressFieldValue('subpremise'),
             {
               shouldDirty: true
             }
@@ -144,6 +157,7 @@ const GoogleAddressForm = ({ loading, address }: Props) => {
 
         // Set map instance for component context
         setMap(_map)
+        setMarker(_marker)
       })
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -151,14 +165,21 @@ const GoogleAddressForm = ({ loading, address }: Props) => {
   )
 
   useEffect(() => {
-    if (address && map && !map.getCenter()) {
+    if (address) {
       // Default Sydney centre
-      map.setCenter({
+      const geometry = {
         lat: address?.lat ? parseFloat(address.lat) : -33.865143,
         lng: address?.lng ? parseFloat(address.lng) : 151.2099
-      })
+      }
+
+      !!map &&
+        !isEqualGeometry(map.getCenter()?.toJSON(), geometry) &&
+        map.setCenter(geometry)
+      !!marker &&
+        !isEqualGeometry(marker.getPosition()?.toJSON(), geometry) &&
+        marker.setPosition(geometry)
     }
-  }, [map, loading, address])
+  }, [map, marker, address])
 
   return (
     <FormProvider {...formMethods}>
