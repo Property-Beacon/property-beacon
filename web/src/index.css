@@ -32,9 +32,7 @@
   --PhoneInputCountryFlag-borderColor: none !important;
   /* --PhoneInputCountryFlag-borderColor--focus: var(--PhoneInput-color--focus); */
   --PhoneInputCountryFlag-backgroundColor--loading: none !important;
-}
 
-body {
   /* daisyui cupcake theme base colours var */
   --p: 183 47.4% 59%;
   --pf: 183 47.2% 49%;
@@ -50,8 +48,7 @@ body {
 
   --btn-text-case: 'capitalize';
 
-  @apply bg-base-300;
-  @apply text-neutral;
+  @apply bg-base-300 text-neutral;
 }
 
 ::selection {
