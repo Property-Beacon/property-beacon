@@ -111,6 +111,12 @@ then you should see `Postgres` and `PgAdmin` are up and running. Since the conta
 
 <img src="docs/docker-desktop.png" alt="Docker Desktop">
 
+apply all db migration scripts
+
+```bash
+yarn rw prisma migrate dev
+```
+
 `PgAdmin` run on http://localhost:8080/ with `admin@propertybeacon.com/admin` _(username/password)_. You will need to change your database server connection to your actual machine IP address since the two docker containers are running at its independent environment (the same as running on two different machines).
 
 <img src="docs/pgadmin-connection.png" alt="Docker Desktop">

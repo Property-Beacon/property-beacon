@@ -10,7 +10,7 @@ services:
     ports:
       - '5432:5432'
   pgadmin:
-    image: propertybeacon/pgadmin4
+    image: dpage/pgadmin4
     restart: always
     environment:
       PGADMIN_DEFAULT_EMAIL: admin@propertybeacon.com
