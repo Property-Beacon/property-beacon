@@ -1,5 +1,5 @@
 import { Magic } from '@magic-sdk/admin'
-import { AuthenticationError, ForbiddenError } from '@redwoodjs/api'
+import { AuthenticationError, ForbiddenError } from '@redwoodjs/graphql-server'
 import { logger } from 'src/lib/logger'
 import {
   createUser,

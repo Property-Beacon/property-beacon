@@ -6,7 +6,8 @@
   "dependencies": {
     "@magic-sdk/admin": "^1.3.0",
     "@redwoodjs/api": "^0.35.2",
-    "@redwoodjs/api-server": "^0.35.2"
+    "@redwoodjs/api-server": "^0.35.2",
+    "@redwoodjs/graphql-server": "^0.35.2"
   },
   "keywords": [
     "prisma",

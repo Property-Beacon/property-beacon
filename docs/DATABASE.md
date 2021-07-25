@@ -52,7 +52,11 @@ model User {
 
 `seed.js`
 
-This script is mainly to inject dummy data for dev (testing) purpose, data seeding is `development` mode only when run `yarn rw prisma migrate dev` (_i.e. `yarn rw prisma migrate` will not apply `seed.js`_) and it will only be applied when schema (relation) changes are breaking. We are less likely need to maintain this file unless breaking schema changes.
+This script is mainly to inject dummy data for dev (testing) purpose, change `data` array in the `seed.js` if needed before running data seeding
+
+```bash
+yarn rw prisma db seed
+```
 
 `migrations` folder
 

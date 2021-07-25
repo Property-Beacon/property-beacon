@@ -1,4 +1,4 @@
-import { createLogger } from '@redwoodjs/api/logger'
+import { createLogger } from '@redwoodjs/graphql-server/logger'
 
 /**
  * Creates a logger with RedwoodLoggerOptions
@@ -15,10 +15,10 @@ import { createLogger } from '@redwoodjs/api/logger'
  * @param {boolean} showConfig - whether to display logger configuration on initialization
  */
 export const logger = createLogger({
+  // TODO: Integrate with 3rd-party logger
+  destination: process.env.LOG_API_DESTINATION,
   // We can extend to avoid logging sensitive data
   // https://redwoodjs.com/docs/logger.html#redaction
   // options: { redact: redactionsList }
-  //
-  // TODO: Integrate with 3rd-party logger
-  destination: process.env.LOG_API_DESTINATION
+  options: { level: 'info', prettyPrint: true }
 })
