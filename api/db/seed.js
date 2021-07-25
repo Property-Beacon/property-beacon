@@ -17,25 +17,32 @@ const db = new PrismaClient()
 async function main() {
   const data = [
     {
-      email: 'ralphbliu@gmail.com',
-      role: 'ADMIN',
-      issuer: 'did:ethr:0xf95Ff41F462Ad6FB53C9d6dF4b9389A3D60C9F35',
-      profile: {
-        firstName: 'Brian',
-        lastName: 'Liu',
-        mobile: '0412345678',
-        phone: '0412345678',
-        address: {
-          country: 'Australia',
-          state: 'NSW',
-          postalCode: '2200'
-        },
-        organisation: {
-          name: 'Property Beacon Pty',
-          shortName: 'PB',
-          website: 'https://property-beacon.netlify.app/',
-          profile: {
-            owner: 'Brian Liu/Peter Mitrovich'
+      user: {
+        email: 'ralphbliu@gmail.com',
+        role: 'ADMIN',
+        issuer: 'did:ethr:0xf95Ff41F462Ad6FB53C9d6dF4b9389A3D60C9F35',
+        profile: {
+          firstName: 'Brian',
+          lastName: 'Liu',
+          mobile: '0412345678',
+          phone: '0412345678',
+          address: {
+            country: 'Australia',
+            state: 'NSW',
+            postalCode: '2200'
+          }
+        }
+      },
+      company: {
+        name: 'Property Beacon Pty',
+        shortName: 'PB',
+        website: 'https://property-beacon.netlify.app/',
+        profile: {
+          fullName: 'Brian Property Beacon Pty Ltd',
+          address: {
+            country: 'Australia',
+            state: 'NSW',
+            postalCode: '2200'
           }
         }
       }
@@ -46,12 +53,14 @@ async function main() {
   return Promise.all(
     data.map(
       async ({
-        profile: {
-          address,
-          organisation: { profile: companyProfile, ...organisation },
-          ...userProfile
+        user: {
+          profile: { address, ...profile },
+          ...user
         },
-        ...user
+        company: {
+          profile: { address: companyProfileAddress, ...companyProfile },
+          ...company
+        }
       }) => {
         const _user = await db.user.create({
           data: user
@@ -59,7 +68,7 @@ async function main() {
         const _userProfile = await db.userProfile.create({
           data: {
             userId: _user.id,
-            ...userProfile
+            ...profile
           }
         })
         const _userProfileAddress = await db.address.create({
@@ -68,23 +77,28 @@ async function main() {
             ...address
           }
         })
-        const _userOrg = await db.company.create({
-          data: organisation
+        const _company = await db.company.create({
+          data: company
         })
 
         await db.userProfile.update({
           data: {
-            companyId: _userOrg.id
+            companyId: _company.id
           },
           where: {
             id: _userProfile.id
           }
         })
-
-        const _userOrgProfile = await db.companyProfile.create({
+        const _companyProfile = await db.companyProfile.create({
           data: {
-            companyId: _userOrg.id,
+            companyId: _company.id,
             ...companyProfile
+          }
+        })
+        const _companyProfileAddress = await db.address.create({
+          data: {
+            companyProfileId: _companyProfile.id,
+            ...companyProfileAddress
           }
         })
         console.log(_user)
