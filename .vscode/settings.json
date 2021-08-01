@@ -23,5 +23,6 @@
     "titleBar.inactiveForeground": "#2a2e3799"
   },
   "editor.tabSize": 2,
-  "css.validate": false
+  "css.validate": false,
+  "prettier.printWidth": 120
 }
