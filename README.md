@@ -12,28 +12,41 @@ All technical 👨‍💻👩‍💻 documentations of Property Beacon
 
 ### Architecture 🏗️
 
-- Backend
-
+#### Backend
+<details>
+  <summary>Click to exapnd!</summary>
+  
   - [DB (Prisma + PostgreSQL)](docs/DATABASE.md)
   - [Authentication](docs/AUTHENTICATION.md)
   - [Services](docs/SERVICES.md)
   - [GraphQL API](docs/GRAPHQL.md)
+  
+</details>
 
-- Frontend
+#### Frontend
+ <details>
+  <summary>Click to exapnd!</summary>
+  
   - [CDN](docs/CDN.md)
   - [Google Maps Javascript API](docs/GOOGLE_MAP.md)
+  
+ </details>
 
 ### Coding conventions and standards
 
-- [Fundamental](docs/FUNDAMENTAL.md) _(folder structure, naming conventions and etc)_
-- React
-- Typescript
-- TailwindCSS
-- GraphQL
-- Prisma
-- PostgreSQL
-- Jest
-- Storybook
+<details>
+  <summary>Click to exapnd!</summary>
+  
+  - [Fundamental](docs/FUNDAMENTAL.md) _(folder structure, naming conventions and etc)_
+  - React
+  - Typescript
+  - TailwindCSS
+  - GraphQL
+  - Prisma
+  - PostgreSQL
+  - Jest
+  - Storybook
+</details>
 
 ## Getting Started 👨‍💻👩‍💻
 
@@ -45,6 +58,9 @@ yarn install
 
 ### Environment variables
 
+<details>
+  <summary>Click to expand!</summary>
+  
 `.env.defaults`
 
 See [Local Postgres](#local-postgres) to setup your database for local development
@@ -82,9 +98,13 @@ add `Google Maps Javascript API key` [(?)](docs/GOOGLE_MAP.md)
 ```
 GOOGLE_MAP_API_KEY={askMeTheKey}
 ```
+</details>
 
 ### Local database (PostgreSQL + PgAdmin)
 
+<details>
+  <summary>Click to expand!</summary>
+  
 Install `Docker Desktop` which comes with CLI `docker`
 
 - [Apple Mac](https://docs.docker.com/docker-for-mac/install/)
@@ -120,6 +140,8 @@ yarn rw prisma migrate dev
 `PgAdmin` run on http://localhost:8080/ with `admin@propertybeacon.com/admin` _(username/password)_. You will need to change your database server connection to your actual machine IP address since the two docker containers are running at its independent environment (the same as running on two different machines).
 
 <img src="docs/pgadmin-connection.png" alt="Docker Desktop">
+  
+</details>
 
 ### Fire it up
 
