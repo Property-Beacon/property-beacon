@@ -12,6 +12,7 @@ module.exports = (config, { mode }) => {
 
   config.plugins.forEach((plugin) => {
     if (plugin.constructor.name === 'HtmlWebpackPlugin') {
+      plugin.userOptions.title = process.env.npm_package_displayName
       plugin.userOptions.templateParameters = {
         brandName: process.env.npm_package_displayName,
         ogUrl: process.env.npm_package_homepage,
