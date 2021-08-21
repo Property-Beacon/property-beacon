@@ -254,42 +254,14 @@ export type GetUserByIdVariables = Exact<{
 }>;
 
 
-export type GetUserById = (
-  { __typename?: 'Query' }
-  & { user: (
-    { __typename?: 'User' }
-    & Pick<User, 'id' | 'role' | 'email' | 'logOn' | 'logOff' | 'createdAt'>
-    & { profile: (
-      { __typename?: 'UserProfile' }
-      & Pick<UserProfile, 'id' | 'avatar' | 'fullName' | 'firstName' | 'lastName' | 'mobile' | 'phone' | 'companyId' | 'updatedAt'>
-      & { address?: Maybe<(
-        { __typename?: 'Address' }
-        & Pick<Address, 'lat' | 'lng' | 'gPlaceId' | 'premise' | 'state' | 'street' | 'suburb' | 'country' | 'postalCode' | 'updatedAt' | 'formattedAddress'>
-      )> }
-    ) }
-  ) }
-);
+export type GetUserById = { __typename?: 'Query', user: { __typename?: 'User', id: string, role: Role, email: string, logOn: string, logOff?: Maybe<string>, createdAt: string, profile: { __typename?: 'UserProfile', id: string, avatar?: Maybe<string>, fullName?: Maybe<string>, firstName?: Maybe<string>, lastName?: Maybe<string>, mobile?: Maybe<string>, phone?: Maybe<string>, companyId?: Maybe<string>, updatedAt?: Maybe<string>, address?: Maybe<{ __typename?: 'Address', lat?: Maybe<string>, lng?: Maybe<string>, gPlaceId?: Maybe<string>, premise?: Maybe<string>, state?: Maybe<string>, street?: Maybe<string>, suburb?: Maybe<string>, country?: Maybe<string>, postalCode?: Maybe<string>, updatedAt?: Maybe<string>, formattedAddress?: Maybe<string> }> } } };
 
 export type GetCompanyVariables = Exact<{
   id: Scalars['String'];
 }>;
 
 
-export type GetCompany = (
-  { __typename?: 'Query' }
-  & { company: (
-    { __typename?: 'Company' }
-    & Pick<Company, 'id' | 'name' | 'logo' | 'shortName' | 'displayName' | 'website' | 'updatedAt' | 'createdAt'>
-    & { profile?: Maybe<(
-      { __typename?: 'CompanyProfile' }
-      & Pick<CompanyProfile, 'id' | 'companyId' | 'phone' | 'fax' | 'mobile' | 'fullName' | 'email' | 'abn' | 'acn' | 'crn' | 'owner' | 'mayor' | 'updatedAt'>
-      & { address?: Maybe<(
-        { __typename?: 'Address' }
-        & Pick<Address, 'lat' | 'lng' | 'gPlaceId' | 'premise' | 'state' | 'street' | 'suburb' | 'country' | 'postalCode' | 'updatedAt' | 'formattedAddress'>
-      )> }
-    )> }
-  ) }
-);
+export type GetCompany = { __typename?: 'Query', company: { __typename?: 'Company', id: string, name?: Maybe<string>, logo?: Maybe<string>, shortName?: Maybe<string>, displayName?: Maybe<string>, website?: Maybe<string>, updatedAt?: Maybe<string>, createdAt: string, profile?: Maybe<{ __typename?: 'CompanyProfile', id: string, companyId: string, phone?: Maybe<string>, fax?: Maybe<string>, mobile?: Maybe<string>, fullName?: Maybe<string>, email?: Maybe<string>, abn?: Maybe<string>, acn?: Maybe<string>, crn?: Maybe<string>, owner?: Maybe<string>, mayor?: Maybe<string>, updatedAt?: Maybe<string>, address?: Maybe<{ __typename?: 'Address', lat?: Maybe<string>, lng?: Maybe<string>, gPlaceId?: Maybe<string>, premise?: Maybe<string>, state?: Maybe<string>, street?: Maybe<string>, suburb?: Maybe<string>, country?: Maybe<string>, postalCode?: Maybe<string>, updatedAt?: Maybe<string>, formattedAddress?: Maybe<string> }> }> } };
 
 export type UpdateCompanyVariables = Exact<{
   id: Scalars['String'];
@@ -297,13 +269,7 @@ export type UpdateCompanyVariables = Exact<{
 }>;
 
 
-export type UpdateCompany = (
-  { __typename?: 'Mutation' }
-  & { company: (
-    { __typename?: 'Company' }
-    & Pick<Company, 'id' | 'name' | 'logo' | 'displayName' | 'shortName' | 'website' | 'updatedAt' | 'createdAt'>
-  ) }
-);
+export type UpdateCompany = { __typename?: 'Mutation', company: { __typename?: 'Company', id: string, name?: Maybe<string>, logo?: Maybe<string>, displayName?: Maybe<string>, shortName?: Maybe<string>, website?: Maybe<string>, updatedAt?: Maybe<string>, createdAt: string } };
 
 export type UpdateCompanyProfileVariables = Exact<{
   companyId: Scalars['String'];
@@ -311,17 +277,7 @@ export type UpdateCompanyProfileVariables = Exact<{
 }>;
 
 
-export type UpdateCompanyProfile = (
-  { __typename?: 'Mutation' }
-  & { companyProfile: (
-    { __typename?: 'CompanyProfile' }
-    & Pick<CompanyProfile, 'id' | 'companyId' | 'phone' | 'fax' | 'mobile' | 'fullName' | 'email' | 'abn' | 'acn' | 'crn' | 'owner' | 'mayor' | 'updatedAt'>
-    & { address?: Maybe<(
-      { __typename?: 'Address' }
-      & Pick<Address, 'lat' | 'lng' | 'gPlaceId' | 'premise' | 'state' | 'street' | 'suburb' | 'country' | 'postalCode' | 'updatedAt' | 'formattedAddress'>
-    )> }
-  ) }
-);
+export type UpdateCompanyProfile = { __typename?: 'Mutation', companyProfile: { __typename?: 'CompanyProfile', id: string, companyId: string, phone?: Maybe<string>, fax?: Maybe<string>, mobile?: Maybe<string>, fullName?: Maybe<string>, email?: Maybe<string>, abn?: Maybe<string>, acn?: Maybe<string>, crn?: Maybe<string>, owner?: Maybe<string>, mayor?: Maybe<string>, updatedAt?: Maybe<string>, address?: Maybe<{ __typename?: 'Address', lat?: Maybe<string>, lng?: Maybe<string>, gPlaceId?: Maybe<string>, premise?: Maybe<string>, state?: Maybe<string>, street?: Maybe<string>, suburb?: Maybe<string>, country?: Maybe<string>, postalCode?: Maybe<string>, updatedAt?: Maybe<string>, formattedAddress?: Maybe<string> }> } };
 
 export type UpdateUserProfileVariables = Exact<{
   userId: Scalars['String'];
@@ -329,14 +285,4 @@ export type UpdateUserProfileVariables = Exact<{
 }>;
 
 
-export type UpdateUserProfile = (
-  { __typename?: 'Mutation' }
-  & { userProfile: (
-    { __typename?: 'UserProfile' }
-    & Pick<UserProfile, 'id' | 'avatar' | 'fullName' | 'firstName' | 'lastName' | 'mobile' | 'phone' | 'companyId' | 'updatedAt'>
-    & { address?: Maybe<(
-      { __typename?: 'Address' }
-      & Pick<Address, 'lat' | 'lng' | 'gPlaceId' | 'premise' | 'state' | 'street' | 'suburb' | 'country' | 'postalCode' | 'updatedAt' | 'formattedAddress'>
-    )> }
-  ) }
-);
+export type UpdateUserProfile = { __typename?: 'Mutation', userProfile: { __typename?: 'UserProfile', id: string, avatar?: Maybe<string>, fullName?: Maybe<string>, firstName?: Maybe<string>, lastName?: Maybe<string>, mobile?: Maybe<string>, phone?: Maybe<string>, companyId?: Maybe<string>, updatedAt?: Maybe<string>, address?: Maybe<{ __typename?: 'Address', lat?: Maybe<string>, lng?: Maybe<string>, gPlaceId?: Maybe<string>, premise?: Maybe<string>, state?: Maybe<string>, street?: Maybe<string>, suburb?: Maybe<string>, country?: Maybe<string>, postalCode?: Maybe<string>, updatedAt?: Maybe<string>, formattedAddress?: Maybe<string> }> } };

@@ -1,5 +1,5 @@
 import { AuthProvider, useAuth } from '@redwoodjs/auth'
-import { FatalErrorBoundary } from '@redwoodjs/web'
+import { FatalErrorBoundary, RedwoodProvider } from '@redwoodjs/web'
 import { RedwoodApolloProvider } from '@redwoodjs/web/apollo'
 import { Magic } from 'magic-sdk'
 import FatalErrorPage from 'src/pages/FatalErrorPage/FatalErrorPage'
@@ -13,9 +13,11 @@ m.preload()
 const App = () => (
   <FatalErrorBoundary page={FatalErrorPage}>
     <AuthProvider client={m} type="magicLink">
-      <RedwoodApolloProvider useAuth={useAuth}>
-        <Routes />
-      </RedwoodApolloProvider>
+      <RedwoodProvider titleTemplate="%PageTitle · %AppTitle">
+        <RedwoodApolloProvider useAuth={useAuth}>
+          <Routes />
+        </RedwoodApolloProvider>
+      </RedwoodProvider>
     </AuthProvider>
   </FatalErrorBoundary>
 )

@@ -12,15 +12,14 @@ module.exports = (config, { mode }) => {
 
   config.plugins.forEach((plugin) => {
     if (plugin.constructor.name === 'HtmlWebpackPlugin') {
-      plugin.options.title = process.env.npm_package_displayName
-      plugin.options.templateParameters = {
+      plugin.userOptions.templateParameters = {
         brandName: process.env.npm_package_displayName,
         ogUrl: process.env.npm_package_homepage,
         ogTitle: process.env.npm_package_displayName,
         ogDescription: process.env.npm_package_description,
         ogImage: '',
         manifest: '/manifest.webmanifest',
-        ...plugin.options.templateParameters
+        ...plugin.userOptions.templateParameters
       }
     }
   })

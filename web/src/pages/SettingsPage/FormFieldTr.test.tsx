@@ -1,5 +1,5 @@
 import { Form } from '@redwoodjs/forms'
-import { render, screen } from '@redwoodjs/testing'
+import { render, screen } from '@redwoodjs/testing/web'
 import FormFieldTr from './FormFieldTr'
 
 describe('FormFieldTr', () => {

@@ -1,6 +1,7 @@
 import { useApolloClient, useMutation } from '@apollo/client'
 import { useAuth } from '@redwoodjs/auth'
 import { NavLink, routes, useParams } from '@redwoodjs/router'
+import { Head } from '@redwoodjs/web'
 import { useEffect, useState } from 'react'
 import { RiAdminLine } from 'react-icons/ri'
 import AvatarCell, { QUERY } from 'src/components/AvatarCell'
@@ -73,6 +74,9 @@ const SettingsPage = () => {
 
   return (
     <>
+      <Head>
+        <title>Settings</title>
+      </Head>
       <div>
         <div className="card shadow-lg bg-base-100 max-w-2xl">
           <div className="flex-col-reverse sm:flex-row place-items-center card-body">
