@@ -66,7 +66,7 @@ const ProfileCard = ({ user }: Props) => {
   })
   const handleSubmit = useCallback(
     ({ address, ...profile }: UpdateUserProfile) => {
-      const { address: dirtyAddress, ...dirtyOthers } = formState.dirtyFields
+      const { address: dirtyAddress, ...dirtyOthers } = formState.touchedFields
       const updateOthers = Object.keys(dirtyOthers || {}).reduce(
         (prev, key) => {
           prev[key] = profile[key]

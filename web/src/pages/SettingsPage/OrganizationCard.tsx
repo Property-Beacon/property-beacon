@@ -122,7 +122,7 @@ const OrganizationCard = ({ companyId }: Props) => {
       profile: dirtyProfile,
       address: dirtyAddress,
       ...dirtyOthers
-    } = formState.dirtyFields
+    } = formState.touchedFields
     const updateOthers = Object.keys(dirtyOthers || {}).reduce((prev, key) => {
       prev[key] = data[key]
       return prev
