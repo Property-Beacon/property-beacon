@@ -12,7 +12,14 @@ All technical 👨‍💻👩‍💻 documentations of Property Beacon
 
 ### Architecture 🏗️
 
+#### Infrastructure
+
+- Domain name - [Godaddy](https://au.godaddy.com/)
+- PostgreSQL - [Railway](https://railway.app/)
+- CDN - [Filestack](https://dev.filestack.com/login/)
+
 #### Backend
+
 <details>
   <summary>Click to exapnd!</summary>
   
@@ -24,6 +31,7 @@ All technical 👨‍💻👩‍💻 documentations of Property Beacon
 </details>
 
 #### Frontend
+
  <details>
   <summary>Click to exapnd!</summary>
   
@@ -98,6 +106,7 @@ add `Google Maps Javascript API key` [(?)](docs/GOOGLE_MAP.md)
 ```
 GOOGLE_MAP_API_KEY={askMeTheKey}
 ```
+
 </details>
 
 ### Local database (PostgreSQL + PgAdmin)
