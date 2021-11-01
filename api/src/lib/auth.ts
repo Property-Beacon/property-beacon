@@ -1,6 +1,5 @@
 import { Magic } from '@magic-sdk/admin'
-import { AuthenticationError, ForbiddenError } from '@redwoodjs/graphql-server'
-import { logger } from 'src/lib/logger'
+import { AuthenticationError } from '@redwoodjs/graphql-server'
 import {
   createUser,
   getUserByIssuer,
@@ -12,69 +11,53 @@ import {
  * an optional collection of roles used by requireAuth() to check
  * if the user is authenticated or has role-based access
  *
- * @param decoded - The decoded access token containing user info and JWT claims like `sub`
+ * @param decoded - The decoded access token containing user info and JWT claims like `sub`. Note could be null.
  * @param { token, SupportedAuthTypes type } - The access token itself as well as the auth provider type
  * @param { APIGatewayEvent event, Context context } - An object which contains information from the invoker
  * such as headers and cookies, and the context information about the invocation such as IP Address
  *
  * @see https://github.com/redwoodjs/redwood/tree/main/packages/auth for examples
  */
-export const getCurrentUser = async (_, { token }) => {
-  const mAdmin = new Magic(process.env.MAGICLINK_SECRET)
+export const getCurrentUser = async (decoded) => {
+  const mAdmin = new Magic(process.env.MAGIC_SECRET_API_KEY)
+  const { proof, claim } = decoded
+  const issuer = claim.iss
 
-  try {
-    const { issuer, email } = await mAdmin.users.getMetadataByToken(token)
-    const user = await getUserByIssuer({ issuer })
-    const _user = user
-      ? await updateUserByIssuer({
-          issuer,
-          data: { logOn: new Date() }
-        })
-      : await createUser({ data: { issuer, email } })
+  const { email } = await mAdmin.users.getMetadataByIssuer(issuer)
+  const user = await getUserByIssuer({ issuer })
+  const _user = user
+    ? await updateUserByIssuer({
+        issuer,
+        data: { logOn: new Date() }
+      })
+    : await createUser({ data: { issuer, email } })
 
-    return { ..._user, roles: [_user.role] }
-  } catch (error) {
-    logger.error(
-      error,
-      'Failed to get current user metadata via Magic admin SDK'
-    )
-  }
+  // https://magic.link/docs/introduction/decentralized-id#what-is-a-did-token
+  return { proof, claim, ..._user, roles: [_user.role] }
 }
 
 /**
- * TODO: RBAC
+ * The user is authenticated if there is a currentUser in the context
  *
+ * @returns {boolean} - If the currentUser is authenticated
+ */
+export const isAuthenticated = (): boolean => {
+  return !!context.currentUser
+}
+
+/**
  * Use requireAuth in your services to check that a user is logged in,
- * whether or not they are assigned a role, and optionally raise an
- * error if they're not.
+ * and raise an error if they're not.
  *
- * @param {string=} roles - An optional role or list of roles
- * @param {string[]=} roles - An optional list of roles
- * @returns {boolean} - If the currentUser is authenticated (and assigned one of the given roles)
+ * @returns - If the currentUser is authenticated
  *
  * @throws {AuthenticationError} - If the currentUser is not authenticated
- * @throws {ForbiddenError} If the currentUser is not allowed due to role permissions
  *
  * @see https://github.com/redwoodjs/redwood/tree/main/packages/auth for examples
  */
-export const requireAuth = ({ role } = {}) => {
-  if (!context.currentUser) {
+export const requireAuth = () => {
+  if (!isAuthenticated()) {
     throw new AuthenticationError("You don't have permission to do that.")
   }
-
-  if (
-    typeof role !== 'undefined' &&
-    typeof role === 'string' &&
-    !context.currentUser.roles?.includes(role)
-  ) {
-    throw new ForbiddenError("You don't have access to do that.")
-  }
-
-  if (
-    typeof role !== 'undefined' &&
-    Array.isArray(role) &&
-    !context.currentUser.roles?.some((r) => role.includes(r))
-  ) {
-    throw new ForbiddenError("You don't have access to do that.")
-  }
+  // Custom implementation of RBAC is required for magicLink
 }

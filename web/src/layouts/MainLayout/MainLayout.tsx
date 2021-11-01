@@ -144,7 +144,7 @@ const MainLayout: React.FunctionComponent = ({ children }) => {
                 <NavLink
                   to={routes.dashboard()}
                   activeClassName="text-primary"
-                  className="btn btn-ghost btn-sm rounded-btn hidden sm:inline"
+                  className="btn btn-ghost btn-sm rounded-btn hidden sm:flex"
                 >
                   <span>Dashboard</span>
                 </NavLink>

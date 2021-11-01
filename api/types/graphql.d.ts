@@ -20,53 +20,49 @@ export type Scalars = {
 
 export type Address = {
   __typename?: 'Address';
+  country?: Maybe<Scalars['String']>;
+  formattedAddress?: Maybe<Scalars['String']>;
+  gPlaceId?: Maybe<Scalars['String']>;
   lat?: Maybe<Scalars['String']>;
   lng?: Maybe<Scalars['String']>;
+  postalCode?: Maybe<Scalars['String']>;
+  premise?: Maybe<Scalars['String']>;
   state?: Maybe<Scalars['String']>;
   street?: Maybe<Scalars['String']>;
   suburb?: Maybe<Scalars['String']>;
-  premise?: Maybe<Scalars['String']>;
-  country?: Maybe<Scalars['String']>;
-  gPlaceId?: Maybe<Scalars['String']>;
-  postalCode?: Maybe<Scalars['String']>;
   updatedAt?: Maybe<Scalars['DateTime']>;
-  formattedAddress?: Maybe<Scalars['String']>;
 };
 
 export type Company = {
   __typename?: 'Company';
-  id: Scalars['String'];
-  name?: Maybe<Scalars['String']>;
-  logo?: Maybe<Scalars['String']>;
-  displayName?: Maybe<Scalars['String']>;
-  shortName?: Maybe<Scalars['String']>;
-  website?: Maybe<Scalars['String']>;
-  profile?: Maybe<CompanyProfile>;
-  updatedAt?: Maybe<Scalars['DateTime']>;
   createdAt: Scalars['DateTime'];
+  displayName?: Maybe<Scalars['String']>;
+  id: Scalars['String'];
+  logo?: Maybe<Scalars['String']>;
+  name?: Maybe<Scalars['String']>;
+  profile?: Maybe<CompanyProfile>;
+  shortName?: Maybe<Scalars['String']>;
+  updatedAt?: Maybe<Scalars['DateTime']>;
+  website?: Maybe<Scalars['String']>;
 };
 
 export type CompanyProfile = {
   __typename?: 'CompanyProfile';
-  id: Scalars['String'];
-  companyId: Scalars['String'];
-  phone?: Maybe<Scalars['String']>;
-  fax?: Maybe<Scalars['String']>;
-  mobile?: Maybe<Scalars['String']>;
-  fullName?: Maybe<Scalars['String']>;
-  email?: Maybe<Scalars['String']>;
   abn?: Maybe<Scalars['String']>;
   acn?: Maybe<Scalars['String']>;
-  crn?: Maybe<Scalars['String']>;
-  owner?: Maybe<Scalars['String']>;
-  mayor?: Maybe<Scalars['String']>;
   address?: Maybe<Address>;
+  companyId: Scalars['String'];
+  crn?: Maybe<Scalars['String']>;
+  email?: Maybe<Scalars['String']>;
+  fax?: Maybe<Scalars['String']>;
+  fullName?: Maybe<Scalars['String']>;
+  id: Scalars['String'];
+  mayor?: Maybe<Scalars['String']>;
+  mobile?: Maybe<Scalars['String']>;
+  owner?: Maybe<Scalars['String']>;
+  phone?: Maybe<Scalars['String']>;
   updatedAt?: Maybe<Scalars['DateTime']>;
 };
-
-
-
-
 
 export type Mutation = {
   __typename?: 'Mutation';
@@ -107,8 +103,8 @@ export type MutationDeleteUserByIssuerArgs = {
 
 
 export type MutationUpdateCompanyArgs = {
-  id: Scalars['String'];
   data: UpdateCompany;
+  id: Scalars['String'];
 };
 
 
@@ -119,8 +115,8 @@ export type MutationUpdateCompanyProfileArgs = {
 
 
 export type MutationUpdateUserProfileArgs = {
-  userId: Scalars['String'];
   data: UpdateUserProfile;
+  userId: Scalars['String'];
 };
 
 export type Query = {
@@ -167,88 +163,87 @@ export type QueryGetUsersByRoleArgs = {
 
 export type Redwood = {
   __typename?: 'Redwood';
-  version?: Maybe<Scalars['String']>;
   currentUser?: Maybe<Scalars['JSON']>;
   prismaVersion?: Maybe<Scalars['String']>;
+  version?: Maybe<Scalars['String']>;
 };
 
 export type Role =
-  | 'USER'
   | 'ADMIN'
   | 'CLIENT'
-  | 'CUSTOMER';
-
+  | 'CUSTOMER'
+  | 'USER';
 
 export type UpdateAddress = {
+  country?: Maybe<Scalars['String']>;
+  formattedAddress?: Maybe<Scalars['String']>;
+  gPlaceId?: Maybe<Scalars['String']>;
   lat?: Maybe<Scalars['String']>;
   lng?: Maybe<Scalars['String']>;
+  postalCode?: Maybe<Scalars['String']>;
+  premise?: Maybe<Scalars['String']>;
   state?: Maybe<Scalars['String']>;
   street?: Maybe<Scalars['String']>;
   suburb?: Maybe<Scalars['String']>;
-  premise?: Maybe<Scalars['String']>;
-  country?: Maybe<Scalars['String']>;
-  gPlaceId?: Maybe<Scalars['String']>;
-  postalCode?: Maybe<Scalars['String']>;
-  formattedAddress?: Maybe<Scalars['String']>;
 };
 
 export type UpdateCompany = {
-  name?: Maybe<Scalars['String']>;
-  logo?: Maybe<Scalars['String']>;
   displayName?: Maybe<Scalars['String']>;
+  logo?: Maybe<Scalars['String']>;
+  name?: Maybe<Scalars['String']>;
   shortName?: Maybe<Scalars['String']>;
   website?: Maybe<Scalars['String']>;
 };
 
 export type UpdateCompanyProfile = {
-  phone?: Maybe<Scalars['String']>;
-  fax?: Maybe<Scalars['String']>;
-  mobile?: Maybe<Scalars['String']>;
-  fullName?: Maybe<Scalars['String']>;
-  email?: Maybe<Scalars['String']>;
   abn?: Maybe<Scalars['String']>;
   acn?: Maybe<Scalars['String']>;
-  crn?: Maybe<Scalars['String']>;
-  owner?: Maybe<Scalars['String']>;
-  mayor?: Maybe<Scalars['String']>;
   address?: Maybe<UpdateAddress>;
+  crn?: Maybe<Scalars['String']>;
+  email?: Maybe<Scalars['String']>;
+  fax?: Maybe<Scalars['String']>;
+  fullName?: Maybe<Scalars['String']>;
+  mayor?: Maybe<Scalars['String']>;
+  mobile?: Maybe<Scalars['String']>;
+  owner?: Maybe<Scalars['String']>;
+  phone?: Maybe<Scalars['String']>;
 };
 
 export type UpdateUserProfile = {
-  phone?: Maybe<Scalars['String']>;
-  avatar?: Maybe<Scalars['String']>;
-  mobile?: Maybe<Scalars['String']>;
-  lastName?: Maybe<Scalars['String']>;
-  firstName?: Maybe<Scalars['String']>;
-  companyId?: Maybe<Scalars['String']>;
   address?: Maybe<UpdateAddress>;
+  avatar?: Maybe<Scalars['String']>;
+  companyId?: Maybe<Scalars['String']>;
+  firstName?: Maybe<Scalars['String']>;
+  lastName?: Maybe<Scalars['String']>;
+  mobile?: Maybe<Scalars['String']>;
+  phone?: Maybe<Scalars['String']>;
 };
 
 export type User = {
   __typename?: 'User';
-  id: Scalars['String'];
-  role: Role;
-  email: Scalars['String'];
-  logOn: Scalars['DateTime'];
-  logOff?: Maybe<Scalars['DateTime']>;
-  profile: UserProfile;
   createdAt: Scalars['DateTime'];
+  email: Scalars['String'];
+  id: Scalars['String'];
+  logOff?: Maybe<Scalars['DateTime']>;
+  logOn: Scalars['DateTime'];
+  profile: UserProfile;
+  role: Role;
 };
 
 export type UserProfile = {
   __typename?: 'UserProfile';
-  id: Scalars['String'];
-  phone?: Maybe<Scalars['String']>;
-  avatar?: Maybe<Scalars['String']>;
-  mobile?: Maybe<Scalars['String']>;
-  userId?: Maybe<Scalars['String']>;
-  companyId?: Maybe<Scalars['String']>;
   address?: Maybe<Address>;
-  lastName?: Maybe<Scalars['String']>;
-  firstName?: Maybe<Scalars['String']>;
+  avatar?: Maybe<Scalars['String']>;
+  companyId?: Maybe<Scalars['String']>;
   created?: Maybe<Scalars['DateTime']>;
-  updatedAt?: Maybe<Scalars['DateTime']>;
+  firstName?: Maybe<Scalars['String']>;
   fullName?: Maybe<Scalars['String']>;
+  id: Scalars['String'];
+  lastName?: Maybe<Scalars['String']>;
+  mobile?: Maybe<Scalars['String']>;
+  phone?: Maybe<Scalars['String']>;
+  updatedAt?: Maybe<Scalars['DateTime']>;
+  userId?: Maybe<Scalars['String']>;
 };
 
 
@@ -321,7 +316,7 @@ export type DirectiveResolverFn<TResult = {}, TParent = {}, TContext = {}, TArgs
 /** Mapping between all available schema types and the resolvers types */
 export type ResolversTypes = {
   Address: ResolverTypeWrapper<Address>;
-  String: ResolverTypeWrapper<Scalars['String']>;
+  Boolean: ResolverTypeWrapper<Scalars['Boolean']>;
   Company: ResolverTypeWrapper<Company>;
   CompanyProfile: ResolverTypeWrapper<CompanyProfile>;
   Date: ResolverTypeWrapper<Scalars['Date']>;
@@ -329,10 +324,10 @@ export type ResolversTypes = {
   JSON: ResolverTypeWrapper<Scalars['JSON']>;
   JSONObject: ResolverTypeWrapper<Scalars['JSONObject']>;
   Mutation: ResolverTypeWrapper<{}>;
-  Boolean: ResolverTypeWrapper<Scalars['Boolean']>;
   Query: ResolverTypeWrapper<{}>;
   Redwood: ResolverTypeWrapper<Redwood>;
   Role: Role;
+  String: ResolverTypeWrapper<Scalars['String']>;
   Time: ResolverTypeWrapper<Scalars['Time']>;
   UpdateAddress: UpdateAddress;
   UpdateCompany: UpdateCompany;
@@ -345,7 +340,7 @@ export type ResolversTypes = {
 /** Mapping between all available schema types and the resolvers parents */
 export type ResolversParentTypes = {
   Address: Address;
-  String: Scalars['String'];
+  Boolean: Scalars['Boolean'];
   Company: Company;
   CompanyProfile: CompanyProfile;
   Date: Scalars['Date'];
@@ -353,9 +348,9 @@ export type ResolversParentTypes = {
   JSON: Scalars['JSON'];
   JSONObject: Scalars['JSONObject'];
   Mutation: {};
-  Boolean: Scalars['Boolean'];
   Query: {};
   Redwood: Redwood;
+  String: Scalars['String'];
   Time: Scalars['Time'];
   UpdateAddress: UpdateAddress;
   UpdateCompany: UpdateCompany;
@@ -365,48 +360,58 @@ export type ResolversParentTypes = {
   UserProfile: UserProfile;
 };
 
+export type RequireAuthDirectiveArgs = {
+  roles?: Maybe<Array<Maybe<Scalars['String']>>>;
+};
+
+export type RequireAuthDirectiveResolver<Result, Parent, ContextType = any, Args = RequireAuthDirectiveArgs> = DirectiveResolverFn<Result, Parent, ContextType, Args>;
+
+export type SkipAuthDirectiveArgs = { };
+
+export type SkipAuthDirectiveResolver<Result, Parent, ContextType = any, Args = SkipAuthDirectiveArgs> = DirectiveResolverFn<Result, Parent, ContextType, Args>;
+
 export type AddressResolvers<ContextType = any, ParentType extends ResolversParentTypes['Address'] = ResolversParentTypes['Address']> = {
+  country?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  formattedAddress?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  gPlaceId?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   lat?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   lng?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  postalCode?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  premise?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   state?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   street?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   suburb?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  premise?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  country?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  gPlaceId?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  postalCode?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   updatedAt?: Resolver<Maybe<ResolversTypes['DateTime']>, ParentType, ContextType>;
-  formattedAddress?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
 export type CompanyResolvers<ContextType = any, ParentType extends ResolversParentTypes['Company'] = ResolversParentTypes['Company']> = {
-  id?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  name?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  logo?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  displayName?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  shortName?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  website?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  profile?: Resolver<Maybe<ResolversTypes['CompanyProfile']>, ParentType, ContextType>;
-  updatedAt?: Resolver<Maybe<ResolversTypes['DateTime']>, ParentType, ContextType>;
   createdAt?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>;
+  displayName?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  id?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  logo?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  name?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  profile?: Resolver<Maybe<ResolversTypes['CompanyProfile']>, ParentType, ContextType>;
+  shortName?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  updatedAt?: Resolver<Maybe<ResolversTypes['DateTime']>, ParentType, ContextType>;
+  website?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
 export type CompanyProfileResolvers<ContextType = any, ParentType extends ResolversParentTypes['CompanyProfile'] = ResolversParentTypes['CompanyProfile']> = {
-  id?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  companyId?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  phone?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  fax?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  mobile?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  fullName?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  email?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   abn?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   acn?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  crn?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  owner?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  mayor?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   address?: Resolver<Maybe<ResolversTypes['Address']>, ParentType, ContextType>;
+  companyId?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  crn?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  email?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  fax?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  fullName?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  id?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  mayor?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  mobile?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  owner?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  phone?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   updatedAt?: Resolver<Maybe<ResolversTypes['DateTime']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
@@ -433,9 +438,9 @@ export type MutationResolvers<ContextType = any, ParentType extends ResolversPar
   deleteUserByEmail?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType, RequireFields<MutationDeleteUserByEmailArgs, 'email'>>;
   deleteUserById?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType, RequireFields<MutationDeleteUserByIdArgs, 'id'>>;
   deleteUserByIssuer?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType, RequireFields<MutationDeleteUserByIssuerArgs, 'issuer'>>;
-  updateCompany?: Resolver<ResolversTypes['Company'], ParentType, ContextType, RequireFields<MutationUpdateCompanyArgs, 'id' | 'data'>>;
+  updateCompany?: Resolver<ResolversTypes['Company'], ParentType, ContextType, RequireFields<MutationUpdateCompanyArgs, 'data' | 'id'>>;
   updateCompanyProfile?: Resolver<ResolversTypes['CompanyProfile'], ParentType, ContextType, RequireFields<MutationUpdateCompanyProfileArgs, 'companyId'>>;
-  updateUserProfile?: Resolver<ResolversTypes['UserProfile'], ParentType, ContextType, RequireFields<MutationUpdateUserProfileArgs, 'userId' | 'data'>>;
+  updateUserProfile?: Resolver<ResolversTypes['UserProfile'], ParentType, ContextType, RequireFields<MutationUpdateUserProfileArgs, 'data' | 'userId'>>;
 };
 
 export type QueryResolvers<ContextType = any, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = {
@@ -450,9 +455,9 @@ export type QueryResolvers<ContextType = any, ParentType extends ResolversParent
 };
 
 export type RedwoodResolvers<ContextType = any, ParentType extends ResolversParentTypes['Redwood'] = ResolversParentTypes['Redwood']> = {
-  version?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   currentUser?: Resolver<Maybe<ResolversTypes['JSON']>, ParentType, ContextType>;
   prismaVersion?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  version?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -461,29 +466,29 @@ export interface TimeScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes
 }
 
 export type UserResolvers<ContextType = any, ParentType extends ResolversParentTypes['User'] = ResolversParentTypes['User']> = {
-  id?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  role?: Resolver<ResolversTypes['Role'], ParentType, ContextType>;
-  email?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  logOn?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>;
-  logOff?: Resolver<Maybe<ResolversTypes['DateTime']>, ParentType, ContextType>;
-  profile?: Resolver<ResolversTypes['UserProfile'], ParentType, ContextType>;
   createdAt?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>;
+  email?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  id?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  logOff?: Resolver<Maybe<ResolversTypes['DateTime']>, ParentType, ContextType>;
+  logOn?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>;
+  profile?: Resolver<ResolversTypes['UserProfile'], ParentType, ContextType>;
+  role?: Resolver<ResolversTypes['Role'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
 export type UserProfileResolvers<ContextType = any, ParentType extends ResolversParentTypes['UserProfile'] = ResolversParentTypes['UserProfile']> = {
-  id?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  phone?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  avatar?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  mobile?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  userId?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  companyId?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   address?: Resolver<Maybe<ResolversTypes['Address']>, ParentType, ContextType>;
-  lastName?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  firstName?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  avatar?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  companyId?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   created?: Resolver<Maybe<ResolversTypes['DateTime']>, ParentType, ContextType>;
-  updatedAt?: Resolver<Maybe<ResolversTypes['DateTime']>, ParentType, ContextType>;
+  firstName?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   fullName?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  id?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  lastName?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  mobile?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  phone?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  updatedAt?: Resolver<Maybe<ResolversTypes['DateTime']>, ParentType, ContextType>;
+  userId?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -503,3 +508,7 @@ export type Resolvers<ContextType = any> = {
   UserProfile?: UserProfileResolvers<ContextType>;
 };
 
+export type DirectiveResolvers<ContextType = any> = {
+  requireAuth?: RequireAuthDirectiveResolver<any, any, ContextType>;
+  skipAuth?: SkipAuthDirectiveResolver<any, any, ContextType>;
+};

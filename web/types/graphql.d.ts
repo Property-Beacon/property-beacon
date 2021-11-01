@@ -18,53 +18,49 @@ export type Scalars = {
 
 export type Address = {
   __typename?: 'Address';
+  country?: Maybe<Scalars['String']>;
+  formattedAddress?: Maybe<Scalars['String']>;
+  gPlaceId?: Maybe<Scalars['String']>;
   lat?: Maybe<Scalars['String']>;
   lng?: Maybe<Scalars['String']>;
+  postalCode?: Maybe<Scalars['String']>;
+  premise?: Maybe<Scalars['String']>;
   state?: Maybe<Scalars['String']>;
   street?: Maybe<Scalars['String']>;
   suburb?: Maybe<Scalars['String']>;
-  premise?: Maybe<Scalars['String']>;
-  country?: Maybe<Scalars['String']>;
-  gPlaceId?: Maybe<Scalars['String']>;
-  postalCode?: Maybe<Scalars['String']>;
   updatedAt?: Maybe<Scalars['DateTime']>;
-  formattedAddress?: Maybe<Scalars['String']>;
 };
 
 export type Company = {
   __typename?: 'Company';
-  id: Scalars['String'];
-  name?: Maybe<Scalars['String']>;
-  logo?: Maybe<Scalars['String']>;
-  displayName?: Maybe<Scalars['String']>;
-  shortName?: Maybe<Scalars['String']>;
-  website?: Maybe<Scalars['String']>;
-  profile?: Maybe<CompanyProfile>;
-  updatedAt?: Maybe<Scalars['DateTime']>;
   createdAt: Scalars['DateTime'];
+  displayName?: Maybe<Scalars['String']>;
+  id: Scalars['String'];
+  logo?: Maybe<Scalars['String']>;
+  name?: Maybe<Scalars['String']>;
+  profile?: Maybe<CompanyProfile>;
+  shortName?: Maybe<Scalars['String']>;
+  updatedAt?: Maybe<Scalars['DateTime']>;
+  website?: Maybe<Scalars['String']>;
 };
 
 export type CompanyProfile = {
   __typename?: 'CompanyProfile';
-  id: Scalars['String'];
-  companyId: Scalars['String'];
-  phone?: Maybe<Scalars['String']>;
-  fax?: Maybe<Scalars['String']>;
-  mobile?: Maybe<Scalars['String']>;
-  fullName?: Maybe<Scalars['String']>;
-  email?: Maybe<Scalars['String']>;
   abn?: Maybe<Scalars['String']>;
   acn?: Maybe<Scalars['String']>;
-  crn?: Maybe<Scalars['String']>;
-  owner?: Maybe<Scalars['String']>;
-  mayor?: Maybe<Scalars['String']>;
   address?: Maybe<Address>;
+  companyId: Scalars['String'];
+  crn?: Maybe<Scalars['String']>;
+  email?: Maybe<Scalars['String']>;
+  fax?: Maybe<Scalars['String']>;
+  fullName?: Maybe<Scalars['String']>;
+  id: Scalars['String'];
+  mayor?: Maybe<Scalars['String']>;
+  mobile?: Maybe<Scalars['String']>;
+  owner?: Maybe<Scalars['String']>;
+  phone?: Maybe<Scalars['String']>;
   updatedAt?: Maybe<Scalars['DateTime']>;
 };
-
-
-
-
 
 export type Mutation = {
   __typename?: 'Mutation';
@@ -105,8 +101,8 @@ export type MutationDeleteUserByIssuerArgs = {
 
 
 export type MutationUpdateCompanyArgs = {
-  id: Scalars['String'];
   data: UpdateCompany;
+  id: Scalars['String'];
 };
 
 
@@ -117,8 +113,8 @@ export type MutationUpdateCompanyProfileArgs = {
 
 
 export type MutationUpdateUserProfileArgs = {
-  userId: Scalars['String'];
   data: UpdateUserProfile;
+  userId: Scalars['String'];
 };
 
 export type Query = {
@@ -165,88 +161,87 @@ export type QueryGetUsersByRoleArgs = {
 
 export type Redwood = {
   __typename?: 'Redwood';
-  version?: Maybe<Scalars['String']>;
   currentUser?: Maybe<Scalars['JSON']>;
   prismaVersion?: Maybe<Scalars['String']>;
+  version?: Maybe<Scalars['String']>;
 };
 
 export type Role =
-  | 'USER'
   | 'ADMIN'
   | 'CLIENT'
-  | 'CUSTOMER';
-
+  | 'CUSTOMER'
+  | 'USER';
 
 export type UpdateAddress = {
+  country?: Maybe<Scalars['String']>;
+  formattedAddress?: Maybe<Scalars['String']>;
+  gPlaceId?: Maybe<Scalars['String']>;
   lat?: Maybe<Scalars['String']>;
   lng?: Maybe<Scalars['String']>;
+  postalCode?: Maybe<Scalars['String']>;
+  premise?: Maybe<Scalars['String']>;
   state?: Maybe<Scalars['String']>;
   street?: Maybe<Scalars['String']>;
   suburb?: Maybe<Scalars['String']>;
-  premise?: Maybe<Scalars['String']>;
-  country?: Maybe<Scalars['String']>;
-  gPlaceId?: Maybe<Scalars['String']>;
-  postalCode?: Maybe<Scalars['String']>;
-  formattedAddress?: Maybe<Scalars['String']>;
 };
 
 export type UpdateCompany = {
-  name?: Maybe<Scalars['String']>;
-  logo?: Maybe<Scalars['String']>;
   displayName?: Maybe<Scalars['String']>;
+  logo?: Maybe<Scalars['String']>;
+  name?: Maybe<Scalars['String']>;
   shortName?: Maybe<Scalars['String']>;
   website?: Maybe<Scalars['String']>;
 };
 
 export type UpdateCompanyProfile = {
-  phone?: Maybe<Scalars['String']>;
-  fax?: Maybe<Scalars['String']>;
-  mobile?: Maybe<Scalars['String']>;
-  fullName?: Maybe<Scalars['String']>;
-  email?: Maybe<Scalars['String']>;
   abn?: Maybe<Scalars['String']>;
   acn?: Maybe<Scalars['String']>;
-  crn?: Maybe<Scalars['String']>;
-  owner?: Maybe<Scalars['String']>;
-  mayor?: Maybe<Scalars['String']>;
   address?: Maybe<UpdateAddress>;
+  crn?: Maybe<Scalars['String']>;
+  email?: Maybe<Scalars['String']>;
+  fax?: Maybe<Scalars['String']>;
+  fullName?: Maybe<Scalars['String']>;
+  mayor?: Maybe<Scalars['String']>;
+  mobile?: Maybe<Scalars['String']>;
+  owner?: Maybe<Scalars['String']>;
+  phone?: Maybe<Scalars['String']>;
 };
 
 export type UpdateUserProfile = {
-  phone?: Maybe<Scalars['String']>;
-  avatar?: Maybe<Scalars['String']>;
-  mobile?: Maybe<Scalars['String']>;
-  lastName?: Maybe<Scalars['String']>;
-  firstName?: Maybe<Scalars['String']>;
-  companyId?: Maybe<Scalars['String']>;
   address?: Maybe<UpdateAddress>;
+  avatar?: Maybe<Scalars['String']>;
+  companyId?: Maybe<Scalars['String']>;
+  firstName?: Maybe<Scalars['String']>;
+  lastName?: Maybe<Scalars['String']>;
+  mobile?: Maybe<Scalars['String']>;
+  phone?: Maybe<Scalars['String']>;
 };
 
 export type User = {
   __typename?: 'User';
-  id: Scalars['String'];
-  role: Role;
-  email: Scalars['String'];
-  logOn: Scalars['DateTime'];
-  logOff?: Maybe<Scalars['DateTime']>;
-  profile: UserProfile;
   createdAt: Scalars['DateTime'];
+  email: Scalars['String'];
+  id: Scalars['String'];
+  logOff?: Maybe<Scalars['DateTime']>;
+  logOn: Scalars['DateTime'];
+  profile: UserProfile;
+  role: Role;
 };
 
 export type UserProfile = {
   __typename?: 'UserProfile';
-  id: Scalars['String'];
-  phone?: Maybe<Scalars['String']>;
-  avatar?: Maybe<Scalars['String']>;
-  mobile?: Maybe<Scalars['String']>;
-  userId?: Maybe<Scalars['String']>;
-  companyId?: Maybe<Scalars['String']>;
   address?: Maybe<Address>;
-  lastName?: Maybe<Scalars['String']>;
-  firstName?: Maybe<Scalars['String']>;
+  avatar?: Maybe<Scalars['String']>;
+  companyId?: Maybe<Scalars['String']>;
   created?: Maybe<Scalars['DateTime']>;
-  updatedAt?: Maybe<Scalars['DateTime']>;
+  firstName?: Maybe<Scalars['String']>;
   fullName?: Maybe<Scalars['String']>;
+  id: Scalars['String'];
+  lastName?: Maybe<Scalars['String']>;
+  mobile?: Maybe<Scalars['String']>;
+  phone?: Maybe<Scalars['String']>;
+  updatedAt?: Maybe<Scalars['DateTime']>;
+  userId?: Maybe<Scalars['String']>;
 };
 
 export type GetUserByIdVariables = Exact<{
@@ -254,14 +249,14 @@ export type GetUserByIdVariables = Exact<{
 }>;
 
 
-export type GetUserById = { __typename?: 'Query', user: { __typename?: 'User', id: string, role: Role, email: string, logOn: string, logOff?: Maybe<string>, createdAt: string, profile: { __typename?: 'UserProfile', id: string, avatar?: Maybe<string>, fullName?: Maybe<string>, firstName?: Maybe<string>, lastName?: Maybe<string>, mobile?: Maybe<string>, phone?: Maybe<string>, companyId?: Maybe<string>, updatedAt?: Maybe<string>, address?: Maybe<{ __typename?: 'Address', lat?: Maybe<string>, lng?: Maybe<string>, gPlaceId?: Maybe<string>, premise?: Maybe<string>, state?: Maybe<string>, street?: Maybe<string>, suburb?: Maybe<string>, country?: Maybe<string>, postalCode?: Maybe<string>, updatedAt?: Maybe<string>, formattedAddress?: Maybe<string> }> } } };
+export type GetUserById = { __typename?: 'Query', user: { __typename?: 'User', id: string, role: Role, email: string, logOn: string, logOff?: string | null | undefined, createdAt: string, profile: { __typename?: 'UserProfile', id: string, avatar?: string | null | undefined, fullName?: string | null | undefined, firstName?: string | null | undefined, lastName?: string | null | undefined, mobile?: string | null | undefined, phone?: string | null | undefined, companyId?: string | null | undefined, updatedAt?: string | null | undefined, address?: { __typename?: 'Address', lat?: string | null | undefined, lng?: string | null | undefined, gPlaceId?: string | null | undefined, premise?: string | null | undefined, state?: string | null | undefined, street?: string | null | undefined, suburb?: string | null | undefined, country?: string | null | undefined, postalCode?: string | null | undefined, updatedAt?: string | null | undefined, formattedAddress?: string | null | undefined } | null | undefined } } };
 
 export type GetCompanyVariables = Exact<{
   id: Scalars['String'];
 }>;
 
 
-export type GetCompany = { __typename?: 'Query', company: { __typename?: 'Company', id: string, name?: Maybe<string>, logo?: Maybe<string>, shortName?: Maybe<string>, displayName?: Maybe<string>, website?: Maybe<string>, updatedAt?: Maybe<string>, createdAt: string, profile?: Maybe<{ __typename?: 'CompanyProfile', id: string, companyId: string, phone?: Maybe<string>, fax?: Maybe<string>, mobile?: Maybe<string>, fullName?: Maybe<string>, email?: Maybe<string>, abn?: Maybe<string>, acn?: Maybe<string>, crn?: Maybe<string>, owner?: Maybe<string>, mayor?: Maybe<string>, updatedAt?: Maybe<string>, address?: Maybe<{ __typename?: 'Address', lat?: Maybe<string>, lng?: Maybe<string>, gPlaceId?: Maybe<string>, premise?: Maybe<string>, state?: Maybe<string>, street?: Maybe<string>, suburb?: Maybe<string>, country?: Maybe<string>, postalCode?: Maybe<string>, updatedAt?: Maybe<string>, formattedAddress?: Maybe<string> }> }> } };
+export type GetCompany = { __typename?: 'Query', company: { __typename?: 'Company', id: string, name?: string | null | undefined, logo?: string | null | undefined, shortName?: string | null | undefined, displayName?: string | null | undefined, website?: string | null | undefined, updatedAt?: string | null | undefined, createdAt: string, profile?: { __typename?: 'CompanyProfile', id: string, companyId: string, phone?: string | null | undefined, fax?: string | null | undefined, mobile?: string | null | undefined, fullName?: string | null | undefined, email?: string | null | undefined, abn?: string | null | undefined, acn?: string | null | undefined, crn?: string | null | undefined, owner?: string | null | undefined, mayor?: string | null | undefined, updatedAt?: string | null | undefined, address?: { __typename?: 'Address', lat?: string | null | undefined, lng?: string | null | undefined, gPlaceId?: string | null | undefined, premise?: string | null | undefined, state?: string | null | undefined, street?: string | null | undefined, suburb?: string | null | undefined, country?: string | null | undefined, postalCode?: string | null | undefined, updatedAt?: string | null | undefined, formattedAddress?: string | null | undefined } | null | undefined } | null | undefined } };
 
 export type UpdateCompanyVariables = Exact<{
   id: Scalars['String'];
@@ -269,7 +264,7 @@ export type UpdateCompanyVariables = Exact<{
 }>;
 
 
-export type UpdateCompany = { __typename?: 'Mutation', company: { __typename?: 'Company', id: string, name?: Maybe<string>, logo?: Maybe<string>, displayName?: Maybe<string>, shortName?: Maybe<string>, website?: Maybe<string>, updatedAt?: Maybe<string>, createdAt: string } };
+export type UpdateCompany = { __typename?: 'Mutation', company: { __typename?: 'Company', id: string, name?: string | null | undefined, logo?: string | null | undefined, displayName?: string | null | undefined, shortName?: string | null | undefined, website?: string | null | undefined, updatedAt?: string | null | undefined, createdAt: string } };
 
 export type UpdateCompanyProfileVariables = Exact<{
   companyId: Scalars['String'];
@@ -277,7 +272,7 @@ export type UpdateCompanyProfileVariables = Exact<{
 }>;
 
 
-export type UpdateCompanyProfile = { __typename?: 'Mutation', companyProfile: { __typename?: 'CompanyProfile', id: string, companyId: string, phone?: Maybe<string>, fax?: Maybe<string>, mobile?: Maybe<string>, fullName?: Maybe<string>, email?: Maybe<string>, abn?: Maybe<string>, acn?: Maybe<string>, crn?: Maybe<string>, owner?: Maybe<string>, mayor?: Maybe<string>, updatedAt?: Maybe<string>, address?: Maybe<{ __typename?: 'Address', lat?: Maybe<string>, lng?: Maybe<string>, gPlaceId?: Maybe<string>, premise?: Maybe<string>, state?: Maybe<string>, street?: Maybe<string>, suburb?: Maybe<string>, country?: Maybe<string>, postalCode?: Maybe<string>, updatedAt?: Maybe<string>, formattedAddress?: Maybe<string> }> } };
+export type UpdateCompanyProfile = { __typename?: 'Mutation', companyProfile: { __typename?: 'CompanyProfile', id: string, companyId: string, phone?: string | null | undefined, fax?: string | null | undefined, mobile?: string | null | undefined, fullName?: string | null | undefined, email?: string | null | undefined, abn?: string | null | undefined, acn?: string | null | undefined, crn?: string | null | undefined, owner?: string | null | undefined, mayor?: string | null | undefined, updatedAt?: string | null | undefined, address?: { __typename?: 'Address', lat?: string | null | undefined, lng?: string | null | undefined, gPlaceId?: string | null | undefined, premise?: string | null | undefined, state?: string | null | undefined, street?: string | null | undefined, suburb?: string | null | undefined, country?: string | null | undefined, postalCode?: string | null | undefined, updatedAt?: string | null | undefined, formattedAddress?: string | null | undefined } | null | undefined } };
 
 export type UpdateUserProfileVariables = Exact<{
   userId: Scalars['String'];
@@ -285,4 +280,4 @@ export type UpdateUserProfileVariables = Exact<{
 }>;
 
 
-export type UpdateUserProfile = { __typename?: 'Mutation', userProfile: { __typename?: 'UserProfile', id: string, avatar?: Maybe<string>, fullName?: Maybe<string>, firstName?: Maybe<string>, lastName?: Maybe<string>, mobile?: Maybe<string>, phone?: Maybe<string>, companyId?: Maybe<string>, updatedAt?: Maybe<string>, address?: Maybe<{ __typename?: 'Address', lat?: Maybe<string>, lng?: Maybe<string>, gPlaceId?: Maybe<string>, premise?: Maybe<string>, state?: Maybe<string>, street?: Maybe<string>, suburb?: Maybe<string>, country?: Maybe<string>, postalCode?: Maybe<string>, updatedAt?: Maybe<string>, formattedAddress?: Maybe<string> }> } };
+export type UpdateUserProfile = { __typename?: 'Mutation', userProfile: { __typename?: 'UserProfile', id: string, avatar?: string | null | undefined, fullName?: string | null | undefined, firstName?: string | null | undefined, lastName?: string | null | undefined, mobile?: string | null | undefined, phone?: string | null | undefined, companyId?: string | null | undefined, updatedAt?: string | null | undefined, address?: { __typename?: 'Address', lat?: string | null | undefined, lng?: string | null | undefined, gPlaceId?: string | null | undefined, premise?: string | null | undefined, state?: string | null | undefined, street?: string | null | undefined, suburb?: string | null | undefined, country?: string | null | undefined, postalCode?: string | null | undefined, updatedAt?: string | null | undefined, formattedAddress?: string | null | undefined } | null | undefined } };

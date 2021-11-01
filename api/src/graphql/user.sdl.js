@@ -17,14 +17,14 @@ export const schema = gql`
   }
 
   type Query {
-    getUserById(id: String!): User!
-    getUserByEmail(email: String!): User!
-    getUsersByRole(role: Role!): [User!]!
+    getUserById(id: String!): User! @requireAuth
+    getUserByEmail(email: String!): User! @requireAuth
+    getUsersByRole(role: Role!): [User!]! @requireAuth
   }
 
   type Mutation {
-    deleteUserById(id: String!): Boolean!
-    deleteUserByEmail(email: String!): Boolean!
-    deleteUserByIssuer(issuer: String!): Boolean!
+    deleteUserById(id: String!): Boolean! @requireAuth
+    deleteUserByEmail(email: String!): Boolean! @requireAuth
+    deleteUserByIssuer(issuer: String!): Boolean! @requireAuth
   }
 `

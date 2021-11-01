@@ -20,13 +20,13 @@ export const schema = gql`
   }
 
   type Query {
-    getCompany(id: String!): Company!
-    getCompanies: [Company!]!
+    getCompany(id: String!): Company! @requireAuth
+    getCompanies: [Company!]! @requireAuth
   }
 
   type Mutation {
-    deleteCompany(id: String!): Boolean
-    createCompany(data: UpdateCompany!): Company!
-    updateCompany(id: String!, data: UpdateCompany!): Company!
+    deleteCompany(id: String!): Boolean @requireAuth
+    createCompany(data: UpdateCompany!): Company! @requireAuth
+    updateCompany(id: String!, data: UpdateCompany!): Company! @requireAuth
   }
 `

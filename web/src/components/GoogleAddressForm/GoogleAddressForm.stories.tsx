@@ -14,11 +14,11 @@ const GoogleAddressFormWrapper = () => {
       onSubmit={(v) => {
         console.info(v)
       }}
-      validation={{ mode: 'onBlur' }}
+      config={{ mode: 'onBlur' }}
     >
       <GoogleAddressForm address={{}} />
     </Form>
-  )
+  );
 }
 
 // TODO Find a way to be abel to demo search address on Storybook

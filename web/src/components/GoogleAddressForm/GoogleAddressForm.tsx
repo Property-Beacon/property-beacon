@@ -258,7 +258,7 @@ const GoogleAddressForm = ({ loading, address }: Props) => {
       </div>
       <div className="h-80 shadow-md" ref={mapDivEl}></div>
     </FormProvider>
-  )
+  );
 }
 
 export default GoogleAddressForm

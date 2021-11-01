@@ -101,7 +101,7 @@ const ProfileCard = ({ user }: Props) => {
     <Form
       formMethods={{ reset, formState, ...formMethods }}
       onSubmit={handleSubmit}
-      validation={{ mode: 'onBlur' }}
+      config={{ mode: 'onBlur' }}
     >
       {error && <FormError error={error} />}
       <div className="flex flex-col lg:flex-row lg:items-start mt-10">
@@ -244,7 +244,7 @@ const ProfileCard = ({ user }: Props) => {
         </Submit>
       </div>
     </Form>
-  )
+  );
 }
 
 export default ProfileCard

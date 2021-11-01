@@ -37,6 +37,6 @@ export const schema = gql`
     updateCompanyProfile(
       companyId: String!
       data: UpdateCompanyProfile
-    ): CompanyProfile!
+    ): CompanyProfile! @requireAuth
   }
 `

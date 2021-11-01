@@ -92,7 +92,7 @@ then add `MagicLink`[(?)](docs/AUTHENTICATION.md) keys
 
 ```
 MAGICLINK_PUBLIC={askMeTheKey}
-MAGICLINK_SECRET={askMeTheKey}
+MAGIC_SECRET_API_KEY={askMeTheKey}
 ```
 
 add `Filestack` CDN[(?)](docs/CDN.md) key

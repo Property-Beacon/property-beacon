@@ -27,7 +27,8 @@ export const schema = gql`
   }
 
   type Query {
-    getAddressByUserProfileId(userProfileId: String!): Address!
+    getAddressByUserProfileId(userProfileId: String!): Address! @requireAuth
     getAddressByCompanyProfileId(companyProfileId: String!): Address!
+      @requireAuth
   }
 `

@@ -185,7 +185,7 @@ const OrganizationCard = ({ companyId }: Props) => {
   return (
     <Form
       onSubmit={handleSubmit}
-      validation={{ mode: 'onBlur' }}
+      config={{ mode: 'onBlur' }}
       formMethods={{ reset, formState, ...formMethods }}
     >
       {error && <FormError error={error} />}
@@ -437,7 +437,7 @@ const OrganizationCard = ({ companyId }: Props) => {
         />
       )}
     </Form>
-  )
+  );
 }
 
 export default OrganizationCard

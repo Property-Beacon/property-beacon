@@ -9,8 +9,8 @@
   host = "0.0.0.0"
   port = 8910
   title = "Property Beacon"
-  apiProxyPath = "/.netlify/functions"
-  includeEnvironmentVariables = ["MAGICLINK_PUBLIC", "MAGICLINK_SECRET", "REDWOOD_SECURE_SERVICES", "DATABASE_URL", "TEST_DATABASE_URL", "GOOGLE_MAP_API_KEY"]
+  apiUrl = "/.netlify/functions"
+  includeEnvironmentVariables = ["MAGICLINK_PUBLIC", "MAGIC_SECRET_API_KEY", "REDWOOD_SECURE_SERVICES", "DATABASE_URL", "TEST_DATABASE_URL", "GOOGLE_MAP_API_KEY"]
 [api]
   host = "0.0.0.0"
   port = 8911

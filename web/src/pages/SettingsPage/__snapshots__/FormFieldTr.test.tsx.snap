@@ -23,7 +23,6 @@ exports[`FormFieldTr renders successfully 1`] = `
               class="mb-2 capitalize font-semibold text-sm md:hidden"
               data-testid="form-field-tr-label"
               for="firstName"
-              name="firstName"
             >
               First name
             </label>
