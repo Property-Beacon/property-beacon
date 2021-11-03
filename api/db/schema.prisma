@@ -30,7 +30,7 @@ model UserProfile {
   id        String    @id @default(uuid())
   userId    String    @unique
   companyId String?   @unique
-  User      User?     @relation(fields: [userId], references: [id])
+  User      User?     @relation(fields: [userId], references: [id], onDelete: Cascade)
   Company   Company?  @relation(fields: [companyId], references: [id])
   avatar    String?
   firstName String?
@@ -57,7 +57,7 @@ model Company {
 model CompanyProfile {
   id        String    @id @default(uuid())
   companyId String    @unique
-  Company   Company?  @relation(fields: [companyId], references: [id])
+  Company   Company?  @relation(fields: [companyId], references: [id], onDelete: Cascade)
   phone     String?
   fax       String?
   mobile    String?
