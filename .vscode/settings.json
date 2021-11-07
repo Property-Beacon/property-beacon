@@ -24,5 +24,8 @@
   },
   "editor.tabSize": 2,
   "css.validate": false,
-  "prettier.printWidth": 120
+  "prettier.printWidth": 120,
+  "editor.quickSuggestions": {
+    "strings": true
+  }
 }

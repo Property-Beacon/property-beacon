@@ -142,13 +142,21 @@ const GoogleAddressForm = ({ loading, address }: Props) => {
             }
           )
           !!place?.geometry?.location?.lat &&
-            formMethods.setValue('address.lat', place.geometry.location.lat(), {
-              shouldDirty: true
-            })
+            formMethods.setValue(
+              'address.lat',
+              `${place.geometry.location.lat()}`,
+              {
+                shouldDirty: true
+              }
+            )
           !!place?.geometry?.location?.lng &&
-            formMethods.setValue('address.lng', place.geometry.location.lng(), {
-              shouldDirty: true
-            })
+            formMethods.setValue(
+              'address.lng',
+              `${place.geometry.location.lng()}`,
+              {
+                shouldDirty: true
+              }
+            )
           !!place?.place_id &&
             formMethods.setValue('address.gPlaceId', place.place_id, {
               shouldDirty: true
@@ -186,8 +194,9 @@ const GoogleAddressForm = ({ loading, address }: Props) => {
       <div className="mb-6">
         <div className="flex place-items-center mb-4">
           <HiOutlineLocationMarker size={32} className="text-secondary mr-2" />
+          {/* Enable this when we have budget to pay */}
           <TextField
-            disabled={loading}
+            disabled
             ref={locationInputEl}
             placeholder="Search address"
             name="address.formattedAddress"
@@ -256,9 +265,10 @@ const GoogleAddressForm = ({ loading, address }: Props) => {
         <HiddenField name="address.lng" defaultValue={address?.lng} />
         <HiddenField name="address.gPlaceId" defaultValue={address?.gPlaceId} />
       </div>
-      <div className="h-80 shadow-md" ref={mapDivEl}></div>
+      {/* Enable this when we have budget to pay */}
+      <div className="h-0 shadow-md" ref={mapDivEl}></div>
     </FormProvider>
-  );
+  )
 }
 
 export default GoogleAddressForm
